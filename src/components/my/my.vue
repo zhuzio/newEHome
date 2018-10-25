@@ -1,6 +1,51 @@
 <template>
     <div class="wrapper">
-      <h1>这是我的页面</h1>
+      <div class="my-head-container">
+        <div class="my-head">
+          <p class="my-set-msg">
+            <router-link to="/set"><i class="icon icon-set"></i></router-link>
+            <i class="icon icon-msg"></i>
+          </p>
+          <div class="head-center">
+            <div class="user-head-img">
+              <img src="../../assets/images/head.png" alt="">
+            </div>
+            <div class="user-info">
+              <p class="user-info-name">{{username}}</p>
+              <p class="user-info-deg">身份：{{idDeg}}</p>
+            </div>
+            <div class="user-code"></div>
+            <div class="user-big-code"></div>
+          </div>
+        </div>
+        <div class="my-order-treasure">
+          <p class="my-order-treasure-title">订单/资产</p>
+          <ul>
+            <li>
+              <i class="icon icon-treasure"></i>
+              <p>资产</p>
+            </li>
+            <li>
+              <i class="icon icon-earnings"></i>
+              <p>收益</p>
+            </li>
+            <li>
+              <i class="icon icon-team"></i>
+              <p>团队</p>
+            </li>
+            <li>
+              <i class="icon icon-order"></i>
+              <p>订单</p>
+            </li>
+          </ul>
+        </div>
+        <div class="my-order-treasure">
+          <p class="my-order-treasure-title">服务</p>
+          <div><i class="icon icon-borrowing"></i>借款<i class="icon icon-right fr"></i></div>
+          <div><i class="icon icon-address"></i>收货地址<i class="icon icon-right fr"></i></div>
+          <div><i class="icon icon-about"></i>关于我们<i class="icon icon-right fr"></i></div>
+        </div>
+      </div>
       <tabFoot></tabFoot>
     </div>
 </template>
@@ -8,13 +53,19 @@
 <script>
   import tabFoot from '../comp/tabFoot.vue'
     export default {
-        name: "my",
+      name: "my",
       components: {
         tabFoot
       },
+      data () {
+        return {
+          username:'陈予安',
+          idDeg:'合伙人'
+        }
+      }
     }
 </script>
 
-<style scoped>
-
+<style scoped lang="less">
+ @import "../../assets/less/my.less";
 </style>

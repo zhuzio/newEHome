@@ -4,7 +4,7 @@
         <span class="search-input"><i class="icon icon-search"></i><u>输入关键字</u></span><span class="search-button fr">搜索</span>
       </div>
       <swiper :options="swiperOption" ref="mySwiper" @someSwiperEvent="">
-        <swiper-slide><img src="../../assets/images/banner.png" alt="" class="swiper-image"></swiper-slide>
+        <swiper-slide v-for="(sp, index) in swipeBox" :key="index"><img :src="imgUrl+sp.pic" alt="" class="swiper-image"></swiper-slide>
        <div class="swiper-pagination"  slot="pagination"></div>
       </swiper>
       <div class="index-classify">
@@ -33,7 +33,7 @@
           </div>
           <div class="ft1-container">
             <ul>
-              <li><img src="../../assets/images/1.jpg" alt=""></li>
+              <router-link to="detail"><li><img src="../../assets/images/1.jpg" alt=""></li></router-link>
               <li><img src="../../assets/images/2.jpg" alt=""></li>
               <li><img src="../../assets/images/4.jpg" alt=""></li>
               <li><img src="../../assets/images/1.jpg" alt=""></li>
@@ -203,6 +203,8 @@
 <script>
   import tabFoot from '../comp/tabFoot.vue'
   import {swiper, swiperSlide } from 'vue-awesome-swiper'
+  import api from '../../assets/js/api.js'
+  import { imgUrl } from '../../assets/js/api.js'
   export default {
     name: "index",
     components: {
@@ -213,8 +215,8 @@
     data() {
       return {
         swiperOption: {
-          autoplay:false,
-          loop:false,
+          autoplay:true,
+          loop: true,
           delay: 1000,
           // effect : 'fade',
           pagination: {
@@ -226,7 +228,9 @@
           '热烈庆祝新易家商城上线',
           '前一百位会员可享受购物优惠',
           '新易家，开启您的购物之旅'
-        ]
+        ],
+        swipeBox: [],
+        imgUrl:imgUrl
       }
     },
     computed: {
@@ -253,6 +257,10 @@
     },
     created () {
       this.showMarquee(this.num)
+      api.swipe()
+        .then(res => {
+          this.swipeBox = res.data;
+        })
     },
   }
 </script>
