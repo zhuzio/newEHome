@@ -11,7 +11,7 @@
               <img src="../../assets/images/head.png" alt="">
             </div>
             <div class="user-info">
-              <p class="user-info-name">{{username}}</p>
+              <p class="user-info-name">{{userInfo.realname}}</p>
               <p class="user-info-deg">身份：{{idDeg}}</p>
             </div>
             <div class="user-code"></div>
@@ -21,10 +21,12 @@
         <div class="my-order-treasure">
           <p class="my-order-treasure-title">订单/资产</p>
           <ul>
-            <li>
-              <i class="icon icon-treasure"></i>
-              <p>资产</p>
-            </li>
+            <router-link to="/assets">
+              <li>
+                <i class="icon icon-treasure"></i>
+                <p>资产</p>
+              </li>
+            </router-link>
             <li>
               <i class="icon icon-earnings"></i>
               <p>收益</p>
@@ -52,18 +54,40 @@
 
 <script>
   import tabFoot from '../comp/tabFoot.vue'
-    export default {
-      name: "my",
-      components: {
-        tabFoot
-      },
-      data () {
-        return {
-          username:'陈予安',
-          idDeg:'合伙人'
+  import api from '@/assets/js/api.js'
+  let token = localStorage.getItem('token')
+  export default {
+    name: "my",
+    components: {
+      tabFoot
+    },
+    data () {
+      return {
+        userInfo:[],
+        username:'陈予安',
+        idDeg:'合伙人'
+      }
+    },
+    created () {
+      if (!token) {
+        window.location.href = '/#/login'
+      } else {
+        this.userInfo = JSON.parse(localStorage.getItem('userInfo'))
+        switch (parseInt(this.userInfo.account_type)) {
+          case 1:
+            this.idDeg = '代理';
+            break;
+          case 2:
+            this.idDeg = '总代';
+            break;
+          case 3:
+            this.idDeg = '合伙人';
+            break;
         }
       }
-    }
+    },
+
+  }
 </script>
 
 <style scoped lang="less">

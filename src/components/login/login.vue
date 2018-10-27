@@ -4,8 +4,8 @@
       <div class="login-center">
         <h1 class="login-title">新易家</h1>
         <div class="login-form">
-          <div class="login-list"><span>账号</span><input type="number" placeholder="请输入您的账号"></div>
-          <div class="login-list"><span>密码</span><input type="password" placeholder="请输入您的密码"></div>
+          <div class="login-list"><span>账号</span><input type="number" placeholder="请输入您的账号" v-model="account"></div>
+          <div class="login-list"><span>密码</span><input type="password" placeholder="请输入您的密码" v-model="password"></div>
           <button class="login-btn" @click="login">登录</button>
         </div>
         <p class="login-register">
@@ -20,21 +20,51 @@
 </template>
 
 <script>
+  import { Toast } from 'mint-ui'
+  import api from '@/assets/js/api.js'
   export default {
     name: "login",
     data () {
       return {
-        height: 0
+        height: 0,
+        account: '',
+        password: '',
+        userInfo: [],
+        token: ''
       }
     },
     methods: {
       login () {
+        if (!this.account) {
+          Toast('账号不能为空！');
+          return false;
+        };
+        if (!this.password) {
+          Toast('密码不能为空！');
+          return false;
+        }
+        api.login({
+          account:this.account,
+          password:this.password
+        })
+          .then(res => {
+            console.log(res)
+            if (res.code === 200) {
+              Toast('登录成功！');
+              // this.$router.push('/index');
+              localStorage.setItem('token', res.data.token)
+              localStorage.setItem('userInfo', JSON.stringify(res.data.userinfo))
+              window.location.href = '/index'
+            }
+          })
+          .catch(err => {
+            console.log(err)
+          })
 
       }
     },
     created () {
       this.height = window.screen.availHeight;
-      console.log(this.height)
     }
   }
 </script>

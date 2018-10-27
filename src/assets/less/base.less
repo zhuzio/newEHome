@@ -201,6 +201,7 @@ button {
   cursor: pointer;
   -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
   outline: none;
+  border: none;
 }
 .wrapper{
   overflow: hidden;
@@ -264,6 +265,7 @@ button {
     height: 0.34133rem;
     background-position: -2.21567rem -0.34133rem;
   }
+
   &.icon-y-integral{
     width: 0.34133rem;
     height: 0.34133rem;
@@ -374,6 +376,26 @@ button {
     height: 0.42667rem;
     background-position: -2.21567rem -1.28rem;
   }
+  &.icon-y-integral-white{
+    width: 0.42667rem;
+    height: 0.42667rem;
+    background-position: -1.792rem -2.56rem;
+  }
+  &.icon-x-integral-white{
+    width: 0.42667rem;
+    height: 0.42667rem;
+    background-position: -1.792rem -2.98667rem;
+  }
+  &.icon-withdrawRecord{
+     width: 0.42667rem;
+     height: 0.42667rem;
+     background-position: -1.792rem -2.1333rem;
+  }
+  &.icon-consumeRecord{
+    width: 0.42667rem;
+    height: 0.42667rem;
+    background-position: -1.792rem -1.70667rem;
+  }
   /*
     20px = 0.34133rem
     25px = 0.42667rem
@@ -385,6 +407,8 @@ button {
     80px = 1.3653rem
     90px = 1.536rem
     100px = 1.70667rem
+    105px = 1.792rem
+    110px = 1.8773rem
     120px = 2.048rem
     125px = 2.1333rem
     130px = 2.21567rem
@@ -428,6 +452,14 @@ button {
   left: 0;
   z-index: 99;
   color: #222222;
+  &.moduleHeadWhite{
+    color: #fff;
+    background: none;
+    a{
+      background: url('../images/back.png') no-repeat center;
+      background-size: auto .3rem;
+    }
+  }
   a{
     display: inline-block;
     position: absolute;
@@ -435,7 +467,7 @@ button {
     height: .8rem;
     top: 0;
     left: 0;
-    background: url('../images/back.png') no-repeat center;
+    background: url('../images/back1.png') no-repeat center;
     background-size: auto .3rem;
   }
 }

@@ -10,7 +10,11 @@ import confirmOrder from '@/components/store/confirmOrder'
 import apply from '@/components/store/apply'
 import login from '@/components/login/login'
 import register from '@/components/register/register'
-
+import assets from '@/components/system/assets'
+import integralDetailList from '@/components/system/integralDetailList'
+import shopIntegral from '@/components/system/shopIntegral'
+import useable from '@/components/system/useable'
+import withdraw from '@/components/system/withdraw'
 Vue.use(Router)
 
 export default new Router({
@@ -68,6 +72,30 @@ export default new Router({
       path: '/set', // 设置
       name: 'set',
       component: set
+    },
+    {
+      path: '/assets', // 资产
+      name: 'assets',
+      component: assets
+    },
+    {
+      path: '/integralDetailList/:m/:t', // 每月转化列表
+      name: 'integralDetailList',
+      component: integralDetailList
+    },
+    {
+      path: '/shopIntegral', // 购物积分
+      name: 'shopIntegral',
+      component: shopIntegral
+    },
+    {
+      path: '/useable', // 可用积分
+      name: 'useable',
+      component: useable
+    },{
+      path: '/withdraw', // 提现
+      name: 'withdraw',
+      component: withdraw
     },
   ]
 })
