@@ -1,0 +1,98 @@
+<template>
+  <div class="wrapper">
+    <div class="moduleHead moduleHeadWhite">
+      <a href="javascript:window.history.go(-1)"></a>银行卡管理
+      <div class="addCard"><router-link to="/addBanKCard"><span>+</span></router-link></div>
+    </div>
+    <div class="bm-container">
+      <div class="bm-list-center">
+        <ul>
+          <li v-for="(card, index) in cardList" :key="index" :class="cardClass+card.logo.id" @click="backWay(card)">
+            <div class="car-center">
+              <div class="card-top">
+                <div class="card-img">
+                  <img :src="imgUrl+card.logo.bank_logo" alt="">
+                </div>
+                <div class="card-name-info">
+                  <p class="card-name">{{card.logo.bank_name}}</p>
+                  <p class="card-type">持卡人：{{card.account}}</p>
+                </div>
+                <div class="card-delete" @click="deleteCard(card.id, index)">
+                  <span>删除</span>
+                </div>
+              </div>
+              <p class="card-num">{{card.card}}</p>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</template>
+
+<script>
+  import api from '@/assets/js/api.js'
+  import { imgUrl } from '@/assets/js/api.js'
+  import { Toast } from 'mint-ui'
+  let token = localStorage.getItem('token')
+  export default {
+    name: "add-bank-card",
+    data () {
+      return{
+        cardList: [],
+        imgUrl: imgUrl,
+        cardClass: 'card-bg',
+        way: this.$route.params.id
+      }
+    },
+    methods: {
+      deleteCard (id, idx){
+        let form = this.$qs.stringify({
+          token: token,
+          bank_id: id
+        })
+        api.delCard (form)
+          .then(res => {
+            if (res.code === 200) {
+              Toast("删除成功");
+              this.cardList.splice(idx, 1);
+            } else {
+              Toast(res.msg);
+            }
+          })
+          .catch(err => {
+            console.log(err)
+          });
+      },
+      backWay (ele) {
+        let way = parseInt(this.way);
+        switch (way) {
+          case 0:
+            // 提现申请选择
+            localStorage.setItem('defCard', JSON.stringify(ele));
+            window.history.go(-1);
+            break;
+          case 1:
+            break;
+          default:
+            return false;
+        }
+      }
+    },
+    created () {
+      api.getBankCard()
+        .then(res => {
+          if (res.code === 200) {
+            this.cardList = res.data;
+          }
+        })
+        .catch(err => {
+          console.log(err)
+        })
+    }
+  }
+</script>
+
+<style scoped lang="less">
+  @import "../../assets/less/addBankCard";
+</style>

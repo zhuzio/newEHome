@@ -85,3 +85,78 @@
     color: #ffffff;
   }
 }
+.wdr-container{
+  width: 100%;
+  height: auto;
+  margin-top: 1rem;
+  .wdr-center{
+    width: 94%;
+    height: auto;
+    padding: .2rem 3%;
+    background: white;
+    ul{
+      li{
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        border-bottom: 1px #e2e2e2 solid;
+        .wdr-card-img{
+          width: 1rem;
+          border-radius: 50%;
+          overflow: hidden;
+          img{
+            display: block;
+            width: 1rem;
+            height: auto;
+            margin: 0 auto;
+          }
+        }
+        .wdr-info{
+          width: 4.8rem;
+          height: auto;
+          p{
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin: .08rem 0;
+            &.wdr-info-card{
+              .wic-name{
+                font-size: 0.256rem;
+                color: #222222;
+                i{
+                  font-size: .2rem;
+                  color: #ff3b30;
+                }
+              }
+            }
+            &.wdr-info-cost{
+              font-size: 0.205rem;
+              margin: .1rem 0!important;
+              .wic-cost{
+                color: #222222;
+              }
+              .wic-status{
+                i{
+                  &.wic-pass{
+                    color: #222222;
+                  }
+                  &.wic-wait{
+                    color: #4f98f5;
+                  }
+                  &.wic-reject{
+                    color: #ff3b30;
+                  }
+                }
+              }
+            }
+            &.wdr-time{
+              font-size: 0.188rem;
+              color: #999999;
+            }
+          }
+
+        }
+      }
+    }
+  }
+}

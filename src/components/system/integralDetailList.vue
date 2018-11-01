@@ -4,9 +4,13 @@
       <a href="javascript:window.history.go(-1)"></a>{{title}}
     </div>
     <div class="hc-container">
-      <div class="hc-list" v-for="(hc, index) in hcList" :key="index">
+      <div class="hc-list" v-for="(hc, index) in hcList" :key="index" v-if="type===0">
         <p class="hc-time"><span>{{hc.mark}}</span><span class="hc-time-txt">{{hc.created_at}}</span></p>
-        <p class="hc-num">+<span> {{hc.money}}</span></p>
+        <p class="hc-num"><span></span><span> +{{hc.money}}</span></p>
+      </div>
+      <div class="hc-list" v-for="(hc, index) in hcList" :key="index" v-if="type===1">
+        <p class="hc-time"><span>{{hc.subject}}</span> <span class="hc-time-txt">{{hc.created_at}}</span></p>
+        <p class="hc-num"><span class="hc-order-sn">订单编号：<i>{{hc.order_sn}}</i></span><span class="hc-order-num">- <i>{{hc.total_point}}</i></span></p>
       </div>
     </div>
   </div>
@@ -23,7 +27,8 @@
         year: (this.$route.params.m).split('-')[0],
         month: (this.$route.params.m).split('-')[1],
         hcList: [],
-        title:''
+        title:'',
+        type: parseInt(this.$route.params.t)
       }
     },
     created () {
@@ -42,14 +47,20 @@
             })
           break;
         case 1:
-          this.title = ''+(this.$route.params.m).split('-')[0]+'年'+(this.$route.params.m).split('-')[1]+'月消费积分消费列表'
-          console.log('消费积分消费记录')
+          this.title = ''+(this.$route.params.m).split('-')[0]+'年'+(this.$route.params.m).split('-')[1]+'月购物积分消费列表'
+          api.shopIntegralDay(this.params)
+            .then(res => {
+              this.hcList = res.data;
+            })
+            .catch(err => {
+              console.log(err)
+            })
           break;
         case 2:
           this.title = '可用积分消费记录';
           api.useAbleIntegral()
             .then(res => {
-              console.log(res)
+              this.hcList = res.data;
             })
             .catch(err => {
               console.log(err)

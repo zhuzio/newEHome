@@ -134,35 +134,6 @@
         display: flex;
         justify-content: space-between;
         align-items: center;
-        input[type='radio']+label::before {
-          content:'\a0';/*不换行空格*/
-          display: inline-block;
-          vertical-align: .01rem;
-          width:0.3rem;
-          height:0.3rem;
-          margin-right: .05rem;
-          border-radius:50%;
-          background: none;/*复选框的背景色*/
-          text-indent:0.15em;
-          line-height: 0.3rem;
-          border: 1px white solid;
-        }
-        input[type='radio'] {
-          /*隐藏掉原先实际的 checkbox 框，之所以没用 display:none; 这种简单直接的方式，是因为这种方法会把它从键盘 tab 键切换焦点的队列中完全删除*/
-          position: absolute;
-          clip:rect(0,0,0,0);
-        }
-        input[type='radio']:checked+label::before {
-          content:'\2713'; /*对号的 Unicode字符*/
-          color: #2f90e1;/*对号的颜色*/
-          background: white;
-          font-size: .3rem;
-          font-weight: bolder;
-        }
-        label{
-          font-size: .24rem;
-          color: white;
-        }
       }
     }
     .register-btn{

@@ -27,14 +27,18 @@
                 <p>资产</p>
               </li>
             </router-link>
-            <li>
-              <i class="icon icon-earnings"></i>
-              <p>收益</p>
-            </li>
-            <li>
-              <i class="icon icon-team"></i>
-              <p>团队</p>
-            </li>
+            <router-link to="/earnings">
+              <li>
+                <i class="icon icon-earnings"></i>
+                <p>收益</p>
+              </li>
+            </router-link>
+            <router-link to="/teams">
+              <li>
+                <i class="icon icon-team"></i>
+                <p>团队</p>
+              </li>
+            </router-link>
             <li>
               <i class="icon icon-order"></i>
               <p>订单</p>
@@ -44,7 +48,7 @@
         <div class="my-order-treasure">
           <p class="my-order-treasure-title">服务</p>
           <div><i class="icon icon-borrowing"></i>借款<i class="icon icon-right fr"></i></div>
-          <div><i class="icon icon-address"></i>收货地址<i class="icon icon-right fr"></i></div>
+          <router-link to="/addressManage"><div><i class="icon icon-address"></i>收货地址<i class="icon icon-right fr"></i></div></router-link>
           <div><i class="icon icon-about"></i>关于我们<i class="icon icon-right fr"></i></div>
         </div>
       </div>
@@ -64,8 +68,8 @@
     data () {
       return {
         userInfo:[],
-        username:'陈予安',
-        idDeg:'合伙人'
+        username:'',
+        idDeg:''
       }
     },
     created () {
@@ -78,9 +82,15 @@
             this.idDeg = '代理';
             break;
           case 2:
-            this.idDeg = '总代';
+            this.idDeg = '区代';
             break;
           case 3:
+            this.idDeg = '总代';
+            break;
+          case 4:
+            this.idDeg = '联创';
+            break;
+          case 5:
             this.idDeg = '合伙人';
             break;
         }

@@ -80,7 +80,7 @@ export default {
     return Get(`/availablePoints?token=${token}`)
   },
   haveConversionIntegral (params) {
-    // 获得用户已转化积分
+    // 获得用户已转化积分(每月)
     return Get(`/alreadyGetMonth/${params}?token=${token}`)
   },
   haveConversionIntegralDay (params) {
@@ -88,16 +88,100 @@ export default {
     return Get(`/alreadyGetDay?token=${token}&times=${params}`)
   },
   shopIntegral (params) {
-    // 获得用户已转化积分每天详情
-    return Get(`/MoneyPointsExpenses/1?token=${token}`)
+    // 获得用户购物积分支出按 月 统计
+    return Get(`/MoneyPointsMonthExpenses/1?token=${token}`)
+  },
+  shopIntegralDay (params) {
+    // 获得用户购物积分支出按 天 统计
+    return Get(`/MoneyPointsDayExpenses?token=${token}&times=${params}`)
   },
   useAbleIntegral (params) {
     // 获得用户可用积分支出列表
     return Get(`/ReadyPointsExpenses/1?token=${token}`)
   },
+  withdrawApply (params) {
+    // 提现申请
+    return Post(`/applyWithdraw`, params)
+  },
+  withdrawRecord (params) {
+    // 提现申请记录
+    return Get(`/withdrawList/1?token=${token}`)
+  },
+  getBankInfo () {
+    // 获得银行信息
+    return Get(`/banksList`)
+  },
+  getBankInfoPro (params) {
+    // 获得开户省份
+    return Get(`/bankProvince?bank=${params}`)
+  },
+  getBankInfoCity (params) {
+    // 获得开户城市
+    return Get(`/bankCity?bank=${params.bank}&province=${params.pro}`)
+  },
+  getBankInfoDis (params) {
+    // 获得开户支行
+    return Get(`/bankCodeList?bank=${params.bank}&province=${params.pro}&area=${params.dis}`)
+  },
+  addBank (params) {
+    // 添加银行卡
+    return Post(`/addBankCard`,params)
+  },
+  getBankCard () {
+    // 获得用户银行卡信息
+    return Get(`/getBankcard?token=${token}`)
+  },
+  delCard (params){
+    // 删除银行卡
+    return Post(`/delBank`, params)
+  },
+  getDefaultCard () {
+    // 获得用户默认银行卡
+    return Get(`getBankDefault?token=${token}`)
+  },
+  getAddress () {
+    // 获得用户收货地址
+    return Get(`myAddress/1?token=${token}`)
+  },
+  getAddressPCA (params) {
+    // 获得省市县
+    return Get(`city/${params}`)
+  },
+  addAddress (params) {
+    // 新增收货地址
+    return Post(`/adressAdd`, params)
+  },
+  setDefAddress (params) {
+    // 设置默认地址
+    return Post(`/setDefault`, params)
+  },
+  deleteAddress (params) {
+    // 删除地址
+    return Post(`/delMyAddress`, params)
+  },
+  editAddress (params) {
+    // 编辑地址
+    return Post(`/addressEdit`, params)
+  },
+  getDefaultAddress () {
+    // 获得用户默认收货地址
+    return Get(`/getDefaultAddress?token=${token}`)
+  },
   swipe () {
     // 首页轮播图
     return Get(`/slides`)
+  },
+  getEarningsFrozen (params) {
+    // 获得用户收益
+    return Get(`/profit/${params}?token=${token}`)
+  },
+  getEarnings (params) {
+    // 获得用户收益
+    return Get(`/profitConversion/${params}?token=${token}`)
+  },
+  getTeams (params) {
+    // 获得用户收益
+    return Get(`/relation/recommend/${params}?token=${token}`)
   }
 }
 export { imgUrl }

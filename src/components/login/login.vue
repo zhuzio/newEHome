@@ -48,7 +48,6 @@
           password:this.password
         })
           .then(res => {
-            console.log(res)
             if (res.code === 200) {
               Toast('登录成功！');
               // this.$router.push('/index');

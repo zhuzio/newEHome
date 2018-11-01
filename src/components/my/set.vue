@@ -6,13 +6,13 @@
     <div class="ser-container">
       <div class="set-center">
         <p class="set-title">个人信息</p>
-        <p class="set-list"><span>登录账号</span><span>15236058819</span></p>
-        <p class="set-list"><span>会员身份</span><span>合伙人</span></p>
-        <p class="set-list"><span>真实姓名</span><span>陈予安</span></p>
+        <p class="set-list"><span>登录账号</span><span>{{userTel}}</span></p>
+        <p class="set-list"><span>会员身份</span><span>{{idDeg}}</span></p>
+        <p class="set-list"><span>真实姓名</span><span>{{username}}</span></p>
       </div>
       <div class="set-center">
         <p class="set-title">安全设置</p>
-        <p class="set-list"><span>银行卡管理</span><i class="icon icon-right"></i></p>
+        <router-link to="/banKManage/1"><p class="set-list"><span>银行卡管理</span><i class="icon icon-right"></i></p></router-link>
         <p class="set-list"><span>修改登录密码</span><i class="icon icon-right"></i></p>
         <p class="set-list"><span>修改支付密码</span><i class="icon icon-right"></i></p>
       </div>
@@ -22,16 +22,46 @@
 </template>
 
 <script>
+  let token = localStorage.getItem('token')
   export default {
     name: "set",
     data () {
       return {
-
+        idDeg: '',
+        username: '',
+        userTel: ''
       }
     },
     methods: {
       quitLogin () {
-        this.$router.push('login')
+        localStorage.clear();
+        this.$router.push('login');
+      }
+    },
+    created () {
+      if (!token) {
+        window.location.href = '/#/login'
+      } else {
+        this.userInfo = JSON.parse(localStorage.getItem('userInfo'));
+        this.username = this.userInfo.realname;
+        this.userTel = this.userInfo.phone;
+        switch (parseInt(this.userInfo.account_type)) {
+          case 1:
+            this.idDeg = '代理';
+            break;
+          case 2:
+            this.idDeg = '区代';
+            break;
+          case 3:
+            this.idDeg = '总代';
+            break;
+          case 4:
+            this.idDeg = '联创';
+            break;
+          case 5:
+            this.idDeg = '合伙人';
+            break;
+        }
       }
     }
   }

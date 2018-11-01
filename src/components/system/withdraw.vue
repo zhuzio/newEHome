@@ -4,14 +4,16 @@
       <a href="javascript:window.history.go(-1)"></a>提现
     </div>
     <div class="wd-container">
-      <div class="wd-chose-card">
-        <div class="wd-c-img"><img src="../../assets/images/jsbank.png" alt=""></div>
-        <div class="wd-c-info">
-          <p class="c-name">建设银行</p>
-          <p class="c-num">6217****0025</p>
+      <router-link to="/bankManage/0">
+        <div class="wd-chose-card" >
+          <div class="wd-c-img"><img :src="imgUrl + defaultCard.img" :alt="defaultCard.name"></div>
+          <div class="wd-c-info">
+            <p class="c-name">{{defaultCard.name}}</p>
+            <p class="c-num">{{defaultCard.num}}</p>
+          </div>
+          <div class="wd-c-back"><i class="icon icon-right"></i></div>
         </div>
-        <div class="wd-c-back"><i class="icon icon-right"></i></div>
-      </div>
+      </router-link>
       <div class="wd-center">
         <p class="wd-count">提现金额（手续费10%，剩余次数<span>{{withdrawCount}}</span>次）</p>
         <div class="wd-num">
@@ -22,25 +24,43 @@
       </div>
       <button class="wd-btn" @click='withdraw'>预计48小时到账，确认提现</button>
     </div>
+    <pay @hidden="hiddenShow"  @password="passwordGro" :password="applyPsd" v-show="payPop"></pay>
   </div>
 </template>
 
 <script>
   import api from '@/assets/js/api.js'
+  import { imgUrl } from '@/assets/js/api.js'
   import { Toast } from 'mint-ui'
   import { MessageBox } from 'mint-ui'
+  import pay from '../comp/pay.vue'
+  let token = localStorage.getItem('token')
   export default {
     name: "withdraw",
     data () {
       return {
-        withdrawCount:10,
+        withdrawCount: 0,
         withdrawNum: '',
-        balance: '3000.00'
+        balance: '3000.00',
+        imgUrl: imgUrl,
+        defaultCard: {
+          img: '',
+          name: '',
+          num: '',
+          id: ''
+        },
+        applyPsd: '123456',
+        payPop: false,
       };
     },
+    components: {
+      pay
+    },
     methods: {
+
       withdraw () {
-        if (this.withdrawCount == 0) {
+        this.payPop = true
+       /* if (this.withdrawCount == 0) {
           Toast('暂无提现次数！');
           return false;
         };
@@ -51,17 +71,77 @@
         if (parseInt(this.withdrawNum) > parseInt(this.balance)) {
           Toast('提现金额不能大于余额！');
           return false;
-        };
+        };*/
+      },
+      hiddenShow () {
+        let that = this;
+        that.payPop = false
+      },
+      passwordGro (e) {
+        this.applyPsd = e
+        let psw = this.applyPsd.toString().replace(/,/g, '')
+        if ( this.applyPsd.length === 6) {
+           let form = this.$qs.stringify({
+           token: token,
+           money: this.withdrawNum,
+           payment_password: psw,
+           bank_id: this.defaultCard.id,
+           mark: ''
+         });
+         api.withdrawApply(form)
+           .then(res => {
+             console.log(res)
+             if (res.code === 200) {
+               Toast({
+                 message: res.msg,
+                 position: 'center',
+                 duration: 2000
+               })
+               setTimeout(() => {
+                 window.history.go(-1)
+               },2500)
+             }
+           })
+           .catch(err => {
+             console.log(err)
+           })
+        }
       }
     },
     created () {
+      // 获得用户默认银行卡
+      let defCard = JSON.parse(localStorage.getItem('defCard'));
+      if (defCard) {
+        this.defaultCard.img = defCard.logo.bank_logo;
+        this.defaultCard.name = defCard.bank;
+        this.defaultCard.num = defCard.card;
+        this.defaultCard.id = defCard.id;
+      } else {
+        api.getDefaultCard()
+          .then(res => {
+            if (res.code === 200) {
+              this.defaultCard.img = res.data.logo.bank_logo;
+              this.defaultCard.name = res.data.bank;
+              this.defaultCard.num = res.data.card;
+              this.defaultCard.id = res.data.id;
+            };
+          })
+          .catch(err => {
+            console.log(err)
+          });
+      };
+      // 获得用户可用积分、提现次数
       api.availableIntegral()
         .then(res => {
           if (res.code === 200) {
-            this.balance = res.data.ready_points
+            this.balance = res.data.ready_points;
+            this.withdrawCount = res.data.available_withdrawals
           } else {
             Toast(res.msg);
           }
+        })
+        .catch(err => {
+          console.log(err)
         })
     }
   }

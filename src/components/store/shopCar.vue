@@ -1,6 +1,6 @@
 <template>
     <div class="wrapper">
-      <div class="shop-car-container">
+      <!--<div class="shop-car-container">
         <div class="shop-car-header"></div>
         <div class="shop-car-list-container">
           <div class="sc-store">
@@ -23,10 +23,10 @@
                       <button>删除</button>
                     </div>
                   </div>
-                 <!-- <div class="sc-goods-price sc-goods-integral-and-money">
+                 &lt;!&ndash; <div class="sc-goods-price sc-goods-integral-and-money">
                     <p class="scg-integral-money scg-x"><i class="icon icon-x-integral"></i><span>2283.00</span><b>+</b><u>¥</u><span>233.00</span></p>
                     <p class="scg-integral-money scg-k"><i class="icon icon-y-integral"></i><span>1234.00</span><b>+</b><u>¥</u><span>122.00</span></p>
-                  </div>-->
+                  </div>&ndash;&gt;
                   <div class="sc-goods-price sc-goods-integral">
                     <div class="scg-integral">
                       <p><i class="icon icon-x-integral"></i><span>3668.00</span></p>
@@ -69,12 +69,12 @@
                      <p class="scg-integral-money scg-x"><i class="icon icon-x-integral"></i><span>2283.00</span><b>+</b><u>¥</u><span>233.00</span></p>
                      <p class="scg-integral-money scg-k"><i class="icon icon-y-integral"></i><span>1234.00</span><b>+</b><u>¥</u><span>122.00</span></p>
                    </div>
-                  <!--<div class="sc-goods-price sc-goods-integral">
+                  &lt;!&ndash;<div class="sc-goods-price sc-goods-integral">
                     <div class="scg-integral">
                       <p><i class="icon icon-x-integral"></i><span>3668.00</span></p>
                       <p><i class="icon icon-y-integral"></i><span>7882.00</span></p>
                     </div>
-                  </div>-->
+                  </div>&ndash;&gt;
                   <div class="sc-goods-price-total">
                     <div class="sc-goods-price-money"><span>¥</span>2262.00</div>
                     <div class="sc-goods-total">
@@ -102,16 +102,16 @@
                       <button>删除</button>
                     </div>
                   </div>
-                  <!-- <div class="sc-goods-price sc-goods-integral-and-money">
+                  &lt;!&ndash; <div class="sc-goods-price sc-goods-integral-and-money">
                      <p class="scg-integral-money scg-x"><i class="icon icon-x-integral"></i><span>2283.00</span><b>+</b><u>¥</u><span>233.00</span></p>
                      <p class="scg-integral-money scg-k"><i class="icon icon-y-integral"></i><span>1234.00</span><b>+</b><u>¥</u><span>122.00</span></p>
-                   </div>-->
-                  <!--<div class="sc-goods-price sc-goods-integral">
+                   </div>&ndash;&gt;
+                  &lt;!&ndash;<div class="sc-goods-price sc-goods-integral">
                     <div class="scg-integral">
                       <p><i class="icon icon-x-integral"></i><span>3668.00</span></p>
                       <p><i class="icon icon-y-integral"></i><span>7882.00</span></p>
                     </div>
-                  </div>-->
+                  </div>&ndash;&gt;
                   <div class="sc-goods-price-total">
                     <div class="sc-goods-price-money"><span>¥</span>2262.00</div>
                     <div class="sc-goods-total">
@@ -128,10 +128,10 @@
         <div class="shop-car-clear">
           <div class="sc-total-money">合计:<span><i>¥</i>222.00</span></div>
           <div class="sc-total-integral">
-            <!--<div class="sc-t-integral">
+            &lt;!&ndash;<div class="sc-t-integral">
               <p><i class="icon icon-x-integral"></i><span>2000.00</span></p>
               <p><i class="icon icon-y-integral"></i><span>5353.00</span></p>
-            </div>-->
+            </div>&ndash;&gt;
             <div class="sc-t-integral-and-money">
               <p><i class="icon icon-x-integral"></i><span>1258.00</span><b>+</b><u>¥</u><span>213.00</span></p>
               <p><i class="icon icon-y-integral"></i><span>668.00</span><b>+</b><u>¥</u><span>3241.00</span></p>
@@ -141,12 +141,12 @@
             <button>结算</button>
           </div>
         </div>
-      </div>
-      <!--<div class="shop-car-container-no-data">
+      </div>-->
+      <div class="container-no-data">
         <img src="../../assets/images/no_data.png" alt="">
         <p class="no-data-txt1">购物车竟然是空的</p>
         <p class="no-data-txt2">在忙，也要记得买点什么犒赏自己~</p>
-      </div>-->
+      </div>
       <tabFoot></tabFoot>
     </div>
 </template>

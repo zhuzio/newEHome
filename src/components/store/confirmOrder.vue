@@ -8,8 +8,8 @@
       <div class="confirm-order-container">
         <div class="co-address"><i class="icon icon-confirm-address"></i></div>
         <div class="co-info">
-          <p class="co-info-receiver">收货人：陈予安 <span>15236058819</span></p>
-          <p class="co-info-receiver-address">收货地址：河南省 南阳市 卧龙区 南阳市车站南路与七一路交叉口永康社区</p>
+          <p class="co-info-receiver">收货人：{{coReceiver}} <span>{{coTel}}</span></p>
+          <p class="co-info-receiver-address">收货地址：{{coAds}}</p>
         </div>
         <div class="co-chose"><i class="icon icon-right"></i></div>
       </div>
@@ -62,17 +62,48 @@
 </template>
 
 <script>
+  import api from '@/assets/js/api.js'
+  let token = localStorage.getItem('token')
+  import { MessageBox } from 'mint-ui'
   export default {
     name: "confirm-order",
     data () {
       return{
-
+        coReceiver: '',
+        coTel: '',
+        coAds: ''
       }
     },
     methods : {
       confirmOrder() {
         this.$router.push('/apply')
       }
+    },
+    created () {
+      api.getDefaultAddress()
+        .then(res => {
+          if (res.data.length === 0) {
+            MessageBox({
+              title: '提示',
+              message: '您还没有地址，是否去添加？',
+              showCancelButton: true
+            })
+              .then(res => {
+                if (res == 'confirm') {
+                  this.$router.push('/addAddress/2');
+                } else {
+                  window.history.go(-1);
+                }
+              })
+          } else {
+            this.coReceiver = res.data.name;
+            this.coTel = res.data.phone;
+            this.coAds = res.data.province + res.data.city + res.data.area + res.data.detail;
+          }
+        })
+        .catch(err => {
+          console.log(err)
+        })
     }
   }
 </script>
