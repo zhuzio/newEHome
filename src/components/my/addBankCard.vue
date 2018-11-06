@@ -28,8 +28,8 @@
     data () {
       return {
         cardPop: false,
-        bankPop: true,
-        bankString: '',
+        bankPop: false,
+        bankString: [],
         bank:{
           name: '',
           tel: '',
@@ -52,12 +52,14 @@
       },
       hiddenShow (e) {
         if (e === 0) {
-          console.log('fuck')
+
         } else {
-          console.log(e.abc.split(' ')[0])
-          this.bankString = e.abc;
+          this.bankString = e.abc.split(' ');
           this.bank.code = e.code;
-          // this.bank.bank
+          this.bank.bank =  this.bankString[0];
+          this.bank.province =  this.bankString[1];
+          this.bank.city =  this.bankString[2];
+          this.bank.area =  this.bankString[3];
         }
         this.bankPop = false
       },
@@ -106,7 +108,6 @@
         });
         api.addBank(form)
           .then(res => {
-            console.log(res)
             if (res.code === 200) {
               Toast({
                 message: '添加成功',

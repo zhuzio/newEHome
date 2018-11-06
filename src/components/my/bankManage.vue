@@ -6,7 +6,7 @@
     </div>
     <div class="bm-container">
       <div class="bm-list-center">
-        <ul>
+        <ul v-if="!nod">
           <li v-for="(card, index) in cardList" :key="index" :class="cardClass+card.logo.id" @click="backWay(card)">
             <div class="car-center">
               <div class="card-top">
@@ -25,7 +25,7 @@
             </div>
           </li>
         </ul>
-        <div class="container-no-data">
+        <div class="container-no-data" v-if="nod">
           <img src="../../assets/images/no_data.png" alt="">
           <p class="no-data-txt2">还没有银行卡，快点击右上角加号添加吧~</p>
         </div>
@@ -46,7 +46,8 @@
         cardList: [],
         imgUrl: imgUrl,
         cardClass: 'card-bg',
-        way: this.$route.params.id
+        way: this.$route.params.id,
+        nod: false
       }
     },
     methods: {
@@ -54,12 +55,15 @@
         let form = this.$qs.stringify({
           token: token,
           bank_id: id
-        })
+        });
         api.delCard (form)
           .then(res => {
             if (res.code === 200) {
               Toast("删除成功");
               this.cardList.splice(idx, 1);
+              if ( this.cardList.length === 0) {
+                this.nod = true;
+              };
             } else {
               Toast(res.msg);
             }
@@ -87,7 +91,13 @@
       api.getBankCard()
         .then(res => {
           if (res.code === 200) {
-            this.cardList = res.data;
+            if (res.data.length === 0) {
+              this.nod = true;
+            } else {
+              this.cardList = res.data;
+              this.nod = false;
+            }
+
           }
         })
         .catch(err => {
