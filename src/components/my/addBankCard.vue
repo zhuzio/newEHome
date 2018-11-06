@@ -29,6 +29,7 @@
       return {
         cardPop: false,
         bankPop: true,
+        bankString: '',
         bank:{
           name: '',
           tel: '',
@@ -50,8 +51,14 @@
         this.bankPop = true
       },
       hiddenShow (e) {
-        console.log(e)
-        // if
+        if (e === 0) {
+          console.log('fuck')
+        } else {
+          console.log(e.abc.split(' ')[0])
+          this.bankString = e.abc;
+          this.bank.code = e.code;
+          // this.bank.bank
+        }
         this.bankPop = false
       },
       addBankCard () {
