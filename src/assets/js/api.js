@@ -230,6 +230,18 @@ export default {
   borrowIt (params) {
     // 借款申请
     return Post(`/applyLoan`, params);
+  },
+  getTeamPerson () {
+    // 获得团队总人数
+    return Get(`team?token=${token}`)
+  },
+  getStraightPush () {
+    // 获得直推总人数
+    return Get(`recommend?token=${token}`)
+  },
+  applyUpgrade (params) {
+    // 申请升级
+    return Post(`/applyAgent`, params);
   }
 }
 export { imgUrl }

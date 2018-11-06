@@ -49,6 +49,9 @@
         </div>
         <div class="my-order-treasure">
           <p class="my-order-treasure-title">服务</p>
+          <router-link to="/upgrade">
+            <div><i class="icon icon-about"></i>升级<i class="icon icon-right fr"></i></div>
+          </router-link>
           <router-link to="/borrowing"><div><i class="icon icon-borrowing"></i>借款<i class="icon icon-right fr"></i></div></router-link>
           <router-link to="/addressManage"><div><i class="icon icon-address"></i>收货地址<i class="icon icon-right fr"></i></div></router-link>
           <div><i class="icon icon-about"></i>关于我们<i class="icon icon-right fr"></i></div>
