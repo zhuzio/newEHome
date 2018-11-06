@@ -39,15 +39,17 @@
                 <p>团队</p>
               </li>
             </router-link>
-            <li>
-              <i class="icon icon-order"></i>
-              <p>订单</p>
-            </li>
+            <router-link to="/order">
+              <li>
+                <i class="icon icon-order"></i>
+                <p>订单</p>
+              </li>
+            </router-link>
           </ul>
         </div>
         <div class="my-order-treasure">
           <p class="my-order-treasure-title">服务</p>
-          <div><i class="icon icon-borrowing"></i>借款<i class="icon icon-right fr"></i></div>
+          <router-link to="/borrowing"><div><i class="icon icon-borrowing"></i>借款<i class="icon icon-right fr"></i></div></router-link>
           <router-link to="/addressManage"><div><i class="icon icon-address"></i>收货地址<i class="icon icon-right fr"></i></div></router-link>
           <div><i class="icon icon-about"></i>关于我们<i class="icon icon-right fr"></i></div>
         </div>

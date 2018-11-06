@@ -28,6 +28,11 @@
           <input type="number" placeholder="验证码" class="register-input" v-model="verificationCode">
           <button class="register-get-code" :class="{'haveSend': isSend}" @click="getVerificationCode">{{verificationCodeTxt}}</button>
         </div>
+        <div class="register-list register-list-code">
+          <span class="register-title">图片验证码</span>
+          <input type="number" placeholder="验证码" class="register-input" v-model="verificationCode">
+          <img class="register-get-code" :src="imgCodeSrc">
+        </div>
         <div class="register-list">
           <span class="register-title">真实姓名</span>
           <input type="text" placeholder="请输入您的真实姓名" class="register-input" v-model="realName">
@@ -68,7 +73,8 @@
         applyPassword: '',
         z_tel: /^1(3|4|5|6|7|8|9)\d{9}$/,
         isSend: false,
-        verificationCodeTxt:'获取验证码'
+        verificationCodeTxt:'获取验证码',
+        imgCodeSrc:"http://www.sgyxmall.com/index.php?s=Api/user/code",
       }
     },
     methods: {

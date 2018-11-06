@@ -33,12 +33,11 @@
           </div>
           <div class="ft1-container">
             <ul>
-              <router-link to="detail"><li><img src="../../assets/images/1.jpg" alt=""></li></router-link>
-              <li><img src="../../assets/images/2.jpg" alt=""></li>
-              <li><img src="../../assets/images/4.jpg" alt=""></li>
-              <li><img src="../../assets/images/1.jpg" alt=""></li>
-              <li><img src="../../assets/images/2.jpg" alt=""></li>
-              <li><img src="../../assets/images/4.jpg" alt=""></li>
+              <li v-for="(mz, index) in moneyZone" :key="index">
+                <router-link :to="/detail/+mz.id">
+                  <img :src="imgUrl+mz.default_img" alt="">
+                </router-link>
+              </li>
             </ul>
             <div class="ft1-ad">
               <img src="../../assets/images/ft1_ad.png" alt="">
@@ -52,41 +51,16 @@
           </div>
           <div class="ft2-container">
             <ul class="ft2-container-ul">
-              <li>
-                <img src="../../assets/images/1.jpg" alt="">
-                <p class="goods-name">美加净花肌之恋护肤乳（豪华装）</p>
-                <div class="goods-price">
-                  <p><i class="icon icon-x-integral"></i><span>3320.00</span></p>
-                  <p><i class="icon icon-y-integral"></i><span>450.00</span></p>
-                </div>
-                <p class="goods-price-rmb"><span>¥</span>139.60</p>
-              </li>
-              <li>
-                <img src="../../assets/images/1.jpg" alt="">
-                <p class="goods-name">美加净花肌之恋护肤乳（豪华装）</p>
-                <div class="goods-price">
-                  <p><i class="icon icon-x-integral"></i><span>3320.00</span></p>
-                  <p><i class="icon icon-y-integral"></i><span>450.00</span></p>
-                </div>
-                <p class="goods-price-rmb"><span>¥</span>139.60</p>
-              </li>
-              <li>
-                <img src="../../assets/images/1.jpg" alt="">
-                <p class="goods-name">美加净花肌之恋护肤乳（豪华装）</p>
-                <div class="goods-price">
-                  <p><i class="icon icon-x-integral"></i><span>3320.00</span></p>
-                  <p><i class="icon icon-y-integral"></i><span>450.00</span></p>
-                </div>
-                <p class="goods-price-rmb"><span>¥</span>139.60</p>
-              </li>
-              <li>
-                <img src="../../assets/images/1.jpg" alt="">
-                <p class="goods-name">美加净花肌之恋护肤乳（豪华装）</p>
-                <div class="goods-price">
-                  <p><i class="icon icon-x-integral"></i><span>3320.00</span></p>
-                  <p><i class="icon icon-y-integral"></i><span>450.00</span></p>
-                </div>
-                <p class="goods-price-rmb"><span>¥</span>139.60</p>
+              <li v-for="(iz, index) in integralZone" :key="index">
+                <router-link :to="/detail/+iz.id">
+                  <img :src="imgUrl+iz.default_img" alt="">
+                  <p class="goods-name">{{iz.name}}</p>
+                  <div class="goods-price">
+                    <p><i class="icon icon-x-integral"></i><span>{{iz.spec.points}}</span></p>
+                    <p><i class="icon icon-y-integral"></i><span>{{iz.spec.points}}</span></p>
+                  </div>
+                  <!--<p class="goods-price-rmb"><span>¥</span>139.60</p>-->
+                </router-link>
               </li>
             </ul>
             <div class="goods-banner-container">
@@ -124,73 +98,24 @@
           </div>
           <div class="ft3-container">
             <ul class="ft2-container-ul">
-              <li>
-                <img src="../../assets/images/1.jpg" alt="">
-                <p class="goods-name">美加净花肌之恋护肤乳（豪华装）</p>
-                <div class="goods-price-integral">
-                  <div>
-                    <p class="spec"><i class="icon icon-x-integral"></i><span>1320.00</span></p>
-                    <u>+</u>
-                    <p><span class="price-rmb">¥</span>233.00</p>
+              <li v-for="(imz, index) in integralMoneyZone" :key="index">
+                <router-link :to="/detail/+imz.id">
+                  <img :src="imgUrl+imz.default_img" alt="">
+                  <p class="goods-name">{{imz.name}}</p>
+                  <div class="goods-price-integral">
+                    <div>
+                      <p class="spec"><i class="icon icon-x-integral"></i><span>{{imz.spec.points}}</span></p>
+                      <u>+</u>
+                      <p><span class="price-rmb">¥</span>{{imz.spec.ready}}</p>
+                    </div>
+                    <div>
+                      <p class="spec"><i class="icon icon-y-integral"></i><span>{{imz.spec.points}}</span></p>
+                      <u>+</u>
+                      <p><span class="price-rmb">¥</span>{{imz.spec.ready}}</p>
+                    </div>
                   </div>
-                  <div>
-                    <p class="spec"><i class="icon icon-y-integral"></i><span>4450.00</span></p>
-                    <u>+</u>
-                    <p><span class="price-rmb">¥</span>1233.00</p>
-                  </div>
-                </div>
-                <p class="goods-price-rmb"><span>¥</span>139.60</p>
-              </li>
-              <li>
-                <img src="../../assets/images/1.jpg" alt="">
-                <p class="goods-name">美加净花肌之恋护肤乳（豪华装）</p>
-                <div class="goods-price-integral">
-                  <div>
-                    <p class="spec"><i class="icon icon-x-integral"></i><span>1320.00</span></p>
-                    <u>+</u>
-                    <p><span class="price-rmb">¥</span>233.00</p>
-                  </div>
-                  <div>
-                    <p class="spec"><i class="icon icon-y-integral"></i><span>4450.00</span></p>
-                    <u>+</u>
-                    <p><span class="price-rmb">¥</span>1233.00</p>
-                  </div>
-                </div>
-                <p class="goods-price-rmb"><span>¥</span>139.60</p>
-              </li>
-              <li>
-                <img src="../../assets/images/1.jpg" alt="">
-                <p class="goods-name">美加净花肌之恋护肤乳（豪华装）</p>
-                <div class="goods-price-integral">
-                  <div>
-                    <p class="spec"><i class="icon icon-x-integral"></i><span>1320.00</span></p>
-                    <u>+</u>
-                    <p><span class="price-rmb">¥</span>233.00</p>
-                  </div>
-                  <div>
-                    <p class="spec"><i class="icon icon-y-integral"></i><span>4450.00</span></p>
-                    <u>+</u>
-                    <p><span class="price-rmb">¥</span>1233.00</p>
-                  </div>
-                </div>
-                <p class="goods-price-rmb"><span>¥</span>139.60</p>
-              </li>
-              <li>
-                <img src="../../assets/images/1.jpg" alt="">
-                <p class="goods-name">美加净花肌之恋护肤乳（豪华装）</p>
-                <div class="goods-price-integral">
-                  <div>
-                    <p class="spec"><i class="icon icon-x-integral"></i><span>1320.00</span></p>
-                    <u>+</u>
-                    <p><span class="price-rmb">¥</span>233.00</p>
-                  </div>
-                  <div>
-                    <p class="spec"><i class="icon icon-y-integral"></i><span>4450.00</span></p>
-                    <u>+</u>
-                    <p><span class="price-rmb">¥</span>1233.00</p>
-                  </div>
-                </div>
-                <p class="goods-price-rmb"><span>¥</span>139.60</p>
+                  <!--<p class="goods-price-rmb"><span>¥</span>139.60</p>-->
+                </router-link>
               </li>
             </ul>
           </div>
@@ -230,7 +155,10 @@
           '新易家，开启您的购物之旅'
         ],
         swipeBox: [],
-        imgUrl:imgUrl
+        imgUrl:imgUrl,
+        moneyZone: [],
+        integralZone: [],
+        integralMoneyZone: []
       }
     },
     computed: {
@@ -253,14 +181,35 @@
           }
           that.num=num*0.286;
         }, 3000);
-      }
+      },
     },
     created () {
       this.showMarquee(this.num)
       api.swipe()
         .then(res => {
           this.swipeBox = res.data;
-        })
+        });
+      api.getZone({
+        page: 1,
+        type: 1
+      })
+        .then(res => {
+         this.integralZone = res.data;
+        });
+      api.getZone({
+        page: 1,
+        type: 2
+      })
+        .then(res => {
+          this.integralMoneyZone = res.data;
+        });
+      api.getZone({
+        page: 1,
+        type: 3
+      })
+        .then(res => {
+          this.moneyZone = res.data;
+        });
     },
   }
 </script>

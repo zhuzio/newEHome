@@ -4,68 +4,103 @@
         <a @click="goBackUp"></a>确认付款
       </div>
       <div class="apply-container">
-        <div class="apply-price" v-if="showModel">
-          <h1>¥<span>3369.00</span></h1>
-          <div class="apply-integral">
-            <p><i class="icon icon-x-integral"></i><span>336.00</span><b>+</b><u>¥</u><span>77.00</span></p>
-            <p><i class="icon icon-y-integral"></i><span>445.00</span><b>+</b><u>¥</u><span>88.00</span></p>
+        <!--<div class="apply-price" v-if="showModel">
+          <h1 v-if="order.type == 3">¥<span>{{order.mo}}</span></h1>
+          <div class="apply-integral" v-if="order.type == 2">
+            <p><i class="icon icon-x-integral"></i><span>{{order.ix}}</span><b>+</b><u>¥</u><span>{{order.mo}}</span></p>
+            <p><i class="icon icon-y-integral"></i><span>{{order.iy}}</span><b>+</b><u>¥</u><span>{{order.mo}}</span></p>
           </div>
-          <div class="apply-integral-money">
-            <p><i class="icon icon-x-integral"></i><span>336.00</span></p>
-            <p><i class="icon icon-y-integral"></i><span>445.00</span></p>
+          <div class="apply-integral-money" v-if="order.type == 1">
+            <p><i class="icon icon-x-integral"></i><span>{{order.ix}}</span></p>
+            <p><i class="icon icon-y-integral"></i><span>{{order.iy}}</span></p>
           </div>
         </div>
         <div class="apply-price" v-if="!showModel">
-          <h1 v-if="applyClass===0">¥<span>3369.00</span></h1>
+          <h1 v-if="applyClass===0">¥<span>{{order.mo}}</span></h1>
           <div class="apply-integral">
-            <p v-if="applyClass===3"><i class="icon icon-x-integral"></i><span>336.00</span><b>+</b><u>¥</u><span>77.00</span></p>
-            <p v-if="applyClass===4"><i class="icon icon-y-integral"></i><span>445.00</span><b>+</b><u>¥</u><span>88.00</span></p>
+            <p v-if="applyClass===3"><i class="icon icon-x-integral"></i><span>{{order.ix}}</span><b>+</b><u>¥</u><span>{{order.mo}}</span></p>
+            <p v-if="applyClass===4"><i class="icon icon-y-integral"></i><span>{{order.iy}}</span><b>+</b><u>¥</u><span>{{order.mo}}</span></p>
           </div>
           <div class="apply-integral-money">
-            <p v-if="applyClass===1"><i class="icon icon-x-integral"></i><span>336.00</span></p>
-            <p v-if="applyClass===2"><i class="icon icon-y-integral"></i><span>445.00</span></p>
+            <p v-if="applyClass===1"><i class="icon icon-x-integral"></i><span>{{order.ix}}</span></p>
+            <p v-if="applyClass===2"><i class="icon icon-y-integral"></i><span>{{order.iy}}</span></p>
           </div>
-        </div>
+        </div>-->
         <div class="apply-way">
           <p class="apply-title">支付方式：</p>
-          <div v-for="(aw, index) in applyWay" :key="index" :class="{'apply-way-on': index===applyClass}" @click="choseApply(index)"><i class="icon" :class="aw.icon"></i><span>{{aw.txt}}</span></div>
+          <div @click="choseApply(0)" :class="{'apply-way-on': 0===applyClass}">
+            <i class="icon icon-pay-weChat"></i><span>微信支付</span>
+          </div>
+          <div @click="choseApply(1)" :class="{'apply-way-on': 1===applyClass}" v-if="order.type == 1">
+            <i class="icon icon-pay-integral-x"></i><span>消费积分</span>
+          </div>
+          <div @click="choseApply(2)" :class="{'apply-way-on': 2===applyClass}" v-if="order.type == 1">
+            <i class="icon icon-pay-integral-y"></i><span>可用积分</span>
+          </div>
+          <div @click="choseApply(3)" :class="{'apply-way-on': 3===applyClass}" v-if="order.type == 2">
+            <i class="icon icon-pay-integral-x-weChat"></i><span>消费积分 + 微信支付</span>
+          </div>
+          <div @click="choseApply(4)" :class="{'apply-way-on': 4===applyClass}" v-if="order.type == 2">
+            <i class="icon icon-pay-integral-y-weChat"></i><span>可用积分 + 微信支付</span>
+          </div>
         </div>
       </div>
       <button class="apply-go" @click="applyGo">提交订单</button>
+      <pay @hidden="hiddenShow"  @password="passwordGro" :password="applyPsd" v-show="payPop"></pay>
+
     </div>
 </template>
 
 <script>
+  import api from '@/assets/js/api.js'
+  import { imgUrl } from '@/assets/js/api.js'
+  import { Toast } from 'mint-ui'
   import { MessageBox } from 'mint-ui'
+  import pay from '../comp/pay.vue'
+  let token = localStorage.getItem('token')
   export default {
     name: "apply",
     data () {
       return {
-        applyWay: [
+       /* applyWay: [
           {
             icon: 'icon-pay-weChat',
-            txt: '微信支付'
+            txt: '微信支付',
+            type: 1
           },
           {
             icon: 'icon-pay-integral-x',
-            txt: '消费积分'
+            txt: '消费积分',
+            type: 3
           },
           {
             icon: 'icon-pay-integral-y',
-            txt: '可用积分'
+            txt: '可用积分',
+            type: 3
           },
           {
             icon: 'icon-pay-integral-x-weChat',
-            txt: '消费积分 + 微信支付'
+            txt: '消费积分 + 微信支付',
+            type: 2
           },
           {
             icon: 'icon-pay-integral-y-weChat',
-            txt: '可用积分 + 微信支付'
+            txt: '可用积分 + 微信支付',
+            type: 2
           },
-          ],
+          ],*/
         applyClass: -1,
-        showModel: true
+        showModel: true,
+        order: [],
+        payWay: '',
+        applyPsd: '',
+        payPop: false,
+        orderSN:'',
+        way: this.$route.params.way
       }
+    },
+    components: {
+      pay
     },
     methods : {
       goBackUp() {
@@ -85,11 +120,93 @@
       choseApply(idx) {
         this.showModel = false;
         this.applyClass = idx;
+        switch (idx) {
+          case 0:
+            this.payWay = 'wx';
+            break;
+          case 1:
+            this.payWay = 'shop_points';
+            break;
+          case 2:
+            this.payWay = 'ready_points';
+            break;
+          case 3:
+            this.payWay = 'wx_shop_points';
+            break;
+          case 4:
+            this.payWay = 'wx_ready_points';
+            break;
+          default:
+            return false;
+        }
+      },
+      hiddenShow () {
+        let that = this;
+        that.payPop = false
       },
       applyGo () {
+        //
+       if (!this.payWay) {
+         Toast('请选择支付方式！！！');
+         return false;
+       } else {
 
+         let form = this.$qs.stringify({
+           token: token,
+           address_id: this.order.address_id,
+           list: {
+             product_id: this.order.list.goods_id,
+             spec_id: this.order.list.spec_id,
+             num: this.order.list.num,
+           },
+           spec1:  this.order.color,
+           pay_channel: this.payWay,
+           remark: this.order.remark
+         });
+         api.createdOrder(form)
+           .then(res => {
+             if (res.code === 200) {
+               this.orderSN = res.data;
+               if (this.applyClass !== 0 || this.applyClass !== 3 || this.applyClass !== 4) {
+                 this.payPop = true;
+               } else {
+
+               }
+             } else {
+               Toast(res.msg)
+             };
+           })
+           .catch(err => {
+             console.log(err)
+           })
+       }
+      },
+      passwordGro (e) {
+        this.applyPsd = e
+        let psw = this.applyPsd.toString().replace(/,/g, '')
+        if ( this.applyPsd.length === 6) {
+          api.orderPay({sn:this.orderSN,psd:psw})
+            .then(res => {
+              if (res.code === 200) {
+                Toast(res.msg);
+                setTimeout(() => {
+                  window.history.go(-2)
+                },3000);
+              } else {
+                Toast(res.msg);
+                return false;
+              }
+            })
+            .catch(err => {
+              console.log(err)
+            })
+        }
       }
-    }
+    },
+    created () {
+      console.log(this.way)
+      this.order = JSON.parse(localStorage.getItem('applyOrder'));
+    },
   }
 </script>
 

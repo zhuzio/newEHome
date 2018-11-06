@@ -182,6 +182,46 @@ export default {
   getTeams (params) {
     // 获得用户收益
     return Get(`/relation/recommend/${params}?token=${token}`)
-  }
+  },
+  getZone (params) {
+    // 获得不同专区的商品
+    return Get(`/productTypeList/${params.page}?type=${params.type}`)
+  },
+  getGoodsDetail (params) {
+    // 获得商品详情
+    return Get(`/goodsInfo?product_id=${params}`)
+  },
+  addShopCar (params) {
+    // 加入购物车
+    return Post(`/addToCart`, params)
+  },
+  getShopCarNum () {
+    // 获得购物车数量
+    return Get(`/numCart?token=${token}`)
+  },
+  shopCarDelete (params) {
+    // 删除购物车
+    return Post(`/deleteFromCart`, params)
+  },
+  getCarList (params) {
+    // 获得购物车列表
+    return Get(`cartList/${params}?token=${token}`)
+  },
+  createdOrder (params) {
+    // 生成订单
+    return Post(`/createOrder`, params);
+  },
+  orderPay (params) {
+    // 订单支付
+    return Get(`OrderPay?order_sn=${params.sn}&payment_password=${params.psd}`)
+  },
+  orderCancel (params) {
+    // 取消订单
+    return Post(`/cancelOrder`, params);
+  },
+  getOrderData (params) {
+    // 获取商城订单列表数据
+    return Get(`/orderget/${params.page}?token=${token}&status=${params.stu}`)
+  },
 }
 export { imgUrl }

@@ -1,0 +1,48 @@
+.borrowing-container{
+  margin-top: 1rem;
+  width: 100%;
+  height: auto;
+  .borrowing-head,
+  .borrowing-info{
+    background: white;
+    width: 95%;
+    padding: 0 2.5%;
+    &.borrowing-info{
+      margin-top: .2rem;
+    }
+    .borrowing-head-title{
+      font-size: 0.29rem;
+      color: #222222;
+      font-weight: bolder;
+      padding: .3rem .15rem;
+      border-bottom: 1px #f5f5f5 solid;
+    }
+    .borrowing-head-chose{
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+      padding: .25rem 0 .25rem;
+      label{
+        font-size: .3rem;
+      }
+    }
+    .borrowing-info-center{
+      background: white;
+      width: 95%;
+      padding: 0 2.5%;
+    }
+  }
+}
+input[type='radio']+label::before {
+  width:0.35rem;
+  height:0.35rem;
+  line-height: 0.35rem;
+  border: 1px #ccc solid;
+}
+input[type='radio']:checked+label::before {
+  color: #fff;/*对号的颜色*/
+  background: #2f90e1;
+}
+label{
+  color: black;
+}

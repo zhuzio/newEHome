@@ -15,45 +15,45 @@
       </div>
     </router-link>
     <div class="confirm-order-goods">
-      <p class="co-goods-name">金染家织旗舰店</p>
+      <p class="co-goods-name">{{goodsInfo.goods.store.name}}</p>
       <div class="co-goods-center">
         <div class="co-goods-img"><img src="../../assets/images/2.jpg" alt=""></div>
         <div class="co-goods-info">
-          <p class="co-goods-info-name">被套单件学生宿舍双人单人150x220x230被罩冬季男女1.5m通用型被罩</p>
-          <p class="co-goods-info-style">梦幻童话；200x230cm</p>
-          <!--<div class="co-goods-integral-money">
-            <p><i class="icon icon-x-integral"></i><span>330.00</span><b>+</b><u>¥</u><span>200.00</span></p>
-            <p><i class="icon icon-y-integral"></i><span>4562.00</span><b>+</b><u>¥</u><span>7893.00</span></p>
-          </div>-->
-          <div class="co-goods-integral">
-            <p><i class="icon icon-x-integral"></i><span>66750.00</span></p>
-            <p><i class="icon icon-y-integral"></i><span>79894.00</span></p>
+          <p class="co-goods-info-name">{{goodsInfo.goods.name}}</p>
+          <p class="co-goods-info-style">{{goodsInfo.t1}}；{{goodsInfo.t2}}</p>
+          <div class="co-goods-integral-money" v-if="goodsInfo.goods.type == 2">
+            <p><i class="icon icon-x-integral"></i><span>{{goodsInfo.integralX}}</span><b>+</b><u>¥</u><span>{{goodsInfo.money}}</span></p>
+            <p><i class="icon icon-y-integral"></i><span>{{goodsInfo.integralY}}</span><b>+</b><u>¥</u><span>{{goodsInfo.money}}</span></p>
+          </div>
+          <div class="co-goods-integral" v-if="goodsInfo.goods.type == 1">
+            <p><i class="icon icon-x-integral"></i><span>{{goodsInfo.integralX}}</span></p>
+            <p><i class="icon icon-y-integral"></i><span>{{goodsInfo.integralY}}</span></p>
           </div>
           <div class="co-goods-price-total">
-            <p>¥ <span>560.00</span></p>
-            <p class="co-goods-total">X <span>1</span></p>
+            <p><span v-if="goodsInfo.goods.type == 3">¥ {{goodsInfo.money}}</span></p>
+            <p class="co-goods-total">X <span>{{goodsInfo.num}}</span></p>
           </div>
         </div>
       </div>
       <div class="co-other">
-        <div class="co-other-list"><span>购买数量</span><span>1</span></div>
+        <div class="co-other-list"><span>购买数量</span><span>{{goodsInfo.num}}</span></div>
         <div class="co-other-list"><span>运费</span><span>¥ 0</span></div>
-        <div class="co-other-list"><span>买家留言：</span><input type="text" placeholder="（选填）填写您的留言"></div>
+        <div class="co-other-list"><span>买家留言：</span><input type="text" placeholder="（选填）填写您的留言" v-model="buyerMsg"></div>
       </div>
       <div class="co-final-price">
         <div class="co-final-price-txt">
           <p>共计 1 件商品 小计 </p>
         </div>
         <div class="co-final-price-center">
-          <p class="co-spec">¥ 34552.00</p>
-          <div class="co-goods-integral-money">
-            <p><i class="icon icon-x-integral"></i><span>330.00</span><b>+</b><u>¥</u><span>200.00</span></p>
-            <p><i class="icon icon-y-integral"></i><span>4562.00</span><b>+</b><u>¥</u><span>7893.00</span></p>
+          <p class="co-spec" v-if="goodsInfo.goods.type == 3">¥ {{finalMoney}}</p>
+          <div class="co-goods-integral-money" v-if="goodsInfo.goods.type == 2">
+            <p><i class="icon icon-x-integral"></i><span>{{finalIntegralX}}</span><b>+</b><u>¥</u><span>{{finalMoney}}</span></p>
+            <p><i class="icon icon-y-integral"></i><span>{{finalIntegralY}}</span><b>+</b><u>¥</u><span>{{finalMoney}}</span></p>
           </div>
-          <!--<div class="co-goods-integral">
-            <p><i class="icon icon-x-integral"></i><span>66750.00</span></p>
-            <p><i class="icon icon-y-integral"></i><span>79894.00</span></p>
-          </div>-->
+          <div class="co-goods-integral" v-if="goodsInfo.goods.type == 1">
+            <p><i class="icon icon-x-integral"></i><span>{{finalIntegralX}}</span></p>
+            <p><i class="icon icon-y-integral"></i><span>{{finalIntegralY}}</span></p>
+          </div>
         </div>
       </div>
     </div>
@@ -71,12 +71,33 @@
       return{
         coReceiver: '',
         coTel: '',
-        coAds: ''
+        coAds: '',
+        AdsId: '',
+        goodsInfo: [],
+        finalIntegralX: 0,
+        finalIntegralY: 0,
+        finalMoney: 0,
+        buyerMsg: ''
       }
     },
     methods : {
       confirmOrder() {
-        this.$router.push('/apply')
+        var applyOrder = {
+          address_id: this.AdsId,
+          list: {
+            goods_id: this.goodsInfo.goods.id,
+            num: this.goodsInfo.num,
+            spec_id: this.goodsInfo.tId,
+          },
+          color: this.goodsInfo.t1,
+          remark: this.buyerMsg,
+          type: this.goodsInfo.goods.type,
+          ix: this.finalIntegralX,
+          iy: this.finalIntegralY,
+          mo: this.finalMoney
+        };
+        localStorage.setItem('applyOrder', JSON.stringify(applyOrder));
+        this.$router.push('/apply/0')
       }
     },
     created () {
@@ -99,11 +120,16 @@
             this.coReceiver = res.data.name;
             this.coTel = res.data.phone;
             this.coAds = res.data.province + res.data.city + res.data.area + res.data.detail;
+            this.AdsId = res.data.id;
           }
         })
         .catch(err => {
           console.log(err)
         })
+      this.goodsInfo = JSON.parse(localStorage.getItem('final'));
+      this.finalIntegralX = parseFloat(this.goodsInfo.integralX) * parseFloat(this.goodsInfo.num);
+      this.finalIntegralY = parseFloat(this.goodsInfo.integralY) * parseFloat(this.goodsInfo.num);
+      this.finalMoney = parseFloat(this.goodsInfo.money) * parseFloat(this.goodsInfo.num);
     }
   }
 </script>

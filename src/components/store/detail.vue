@@ -7,37 +7,27 @@
             <span class="detail-car"><i class="icon icon-detail-car"></i></span>
           </p>
           <swiper :options="swiperOption" ref="mySwiper" @someSwiperEvent="">
-            <swiper-slide><img src="../../assets/images/goods_pic1.png" alt="" class="swiper-image"></swiper-slide>
-            <swiper-slide><img src="../../assets/images/goods_pic2.jpg" alt="" class="swiper-image"></swiper-slide>
-            <swiper-slide><img src="../../assets/images/goods_pic3.jpg" alt="" class="swiper-image"></swiper-slide>
+            <swiper-slide v-for="(sp, index) in goodsInfo.main_img" :key="index"><img :src="imgUrl+sp" alt="" class="swiper-image"></swiper-slide>
             <div class="swiper-pagination"  slot="pagination"></div>
           </swiper>
         </div>
       </div>
       <div class="detail-name-price">
-        <p class="detail-goods-price"><span>¥</span>226.00</p>
-        <!--<div class="detail-goods-integral">
-          <p><i class="icon icon-x-integral"></i><span>667.00</span></p>
-          <p><i class="icon icon-y-integral"></i><span>1622.00</span></p>
-        </div>-->
-        <div class="detail-goods-integral-and-money">
-          <p><i class="icon icon-x-integral"></i><span>22600.00</span><b>+</b><u>¥</u>66000.00</p>
-          <p><i class="icon icon-y-integral"></i><span>3326.00</span><b>+</b><u>¥</u>8886.00</p>
+        <p class="detail-goods-price" v-if="goodsInfo.type == 3"><span>¥</span>{{money}}</p>
+        <div class="detail-goods-integral" v-if="goodsInfo.type == 1">
+          <p><i class="icon icon-x-integral"></i><span>{{integralX}}</span></p>
+          <p><i class="icon icon-y-integral"></i><span>{{integralY}}</span></p>
         </div>
-        <p class="detail-goods-name">被套单件学生宿舍双人单人150x220x230被罩冬季男女1.5m通用型被罩</p>
+        <div class="detail-goods-integral-and-money" v-if="goodsInfo.type == 2">
+          <p><i class="icon icon-x-integral"></i><span>{{integralX}}</span><b>+</b><u>¥</u>{{money}}</p>
+          <p><i class="icon icon-y-integral"></i><span>{{integralY}}</span><b>+</b><u>¥</u>{{money}}</p>
+        </div>
+        <p class="detail-goods-name">{{goodsInfo.name}}</p>
       </div>
       <div class="detail-goods-detail">
         <p class="detail-title"><span></span>商品详情</p>
         <div class="detail-img">
-          <img src="../../assets/images/goods_pic1.png" alt="">
-          <img src="../../assets/images/goods_pic2.jpg" alt="">
-          <img src="../../assets/images/goods_pic3.jpg" alt="">
-          <img src="../../assets/images/goods_pic1.png" alt="">
-          <img src="../../assets/images/goods_pic2.jpg" alt="">
-          <img src="../../assets/images/goods_pic3.jpg" alt="">
-          <img src="../../assets/images/goods_pic1.png" alt="">
-          <img src="../../assets/images/goods_pic2.jpg" alt="">
-          <img src="../../assets/images/goods_pic3.jpg" alt="">
+          <img :src="imgUrl+dimg" alt="" v-for="(dimg, index) in goodsInfo.detail_img" :key="index">
         </div>
       </div>
       <div class="detail-clear">
@@ -53,29 +43,29 @@
               <img src="../../assets/images/goods_pic1.png" alt="">
             </div>
             <div class="pop-detail-txt">
-              <p class="pop-price"><span>¥</span>2220.00</p>
-              <!--<div class="pop-integral">
-                <p><i class="icon icon-x-integral"></i><span>660.00</span></p>
-                <p><i class="icon icon-y-integral"></i><span>77.00</span></p>
-              </div>-->
-              <div class="pop-integral-money">
-                <p><i class="icon icon-x-integral"></i><span>667.00</span><b>+</b><u>¥</u><span>77.00</span></p>
-                <p><i class="icon icon-y-integral"></i><span>882.225</span><b>+</b><u>¥</u><span>886.00</span></p>
+              <p class="pop-price" v-if="goodsInfo.type == 3"><span>¥</span>{{money}}</p>
+              <div class="pop-integral" v-if="goodsInfo.type == 1">
+                <p><i class="icon icon-x-integral"></i><span>{{integralX}}</span></p>
+                <p><i class="icon icon-y-integral"></i><span>{{integralY}}</span></p>
+              </div>
+              <div class="pop-integral-money" v-if="goodsInfo.type == 2">
+                <p><i class="icon icon-x-integral"></i><span>{{integralX}}</span><b>+</b><u>¥</u><span>{{money}}</span></p>
+                <p><i class="icon icon-y-integral"></i><span>{{integralY}}</span><b>+</b><u>¥</u><span>{{money}}</span></p>
               </div>
               <p class="pop-inventory">库存 {{inventory}} 件</p>
             </div>
           </div>
           <div class="pop-style">
             <div class="pop-style-type1">
-              <p class="style-head">颜色</p>
+              <p class="style-head">{{goodsInfo.spec_name1}}</p>
               <div class="style-type-center">
-                <span @click="choseStyle(0, index)" :class="{'style-on':st1Idex===index}" v-for="(st1, index) in style1" :key="index">{{st1}}</span>
+                <span @click="choseStyle(0, index, st1)" :class="{'style-on':st1Idex===index}" v-for="(st1, index) in style1" :key="index">{{st1}}</span>
               </div>
             </div>
             <div class="pop-style-type2">
-              <p class="style-head">分类</p>
+              <p class="style-head">{{goodsInfo.spec_name2}}</p>
               <div class="style-type-center">
-                <span @click="choseStyle(1, index)" :class="{'style-on':st2Idex===index}" v-for="(st2, index) in style2" :key="index">{{st2}}</span>
+                <span @click="choseStyle(1, index, st2)" :class="{'style-on':st2Idex===index}" v-for="(st2, index) in style2" :key="index">{{st2.size}}</span>
               </div>
             </div>
           </div>
@@ -96,6 +86,9 @@
 <script>
   import {swiper, swiperSlide } from 'vue-awesome-swiper'
   import { Toast } from 'mint-ui';
+  import api from "@/assets/js/api";
+  import { imgUrl } from '../../assets/js/api.js'
+  let token = localStorage.getItem('token')
   export default {
     name: "detail",
     components: {
@@ -117,11 +110,22 @@
         popupVisible: false,
         choseWay: 0,
         value: 1, // 购买数量
-        inventory: 20, // 库存
-        style1: ['红色', '橙色', '黄色', '绿色', '青色', '蓝色', '紫色', '白色', '黑色' ], // 样式1--颜色
+        inventory: 0, // 库存
+        style1: [], // 样式1--颜色
         st1Idex:0,
-        style2: ['红红色', '橙橙橙色', '黄色', '绿绿绿色', '青色', '蓝蓝蓝色', '紫紫紫紫紫紫色', '白色', '黑色'],
-        st2Idex: 0
+        style2: [],
+        st2Idex: 0,
+        goodsId: this.$route.params.id,
+        mainImg: [],
+        goodsInfo:[],
+        imgUrl: imgUrl,
+        integralX:0,
+        integralY:0,
+        money:0,
+        styleID: 0,
+        storeID: 0,
+        choseS1: '',
+        choseS2: ''
       }
     },
     computed: {
@@ -176,36 +180,92 @@
         switch (this.choseWay) {
           // 加入购物车
           case 0:
-            Toast({
-              message: '加入购物车',
-              position: 'middle',
-              duration: 2000
-            })
+            let form = this.$qs.stringify({
+              token: token,
+              product_id: this.goodsInfo.id,
+              spec_id: this.styleID,
+              specification: this.choseS1,
+              num: this.value,
+              shop_id: this.storeId
+            });
+            api.addShopCar(form)
+              .then(res => {
+                if (res.code === 200) {
+                  Toast({
+                    message: res.msg,
+                    position: 'middle',
+                    duration: 2000
+                  })
+                } else {
+                  Toast({
+                    message: res.msg,
+                    position: 'middle',
+                    duration: 2000
+                  })
+                }
+              })
+              .catch(err => {
+                console.log(err)
+              })
+
             break;
           // 立即购买
           case 1:
-            Toast({
-              message: '立即购买',
-              position: 'middle',
-              duration: 2000
-            })
+            let final = {
+              t1: this.choseS1,
+              t2: this.choseS2,
+              tId: this.styleID,
+              integralX: this.integralX,
+              integralY: this.integralY,
+              money: this.money,
+              num: this.value,
+              goods: this.goodsInfo
+            };
+            localStorage.setItem('final', JSON.stringify(final));
             this.$router.push('/confirmOrder')
             break;
         };
       },
-      choseStyle (idx, eleIndex) {
+      choseStyle (idx, eleIndex, ele) {
         switch (idx) {
           case 0:
-            this.st1Idex = eleIndex
+            this.st1Idex = eleIndex;
+            this.choseS1 = ele;
             break;
           case 1:
-            this.st2Idex = eleIndex
+            this.integralX = ele.points;
+            this.integralY = ele.points;
+            this.money =  ele.ready;
+            this.inventory = ele.stock;
+            this.styleID = ele.id;
+            this.choseS2 = ele.size;
+            this.st2Idex = eleIndex;
             break;
-
+          default:
+            return false;
         }
       }
     },
     created () {
+      api.getGoodsDetail(this.goodsId)
+        .then(res => {
+          if (res.code === 200) {
+            this.goodsInfo = res.data;
+            this.style1 = this.goodsInfo.spec1;
+            this.choseS1 = this.goodsInfo.spec1[0];
+            this.style2 = this.goodsInfo.specs;
+            this.choseS2 = this.goodsInfo.specs[0].size;
+            this.inventory = this.goodsInfo.specs[0].stock;
+            this.integralX = this.goodsInfo.specs[0].points;
+            this.integralY = this.goodsInfo.specs[0].points;
+            this.money =  this.goodsInfo.specs[0].ready;
+            this.styleID = this.goodsInfo.specs[0].id;
+            this.storeId = this.goodsInfo.store.id;
+          }
+        })
+        .catch(err => {
+          console.log(err)
+        })
       this.nowHeight = window.screen.availWidth;
     }
   }

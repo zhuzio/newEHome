@@ -25,6 +25,10 @@
             </div>
           </li>
         </ul>
+        <div class="container-no-data">
+          <img src="../../assets/images/no_data.png" alt="">
+          <p class="no-data-txt2">还没有银行卡，快点击右上角加号添加吧~</p>
+        </div>
       </div>
     </div>
   </div>

@@ -22,7 +22,9 @@ import addressManage from '@/components/my/addressManage'
 import addAddress from '@/components/my/addAddress'
 import earnings from '@/components/system/earnings'
 import teams from '@/components/my/teams'
-
+import order from '@/components/my/order'
+import upgrade from '@/components/my/upgrade'
+import borrowing from '@/components/my/borrowing'
 Vue.use(Router)
 
 export default new Router({
@@ -62,7 +64,7 @@ export default new Router({
       component: my
     },
     {
-      path: '/detail', // 商品详情
+      path: '/detail/:id', // 商品详情
       name: 'detail',
       component: detail
     },
@@ -72,7 +74,7 @@ export default new Router({
       component: confirmOrder
     },
     {
-      path: '/apply', // 支付方式选择
+      path: '/apply/:way', // 支付方式选择
       name: 'apply',
       component: apply
     },
@@ -141,5 +143,20 @@ export default new Router({
       name: 'teams',
       component: teams
     },
+    {
+      path: '/order', // 我的订单
+      name: 'order',
+      component: order
+    },
+    {
+      path: '/upgrade', // 升级
+      name: 'upgrade',
+      component: upgrade
+    },
+    {
+      path: '/borrowing', // 借贷
+      name: 'borrowing',
+      component: borrowing
+    }
   ]
 })
