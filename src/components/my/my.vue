@@ -78,7 +78,7 @@
       if (!token) {
         window.location.href = '/#/login'
       } else {
-        this.userInfo = JSON.parse(localStorage.getItem('userInfo'))
+        this.userInfo = JSON.parse(localStorage.getItem('userInfo'));
         switch (parseInt(this.userInfo.account_type)) {
           case 1:
             this.idDeg = '代理';
@@ -95,7 +95,9 @@
           case 5:
             this.idDeg = '合伙人';
             break;
-        }
+        };
+        localStorage.removeItem('borrow');
+        localStorage.removeItem('borrowLeave');
       }
     },
 

@@ -24,7 +24,7 @@
       </div>
       <button class="wd-btn" @click='withdraw'>预计48小时到账，确认提现</button>
     </div>
-    <pay @hidden="hiddenShow"  @password="passwordGro" :password="applyPsd" v-show="payPop"></pay>
+    <pay @hidden="hiddenShow" @password="passwordGro" :password="applyPsd" v-show="payPop"></pay>
   </div>
 </template>
 

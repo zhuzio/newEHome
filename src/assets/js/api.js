@@ -1,7 +1,7 @@
 import axios from 'axios'
 import { Toast } from 'mint-ui'
 
-var url = 'http://appliance.test/api/'
+var url = 'http://www.xinyijiamall.com/api/'
 var imgUrl = 'http://img.nyycstar.com/'
 let token = localStorage.getItem('token')
 // axios 配置
@@ -223,5 +223,13 @@ export default {
     // 获取商城订单列表数据
     return Get(`/orderget/${params.page}?token=${token}&status=${params.stu}`)
   },
+  borrowQualification () {
+    // 获得用户是否有贷款资格
+    return Get(`qualifications?token=${token}`)
+  },
+  borrowIt (params) {
+    // 借款申请
+    return Post(`/applyLoan`, params);
+  }
 }
 export { imgUrl }

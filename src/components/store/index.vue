@@ -120,6 +120,7 @@
             </ul>
           </div>
         </div>
+        <p style="text-align: center;color: #4e4c50;font-size: .2rem" onclick="window.location.href='http://www.miitbeian.gov.cn'">豫ICP备18038220号</p>
       </div>
       <tabFoot></tabFoot>
     </div>

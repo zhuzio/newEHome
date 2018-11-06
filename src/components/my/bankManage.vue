@@ -81,6 +81,9 @@
             window.history.go(-1);
             break;
           case 1:
+            // 借款申请
+            localStorage.setItem('borrow', JSON.stringify(ele));
+            window.history.go(-1);
             break;
           default:
             return false;
