@@ -75,11 +75,12 @@ body{
               display: -webkit-box;
               font-size: .26rem;
               -webkit-line-clamp: 1;
-              -webkit-webkit-box-orient: vertical;
+              /* autoprefixer: off */
+              -webkit-box-orient: vertical;
               -moz-webkit-box-orient: vertical;
               -ms-webkit-box-orient: vertical;
               -o-webkit-box-orient: vertical;
-              webkit-box-orient: vertical;
+              /* autoprefixer: on */
               overflow: hidden;
               &.act {
                 color: red;
