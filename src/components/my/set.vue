@@ -12,7 +12,7 @@
       </div>
       <div class="set-center">
         <p class="set-title">安全设置</p>
-        <router-link to="/banKManage/1"><p class="set-list"><span>银行卡管理</span><i class="icon icon-right"></i></p></router-link>
+        <router-link to="/bankManage/1"><p class="set-list"><span>银行卡管理</span><i class="icon icon-right"></i></p></router-link>
         <p class="set-list"><span>修改登录密码</span><i class="icon icon-right"></i></p>
         <p class="set-list"><span>修改支付密码</span><i class="icon icon-right"></i></p>
       </div>

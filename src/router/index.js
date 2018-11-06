@@ -16,7 +16,7 @@ import shopIntegral from '@/components/system/shopIntegral'
 import useable from '@/components/system/useable'
 import withdraw from '@/components/system/withdraw'
 import withdrawRecord from '@/components/system/withdrawRecord'
-import banKManage from '@/components/my/banKManage'
+import bankManage from '@/components/my/bankManage'
 import addBankCard from '@/components/my/addBankCard'
 import addressManage from '@/components/my/addressManage'
 import addAddress from '@/components/my/addAddress'
@@ -114,9 +114,9 @@ export default new Router({
       component: withdrawRecord
     },
     {
-      path: '/banKManage/:id', // 银行卡管理
-      name: 'banKManage',
-      component: banKManage
+      path: '/bankManage/:id', // 银行卡管理
+      name: 'bankManage',
+      component: bankManage
     },
     {
       path: '/addBankCard', // 添加银行卡
