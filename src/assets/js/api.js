@@ -2,6 +2,7 @@ import axios from 'axios'
 import { Toast } from 'mint-ui'
 
 var url = 'http://www.xinyijiamall.com/api/'
+// var url = 'http://appliance.test/api/'
 var imgUrl = 'http://img.nyycstar.com/'
 let token = localStorage.getItem('token')
 // axios 配置
@@ -70,6 +71,9 @@ export default {
   register (params) {
     // 注册
     return Post(`/register`, params)
+  },
+  getSMSVerification (params) {
+    return Post(`/sendSms`, params)
   },
   login (params) {
     // 登录
@@ -231,13 +235,8 @@ export default {
     // 借款申请
     return Post(`/applyLoan`, params);
   },
-  getTeamPerson () {
-    // 获得团队总人数
-    return Get(`team?token=${token}`)
-  },
-  getStraightPush () {
-    // 获得直推总人数
-    return Get(`recommend?token=${token}`)
+  upgradeQualification (params) {
+    return Get(`/myTeam?token=${token}&apply_type=${params}`)
   },
   applyUpgrade (params) {
     // 申请升级

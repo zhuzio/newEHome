@@ -22,7 +22,7 @@ exports.cssLoaders = function (options) {
       minimize:true
     }
   }
-  
+
   const postcssLoader = {
     loader: 'postcss-loader',
     options: {

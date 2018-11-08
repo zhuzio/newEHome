@@ -6,7 +6,7 @@
           <span class="register-title">推荐码</span>
           <input type="text" readonly disabled class="register-input" v-model="recommendCode">
         </div>
-        <div class="register-list">
+        <!--<div class="register-list">
           <span class="register-title">会员等级</span>
           <div class="register-deg">
             <p>
@@ -18,7 +18,7 @@
               <label for="agency">代理</label>
             </p>
           </div>
-        </div>
+        </div>-->
         <div class="register-list">
           <span class="register-title">手机号</span>
           <input type="number" placeholder="请输入您的手机号" class="register-input" v-model="registerTel">
@@ -27,11 +27,6 @@
           <span class="register-title">验证码</span>
           <input type="number" placeholder="验证码" class="register-input" v-model="verificationCode">
           <button class="register-get-code" :class="{'haveSend': isSend}" @click="getVerificationCode">{{verificationCodeTxt}}</button>
-        </div>
-        <div class="register-list register-list-code">
-          <span class="register-title">图片验证码</span>
-          <input type="number" placeholder="验证码" class="register-input" v-model="verificationCode">
-          <img class="register-get-code" :src="imgCodeSrc">
         </div>
         <div class="register-list">
           <span class="register-title">真实姓名</span>
@@ -64,7 +59,7 @@
       return {
         height: 0,
         recommendCode: '13193835328',
-        memberDeg: '',
+        // memberDeg: '',
         registerTel: '',
         verificationCode: '',
         realName: '',
@@ -74,7 +69,6 @@
         z_tel: /^1(3|4|5|6|7|8|9)\d{9}$/,
         isSend: false,
         verificationCodeTxt:'获取验证码',
-        imgCodeSrc:"http://www.sgyxmall.com/index.php?s=Api/user/code",
       }
     },
     methods: {
@@ -94,73 +88,103 @@
         }
       },
       getVerificationCode () {
-        /*if (!this.registerTel) {
+        if (!this.registerTel) {
           Toast('请填写电话号码!')
           return false
         };
         if (this.z_tel.test(this.registerTel) === false) {
-          Toast('您的电话号码格式有误!')
+          Toast('您的电话号码格式有误!');
           return false
-        };*/
+        };
         if (this.isSend) {
           Toast('请稍后点击！');
           return false;
         } else {
-          this.ctimer(60)
+          api.getSMSVerification()
+            .then(res => {
+              console.log(res)
+              if (res.code === 200) {
+                Toast({
+                  message: res.msg,
+                  position: 'bottom',
+                  duration: 2000
+                });
+                this.ctimer(60);
+              } else {
+                Toast({
+                  message: res.msg,
+                  position: 'bottom',
+                  duration: 2000
+                });
+              }
+            })
+            .catch(err => {
+              Toast({
+                message: '网络延时，请稍后重试',
+                position: 'bottom',
+                duration: 2000
+              });
+            })
         };
       },
       register () {
         if (!this.registerTel) {
           Toast('请填写电话号码!');
           return false;
-        } if (this.z_tel.test(this.registerTel) === false) {
+        };
+        if (this.z_tel.test(this.registerTel) === false) {
           Toast('您的电话号码格式有误!');
           return false;
-        }
+        };
         if (!this.verificationCode) {
           Toast('请填写验证码!');
           return false;
-        }
+        };
         if (!this.realName) {
           Toast('请填写您的真实姓名!');
           return false;
-        }
+        };
         if (!this.password) {
           Toast('请填写登录密码!');
           return false;
         } else if (this.password.length < 6 || this.password.length > 16) {
           Toast('请输入6-16位密码');
           return false;
-        }
+        };
         if (!/^\d{6}$/.test(this.applyPassword)){
           Toast('支付密码只能是6位数字!');
           return false;
-        }
+        };
         if (/^(\d)\1+$/.test(this.applyPassword)) {
           Toast('支付密码不能为6位相同数字!');
           return false;
-        }
+        };
         if (!this.applyPassword) {
           Toast('请填写支付密码!');
           return false;
         } else if (this.applyPassword.length != 6) {
           Toast('支付密码只能是6位数字');
           return false;
-        }
+        };
         let form = this.$qs.stringify({
           phone: this.registerTel,
           recommend_phone: this.recommendCode,
           realname: this.realName,
           password: this.password,
           payment_password:this.applyPassword,
-          account_type: this.memberDeg
+          // account_type: this.memberDeg
         });
         api.register(form)
           .then(res => {
-            console.log(res)
             if (res.code === 200) {
-              Toast(res.msg);
-              this.$router.push('/login')
+              Toast({
+                message: res.msg,
+                position: 'bottom',
+                duration: 2000
+              });
+              setTimeout(() => {
+                this.$router.push('/login')
+              },2300);
             }
           })
           .catch(err => {

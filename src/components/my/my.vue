@@ -52,7 +52,7 @@
           <router-link to="/upgrade">
             <div><i class="icon icon-about"></i>升级<i class="icon icon-right fr"></i></div>
           </router-link>
-          <router-link to="/borrowing"><div><i class="icon icon-borrowing"></i>借款<i class="icon icon-right fr"></i></div></router-link>
+          <div @click="borrow"><i class="icon icon-borrowing"></i>借款<i class="icon icon-right fr"></i></div>
           <router-link to="/addressManage"><div><i class="icon icon-address"></i>收货地址<i class="icon icon-right fr"></i></div></router-link>
           <div><i class="icon icon-about"></i>关于我们<i class="icon icon-right fr"></i></div>
         </div>
@@ -64,6 +64,7 @@
 <script>
   import tabFoot from '../comp/tabFoot.vue'
   import api from '@/assets/js/api.js'
+  import { Toast } from 'mint-ui'
   let token = localStorage.getItem('token')
   export default {
     name: "my",
@@ -76,6 +77,25 @@
         username:'',
         idDeg:''
       }
+    },
+    methods: {
+      borrow () {
+        api.borrowQualification()
+          .then(res => {
+            if (res.code !== 200) {
+              Toast({
+                message: res.msg,
+                position: 'middle',
+                duration: 2000
+              });
+            } else {
+              this.$router.push('/borrowing')
+            }
+          })
+          .catch(err => {
+            console.log(err)
+          })
+      },
     },
     created () {
       if (!token) {
