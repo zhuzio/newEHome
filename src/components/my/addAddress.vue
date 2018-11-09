@@ -81,6 +81,7 @@
         let id = parseInt(this.way);
         switch (id){
           case 0:
+          case 2:
             let form = this.$qs.stringify({
               name: this.adsName,
               phone: this.adsTel,

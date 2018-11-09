@@ -62,33 +62,6 @@
     name: "apply",
     data () {
       return {
-       /* applyWay: [
-          {
-            icon: 'icon-pay-weChat',
-            txt: '微信支付',
-            type: 1
-          },
-          {
-            icon: 'icon-pay-integral-x',
-            txt: '消费积分',
-            type: 3
-          },
-          {
-            icon: 'icon-pay-integral-y',
-            txt: '可用积分',
-            type: 3
-          },
-          {
-            icon: 'icon-pay-integral-x-weChat',
-            txt: '消费积分 + 微信支付',
-            type: 2
-          },
-          {
-            icon: 'icon-pay-integral-y-weChat',
-            txt: '可用积分 + 微信支付',
-            type: 2
-          },
-          ],*/
         applyClass: -1,
         showModel: true,
         order: [],
@@ -150,36 +123,78 @@
          Toast('请选择支付方式！！！');
          return false;
        } else {
-
-         let form = this.$qs.stringify({
-           token: token,
-           address_id: this.order.address_id,
-           list: {
-             product_id: this.order.list.goods_id,
-             spec_id: this.order.list.spec_id,
-             num: this.order.list.num,
-           },
-           spec1:  this.order.color,
-           pay_channel: this.payWay,
-           remark: this.order.remark
-         });
-         api.createdOrder(form)
-           .then(res => {
-             if (res.code === 200) {
-               this.orderSN = res.data;
-               if (this.applyClass !== 0 || this.applyClass !== 3 || this.applyClass !== 4) {
-                 this.payPop = true;
+         if (this.way == 1) {
+           let form1 = this.$qs.stringify({
+             token: token,
+             pay_channel: this.payWay,
+             order_id: this.order.orderId
+           });
+           api.payAgain(form1)
+             .then(res => {
+               if (res.code === 200) {
+                 this.orderSN = res.data;
+                 switch (this.applyClass) {
+                   case 0:
+                   case 3:
+                   case 4:
+                     window.location.href = 'http://www.xinyijiamall.com/api/OrderPay?order_sn='+ res.data +'';
+                     break;
+                   case 1:
+                   case 2:
+                     this.payPop = true;
+                     break;
+                   default:
+                     return false;
+                 }
                } else {
+                 Toast(res.msg)
+               };
+             })
+         };
+         if (this.way == 0) {
+           let form = this.$qs.stringify({
+             token: token,
+             address_id: this.order.address_id,
+             list: {
+               product_id: this.order.list.goods_id,
+               spec_id: this.order.list.spec_id,
+               num: this.order.list.num,
+             },
+             spec1:  this.order.color,
+             pay_channel: this.payWay,
+             remark: this.order.remark
+           });
+           api.createdOrder(form)
+             .then(res => {
+               if (res.code === 200) {
+                 this.orderSN = res.data;
+                 switch (this.applyClass) {
+                   case 0:
+                   case 3:
+                   case 4:
+                     window.location.href = 'http://www.xinyijiamall.com/api/OrderPay?order_sn='+ res.data +'';
+                     break;
+                   case 1:
+                   case 2:
+                     this.payPop = true;
+                     break;
+                   default:
+                     return false;
+                 }
+               } else {
+                 Toast(res.msg)
+               };
+             })
+             .catch(err => {
+               console.log(err)
+             })
+         }
 
-               }
-             } else {
-               Toast(res.msg)
-             };
-           })
-           .catch(err => {
-             console.log(err)
-           })
-       }
+
+
+
+
+       };
       },
       passwordGro (e) {
         this.applyPsd = e
@@ -204,7 +219,6 @@
       }
     },
     created () {
-      console.log(this.way)
       this.order = JSON.parse(localStorage.getItem('applyOrder'));
     },
   }

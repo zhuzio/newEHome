@@ -100,7 +100,10 @@
           Toast('请稍后点击！');
           return false;
         } else {
-          api.getSMSVerification()
+          let pho = this.$qs.stringify({
+            phone: this.registerTel
+          })
+          api.getSMSVerification(pho)
             .then(res => {
               console.log(res)
               if (res.code === 200) {

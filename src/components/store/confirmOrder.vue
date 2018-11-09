@@ -17,7 +17,7 @@
     <div class="confirm-order-goods">
       <p class="co-goods-name">{{goodsInfo.goods.store.name}}</p>
       <div class="co-goods-center">
-        <div class="co-goods-img"><img src="../../assets/images/2.jpg" alt=""></div>
+        <div class="co-goods-img"><img :src="imgUrl+goodsInfo.goods.default_img" alt=""></div>
         <div class="co-goods-info">
           <p class="co-goods-info-name">{{goodsInfo.goods.name}}</p>
           <p class="co-goods-info-style">{{goodsInfo.t1}}；{{goodsInfo.t2}}</p>
@@ -63,6 +63,7 @@
 
 <script>
   import api from '@/assets/js/api.js'
+  import {imgUrl} from '@/assets/js/api.js'
   let token = localStorage.getItem('token')
   import { MessageBox } from 'mint-ui'
   export default {
@@ -77,7 +78,8 @@
         finalIntegralX: 0,
         finalIntegralY: 0,
         finalMoney: 0,
-        buyerMsg: ''
+        buyerMsg: '',
+        imgUrl: imgUrl
       }
     },
     methods : {
@@ -103,7 +105,7 @@
     created () {
       api.getDefaultAddress()
         .then(res => {
-          if (res.data.length === 0) {
+          if (res.code === 500) {
             MessageBox({
               title: '提示',
               message: '您还没有地址，是否去添加？',
@@ -116,11 +118,26 @@
                   window.history.go(-1);
                 }
               })
-          } else {
-            this.coReceiver = res.data.name;
-            this.coTel = res.data.phone;
-            this.coAds = res.data.province + res.data.city + res.data.area + res.data.detail;
-            this.AdsId = res.data.id;
+          } else if (res.code === 200) {
+            if (res.data.length === 0) {
+              MessageBox({
+                title: '提示',
+                message: '您还没有地址，是否去添加？',
+                showCancelButton: true
+              })
+                .then(res => {
+                  if (res == 'confirm') {
+                    this.$router.push('/addAddress/2');
+                  } else {
+                    window.history.go(-1);
+                  }
+                })
+            } else {
+              this.coReceiver = res.data.name;
+              this.coTel = res.data.phone;
+              this.coAds = res.data.province + res.data.city + res.data.area + res.data.detail;
+              this.AdsId = res.data.id;
+            }
           }
         })
         .catch(err => {

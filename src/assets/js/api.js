@@ -1,8 +1,8 @@
 import axios from 'axios'
 import { Toast } from 'mint-ui'
 
-var url = 'http://www.xinyijiamall.com/api/'
-// var url = 'http://appliance.test/api/'
+// var url = 'http://www.xinyijiamall.com/api/'
+var url = 'http://appliance.test/api/'
 var imgUrl = 'http://img.nyycstar.com/'
 let token = localStorage.getItem('token')
 // axios 配置
@@ -218,6 +218,10 @@ export default {
   orderPay (params) {
     // 订单支付
     return Get(`OrderPay?order_sn=${params.sn}&payment_password=${params.psd}`)
+  },
+  payAgain (params) {
+    // 未支付订单走支付
+    return Post(`/payOrder`, params);
   },
   orderCancel (params) {
     // 取消订单
