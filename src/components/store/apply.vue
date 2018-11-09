@@ -118,7 +118,6 @@
         that.payPop = false
       },
       applyGo () {
-        //
        if (!this.payWay) {
          Toast('请选择支付方式！！！');
          return false;
