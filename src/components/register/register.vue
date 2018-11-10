@@ -58,7 +58,7 @@
     data () {
       return {
         height: 0,
-        recommendCode: '13193835328',
+        recommendCode: '',
         // memberDeg: '',
         registerTel: '',
         verificationCode: '',
@@ -197,6 +197,16 @@
     },
     created () {
       this.height = window.screen.availHeight;
+      let url = window.location.href.substring()
+      // let url = 'http://wap.xinyijiamall.com/#/register?phone=15236058819&account_type=3'
+      if (url.indexOf('?') == -1) {
+        this.recommendCode = ''
+      } else {
+        let a1 = url.split('?');
+        let a2 = a1[1].split('&');
+        let a3 = a2[0].split('=');
+        this.recommendCode = a3[1]
+      }
     }
   }
 </script>

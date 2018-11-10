@@ -14,7 +14,7 @@
               <p class="user-info-name">{{userInfo.realname}}</p>
               <p class="user-info-deg">身份：{{idDeg}}</p>
             </div>
-            <div class="user-code"></div>
+            <div class="user-code"  @click="CLink(0)"></div>
             <div class="user-big-code"></div>
           </div>
         </div>
@@ -58,6 +58,9 @@
         </div>
       </div>
       <tabFoot></tabFoot>
+      <div class="regCode" v-if="link" @click="CLink(1)">
+        <img :src="src" alt="">
+      </div>
     </div>
 </template>
 
@@ -75,7 +78,9 @@
       return {
         userInfo:[],
         username:'',
-        idDeg:''
+        idDeg:'',
+        src:'',
+        link: false
       }
     },
     methods: {
@@ -96,6 +101,18 @@
             console.log(err)
           })
       },
+      CLink (idx) {
+        switch (idx) {
+          case 0:
+            this.link = true;
+            break;
+          case 1:
+            this.link = false;
+            break;
+          default:
+            return false;
+        }
+      }
     },
     created () {
       if (!token) {
@@ -121,9 +138,9 @@
         };
         localStorage.removeItem('borrow');
         localStorage.removeItem('borrowLeave');
+        this.src = 'http://www.xinyijiamall.com/api/registerLink?token='+token+''
       }
     },
-
   }
 </script>
 

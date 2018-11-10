@@ -9,7 +9,9 @@
           <button class="login-btn" @click="login">登录</button>
         </div>
         <p class="login-register">
-          <span>忘记密码？</span>
+          <router-link to="/changePassword/0">
+            <span>忘记密码？</span>
+          </router-link>
           <router-link to="/register">
             <span>没有账号？立即注册</span>
           </router-link>

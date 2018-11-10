@@ -25,6 +25,9 @@ import teams from '@/components/my/teams'
 import order from '@/components/my/order'
 import upgrade from '@/components/my/upgrade'
 import borrowing from '@/components/my/borrowing'
+import changePassword from '@/components/my/changePassword'
+import classifyDetail from '@/components/store/classifyDetail'
+
 Vue.use(Router)
 
 export default new Router({
@@ -52,6 +55,11 @@ export default new Router({
       path: '/classify', // 分类
       name: 'classify',
       component: classify
+    },
+    {
+      path: '/classifyDetail/:name/:id', // 分类详情
+      name: 'classifyDetail',
+      component: classifyDetail
     },
     {
       path: '/shopCar', // 购物车
@@ -157,6 +165,11 @@ export default new Router({
       path: '/borrowing', // 借贷
       name: 'borrowing',
       component: borrowing
+    },
+    {
+      path: '/changePassword/:id', // 修改登录密码
+      name: 'changePassword',
+      component: changePassword
     }
   ]
 })

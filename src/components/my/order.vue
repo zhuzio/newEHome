@@ -111,16 +111,16 @@
             this.way = '1';
             break;
           case 1:
-            this.way = '3';
+            this.way = '2';
             break;
           case 2:
-            this.way = '4';
+            this.way = '3';
             break;
           case 3:
-            this.way = '5';
+            this.way = '4';
             break;
           case 4:
-            this.way = '0';
+            this.way = '5';
             break;
           default:
             return false;

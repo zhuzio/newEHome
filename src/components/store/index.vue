@@ -69,24 +69,10 @@
                 <span class="banner-more fr">更多 >></span>
               </p>
               <ul class="goods-banner-list">
-                <li><img src="../../assets/images/goods_logo.png" alt="">
-                  <p>美国Brizo龙头</p>
+                <li v-for="(bd, index) in bandList"><img :src="imgUrl+bd.logo" :alt="bd.name">
+                  <p>{{bd.name}}</p>
                 </li>
-                <li><img src="../../assets/images/goods_logo.png" alt="">
-                  <p>美国Brizo龙头</p>
-                </li>
-                <li><img src="../../assets/images/goods_logo.png" alt="">
-                  <p>美国Brizo龙头</p>
-                </li>
-                <li><img src="../../assets/images/goods_logo.png" alt="">
-                  <p>美国Brizo龙头</p>
-                </li>
-                <li><img src="../../assets/images/goods_logo.png" alt="">
-                  <p>美国Brizo龙头</p>
-                </li>
-                <li><img src="../../assets/images/goods_logo.png" alt="">
-                  <p>美国Brizo龙头</p>
-                </li>
+
               </ul>
             </div>
           </div>
@@ -159,7 +145,8 @@
         imgUrl:imgUrl,
         moneyZone: [],
         integralZone: [],
-        integralMoneyZone: []
+        integralMoneyZone: [],
+        bandList: []
       }
     },
     computed: {
@@ -211,6 +198,10 @@
         .then(res => {
           this.moneyZone = res.data;
         });
+      api.getBand()
+        .then(res => {
+          this.bandList = res.data;
+        })
     },
   }
 </script>

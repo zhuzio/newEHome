@@ -7,60 +7,19 @@
       <div class="classify-tab-container">
         <div class="tab-head">
           <ul :style="{'width': width + 'rem'}">
-            <li v-for="(tn, index) in tabName" :key="index" :class="{'tab-on':index === tabIdx}" @click="tabChange(tn,index)"><span>{{tn}}</span></li>
+            <li v-for="(tn, index) in tabName" :key="index" :class="{'tab-on':index === tabIdx}" @click="tabChange(tn,index)"><span>{{tn.name}}</span></li>
           </ul>
         </div>
         <div class="tab-container">
           <p class="tab-container-title">{{tabTxt}}专区</p>
           <div class="tab-container-center">
             <ul>
-              <li>
-                <img src="../../assets/images/f1.png" alt="">
-                <p class="fr">早秋外套</p>
-              </li>
-              <li>
-                <img src="../../assets/images/f2.png" alt="">
-                <p class="fr">羊绒大衣</p>
-              </li>
-              <li>
-                <img src="../../assets/images/f3.png" alt="">
-                <p class="fr">早秋外套</p>
-              </li>
-              <li>
-                <img src="../../assets/images/f4.png" alt="">
-                <p class="fr">羊绒大衣</p>
-              </li>
-              <li>
-                <img src="../../assets/images/f5.png" alt="">
-                <p class="fr">早秋外套</p>
-              </li>
-              <li>
-                <img src="../../assets/images/f6.png" alt="">
-                <p class="fr">羊绒大衣</p>
-              </li>
-              <li>
-                <img src="../../assets/images/f1.png" alt="">
-                <p class="fr">早秋外套</p>
-              </li>
-              <li>
-                <img src="../../assets/images/f2.png" alt="">
-                <p class="fr">羊绒大衣</p>
-              </li>
-              <li>
-                <img src="../../assets/images/f3.png" alt="">
-                <p class="fr">早秋外套</p>
-              </li>
-              <li>
-                <img src="../../assets/images/f4.png" alt="">
-                <p class="fr">羊绒大衣</p>
-              </li>
-              <li>
-                <img src="../../assets/images/f5.png" alt="">
-                <p class="fr">早秋外套</p>
-              </li>
-              <li>
-                <img src="../../assets/images/f6.png" alt="">
-                <p class="fr">羊绒大衣</p>
+              <li v-for="(dd, index) in classifyDetail" :key="index">
+                <!--<router-link :to="{path:'/classifyDetail', params:{name:dd.name}}">-->
+                <router-link :to="/classifyDetail/+dd.name+'/'+dd.id">
+                  <img :src="imgUrl+dd.img" :alt="dd.name">
+                  <p class="fr">{{dd.name}}</p>
+                </router-link>
               </li>
             </ul>
           </div>
@@ -72,6 +31,8 @@
 
 <script>
   import tabFoot from '../comp/tabFoot.vue'
+  import api from '../../assets/js/api.js'
+  import { imgUrl } from '../../assets/js/api.js'
   export default {
     name: "classify",
     components: {
@@ -79,21 +40,41 @@
     },
     data() {
       return {
-        tabName: ['女装','男装','女鞋','男鞋','童装','电器','家具','电子','零食'],
+        imgUrl: imgUrl,
+        tabName: [],
         width: 0,
         tabIdx: 0,
-        tabTxt: ''
+        tabTxt: '',
+        firstId: '',
+        classifyDetail: []
       }
     },
     methods: {
       tabChange (ele, idx) {
-        this.tabIdx = idx
-        this.tabTxt = ele
+        this.tabIdx = idx;
+        this.tabTxt = ele.name;
+        this.getClassifyDetail(ele.id)
+      },
+      getClassifyDetail (id) {
+        api.getClassify(id)
+          .then(res => {
+            if (res.code === 200) {
+              this.classifyDetail = res.data;
+            }
+        })
       }
     },
     created() {
-      this.tabTxt = this.tabName[0]
-      this.width = (this.tabName.length) * 0.9
+      api.getClassify(0)
+        .then(res => {
+          this.tabName = res.data;
+          this.tabTxt = this.tabName[0].name;
+          this.firstId = this.tabName[0].id;
+          this.width = (this.tabName.length) * 0.9;
+          this.getClassifyDetail(this.firstId)
+        });
+
+
     }
   }
 </script>

@@ -10,7 +10,7 @@
       </div>
       <div class="hc-list" v-for="(hc, index) in hcList" :key="index" v-if="type===1">
         <p class="hc-time"><span>{{hc.subject}}</span> <span class="hc-time-txt">{{hc.created_at}}</span></p>
-        <p class="hc-num"><span class="hc-order-sn">订单编号：<i>{{hc.order_sn}}</i></span><span class="hc-order-num">- <i>{{hc.total_point}}</i></span></p>
+        <p class="hc-num hc-num-sp"><span class="hc-order-sn">订单编号：<i>{{hc.order_sn}}</i></span><span class="hc-order-num">- <i>{{hc.total_point}}</i></span></p>
       </div>
       <div class="hc-list" v-for="(hc, index) in hcList" :key="index" v-if="type===2">
         <p class="hc-aaa"><span>订单编号：</span><span>{{hc.order_sn}}</span></p>

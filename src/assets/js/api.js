@@ -75,6 +75,9 @@ export default {
   getSMSVerification (params) {
     return Post(`/sendSms`, params)
   },
+  checkSMS (params) {
+    return Post(`/user/checkSmsCode`, params)
+  },
   login (params) {
     // 登录
     return Post( `/login?phone=${params.account}&password=${params.password}`)
@@ -195,6 +198,18 @@ export default {
     // 获得商品详情
     return Get(`/goodsInfo?product_id=${params}`)
   },
+  getBand () {
+    // 获得品牌
+    return Get(`/brandList/1`)
+  },
+  getClassify (params) {
+    // 获得品牌
+    return Get(`/cateList?cate_id=${params}`)
+  },
+  getClassifyDetail (params) {
+    // 获得品牌
+    return Get(`/productList/1?cate_id=${params}`)
+  },
   addShopCar (params) {
     // 加入购物车
     return Post(`/addToCart`, params)
@@ -245,6 +260,25 @@ export default {
   applyUpgrade (params) {
     // 申请升级
     return Post(`/applyAgent`, params);
+  },
+  resetLogin (params) {
+    // 重置登录密码
+    return Post(`/resetPassword`, params)
+  },
+  resetPay (params) {
+    // 重置登录密码
+    return Post(`/resetPayment`, params)
+  },
+  forgetLoginPsd (params) {
+    // 忘记登录密码
+    return Post(`/forgetPassword`, params)
+  },
+  forgetPayPsd (params) {
+    // 忘记登录密码
+    return Post(`/forgetPaymentPassword`, params)
+  },
+  registerLink () {
+    return Get(`/registerLink?token=${token}`)
   }
 }
 export { imgUrl }
