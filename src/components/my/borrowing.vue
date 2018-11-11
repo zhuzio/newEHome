@@ -150,20 +150,6 @@
     methods: {
       // 上传图片
       addImg (event) {
-      /*  var Base64 = require('js-base64').Base64;
-
-        var reader = new FileReader()
-        // console.log(reader)
-        var img1 = event.target.files[0];
-        // console.log(img1)
-        reader.readAsDataURL(img1);
-        var that = this.borrowInfo;
-        reader.onloadend = function () {
-          console.log(Base64.encode(reader.result))
-          console.log(reader.result)
-          that.imgs = reader.result;
-          that.isUp = true;
-        }*/
         var file = event.target.files[0];
         var _this = this;
         if(!/image\/\w+/.test(file.type)) {
@@ -200,10 +186,8 @@
             canvas.height = h;
             ctx.drawImage(image, 0, 0, w, h, 0, 0, w, h);
             var data = canvas.toDataURL("image/jpeg", rate);
-            var result = data.split(",")[1];
-            _this.upImgSrc = result
-         console.log(_this.upImgSrc)
-            /* console.log(result)*/
+            console.log(data)
+            _this.borrowInfo.upImgSrc = data
 
           }
         }
@@ -211,7 +195,7 @@
       },
       borrowMoney () {
         let t = this;
-        /*if (!t.borrowInfo.money) {
+        if (!t.borrowInfo.money) {
           Toast('请选择贷款金额！！！');
           return false;
         };
@@ -238,7 +222,7 @@
         if (!t.borrowInfo.agree) {
           Toast('请认真阅读并同意协议！！！');
           return false;
-        };*/
+        };
         if (this.isC) {
           this.isC = false;
           this.btnTxt = '正在提交中，请稍等...';
