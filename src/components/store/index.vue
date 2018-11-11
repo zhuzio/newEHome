@@ -9,10 +9,7 @@
       </swiper>
       <div class="index-classify">
         <ul>
-          <li><img src="../../assets/images/nvz.png" alt=""><span>女装</span></li>
-          <li><img src="../../assets/images/naz.png" alt=""><span>男装</span></li>
-          <li><img src="../../assets/images/nvx.png" alt=""><span>女鞋</span></li>
-          <li><img src="../../assets/images/nax.png" alt=""><span>男鞋</span></li>
+          <li v-for="(cl, index) in claList"><router-link to="/classify"><img :src="imgUrl+cl.logo" alt=""><span>{{cl.name}}</span></router-link></li>
           <li><img src="../../assets/images/all.png" alt=""><span>全部</span></li>
         </ul>
       </div>
@@ -146,7 +143,8 @@
         moneyZone: [],
         integralZone: [],
         integralMoneyZone: [],
-        bandList: []
+        bandList: [],
+        claList:[]
       }
     },
     computed: {
@@ -201,6 +199,14 @@
       api.getBand()
         .then(res => {
           this.bandList = res.data;
+        })
+      api.getClassify(0)
+        .then(res => {
+          for (var i in res.data) {
+            if (i <= 4) {
+              this.claList.push(res.data[i])
+            }
+          }
         })
     },
   }

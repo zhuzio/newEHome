@@ -48,7 +48,7 @@
       <input type="checkbox" id="agreement" v-model="borrowInfo.agree" @click="ag">
       <label for="agreement">我已经阅读并同意 </label><span @click="readAgreement(0)">《用户借款协议》</span>
     </div>
-    <div class="borrowing-btn" @click="borrowMoney">确认借款</div>
+    <div class="borrowing-btn" @click="borrowMoney" :class="{'borrowing-btn-c': !isC}">{{btnTxt}}</div>
     <div class="agreement-container" :style="aClass">
       <div class="agreement-center">
         <h4>苏格优品商城用户注册协议（以下简称本协议）由南阳苏格实业有限公司（以下简称本公司）和您签订。</h4>
@@ -142,6 +142,8 @@
         aClass: '',
         an:'top:0rem;transition-duration: .8s;',
         an0:'top:100%;transition-duration: .8s;',
+        btnTxt: '申请借款',
+        isC: true
       }
     },
     methods: {
@@ -186,33 +188,42 @@
           Toast('请认真阅读并同意协议！！！');
           return false;
         };
-        let form = this.$qs.stringify({
-          token: token,
-          bank_id: t.bankId,
-          id_number: t.borrowInfo.idNum,
-          apply_level: t.borrowInfo.money,
-          name: t.borrowInfo.realName,
-          phone: t.borrowInfo.tel,
-          id_photo: t.borrowInfo.imgs,
-          agree_to_agreement: t.borrowInfo.agreeNum
-        });
-        api.borrowIt(form)
-          .then(res => {
-            console.log(res)
-            if (res.code === 200) {
-              Toast({
-                message: '借款成功，请等待审核，并注意您提交的账户信息变动！',
-                position: 'middle',
-                duration: 2000
-              });
-              setTimeout(() => {
-                this.$router.back(-1);
-              },2300)
-            }
-          })
-          .then(err => {
-            console.log(err)
-          })
+        if (this.isC) {
+          this.isC = false;
+          this.btnTxt = '正在提交中，请稍等...';
+          let form = this.$qs.stringify({
+            token: token,
+            bank_id: t.bankId,
+            id_number: t.borrowInfo.idNum,
+            apply_level: t.borrowInfo.money,
+            name: t.borrowInfo.realName,
+            phone: t.borrowInfo.tel,
+            id_photo: t.borrowInfo.imgs,
+            agree_to_agreement: t.borrowInfo.agreeNum
+          });
+          api.borrowIt(form)
+            .then(res => {
+              if (res.code === 200) {
+                Toast({
+                  message: '借款成功，请等待审核，并注意您提交的账户信息变动！',
+                  position: 'middle',
+                  duration: 2000
+                });
+                setTimeout(() => {
+                  this.$router.back(-1);
+                },2300)
+              } else {
+                this.isC = true;
+                this.btnTxt = '申请借款';
+              }
+            })
+            .then(err => {
+              console.log(err)
+            })
+        } else {
+          Toast('正在提交中，请稍等...')
+        }
+
 
       },
       readAgreement (idx) {

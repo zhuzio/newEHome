@@ -254,6 +254,10 @@ export default {
     // 借款申请
     return Post(`/applyLoan`, params);
   },
+  qualificationBorrow () {
+    // 是否借款
+    return Get(`/whetherToBorrow?token=${token}`)
+  },
   upgradeQualification (params) {
     return Get(`/myTeam?token=${token}&apply_type=${params}`)
   },

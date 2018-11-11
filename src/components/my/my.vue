@@ -52,7 +52,7 @@
           <router-link to="/upgrade">
             <div><i class="icon icon-about"></i>升级<i class="icon icon-right fr"></i></div>
           </router-link>
-          <div @click="borrow"><i class="icon icon-borrowing"></i>借款<i class="icon icon-right fr"></i></div>
+          <div @click="borrow" v-if="c_b"><i class="icon icon-borrowing"></i>借款<i class="icon icon-right fr"></i></div>
           <router-link to="/addressManage"><div><i class="icon icon-address"></i>收货地址<i class="icon icon-right fr"></i></div></router-link>
           <div><i class="icon icon-about"></i>关于我们<i class="icon icon-right fr"></i></div>
         </div>
@@ -80,12 +80,20 @@
         username:'',
         idDeg:'',
         src:'',
-        link: false
+        link: false,
+        c_b: false,
+        msg: ''
       }
     },
     methods: {
       borrow () {
-        api.borrowQualification()
+        if (this.c_b &&  this.msg == '可以借款') {
+          this.$router.push('/borrowing');
+        };
+        if (this.c_b &&  this.msg == '有未处理的借款') {
+          Toast('您的借款申请正在审核中，请耐心等待...')
+        };
+       /* api.borrowQualification()
           .then(res => {
             if (res.code !== 200) {
               Toast({
@@ -99,7 +107,7 @@
           })
           .catch(err => {
             console.log(err)
-          })
+          })*/
       },
       CLink (idx) {
         switch (idx) {
@@ -138,7 +146,22 @@
         };
         localStorage.removeItem('borrow');
         localStorage.removeItem('borrowLeave');
-        this.src = 'http://www.xinyijiamall.com/api/registerLink?token='+token+''
+        this.src = 'http://www.xinyijiamall.com/api/registerLink?token='+token+'';
+        api.qualificationBorrow()
+          .then(res => {
+            console.log(res)
+            if (res.code === 200 && res.msg == '可以借款') {
+              this.c_b = true;
+              this.msg = res.msg;
+            };
+            if (res.code === 500 && res.msg == '有未处理的借款') {
+              this.c_b = true;
+              this.msg = res.msg;
+            };
+            if (res.code === 500 && res.msg == '已经有借款了') {
+              this.c_b = false;
+            };
+          })
       }
     },
   }
