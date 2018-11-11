@@ -136,6 +136,7 @@
           tel: '',
           agree: false,
           agreeNum: '0',
+          upImgSrc: ''
         },
         bankAccount:'',
         bankId: '',
@@ -149,18 +150,68 @@
     methods: {
       // 上传图片
       addImg (event) {
+      /*  var Base64 = require('js-base64').Base64;
+
         var reader = new FileReader()
+        // console.log(reader)
         var img1 = event.target.files[0];
+        // console.log(img1)
         reader.readAsDataURL(img1);
         var that = this.borrowInfo;
         reader.onloadend = function () {
+          console.log(Base64.encode(reader.result))
+          console.log(reader.result)
           that.imgs = reader.result;
           that.isUp = true;
+        }*/
+        var file = event.target.files[0];
+        var _this = this;
+        if(!/image\/\w+/.test(file.type)) {
+          alert('请确保文件为图像类型');
+          return false;
         }
+        if(file.size > 5 * 1024 * 1024) {
+          alert('上传图片不能超过5M');
+          return false;
+        }
+        var reader = new FileReader();
+        reader.readAsDataURL(file);
+        reader.onload = function(e) {
+          var result = this.result;
+          console.log(result)
+          _this.borrowInfo.imgs = result;
+          _this.borrowInfo.isUp = true;
+          var image = new Image();
+          var rate = 1;
+          if(file.size>=200 && file.size<=500){
+            rate = 0.7;
+          }else if(file.size>500 && file.size<=1024){
+            rate = 0.5;
+          }else if(file.size>1024){
+            rate = 0.3
+          }
+          var canvas = document.createElement("canvas");
+          var ctx = canvas.getContext('2d');
+          image.src = result;
+          image.onload = function(){
+            var w = image.naturalWidth,
+              h = image.naturalHeight;
+            canvas.width = w;
+            canvas.height = h;
+            ctx.drawImage(image, 0, 0, w, h, 0, 0, w, h);
+            var data = canvas.toDataURL("image/jpeg", rate);
+            var result = data.split(",")[1];
+            _this.upImgSrc = result
+         console.log(_this.upImgSrc)
+            /* console.log(result)*/
+
+          }
+        }
+
       },
       borrowMoney () {
         let t = this;
-        if (!t.borrowInfo.money) {
+        /*if (!t.borrowInfo.money) {
           Toast('请选择贷款金额！！！');
           return false;
         };
@@ -187,7 +238,7 @@
         if (!t.borrowInfo.agree) {
           Toast('请认真阅读并同意协议！！！');
           return false;
-        };
+        };*/
         if (this.isC) {
           this.isC = false;
           this.btnTxt = '正在提交中，请稍等...';
@@ -198,7 +249,7 @@
             apply_level: t.borrowInfo.money,
             name: t.borrowInfo.realName,
             phone: t.borrowInfo.tel,
-            id_photo: t.borrowInfo.imgs,
+            id_photo: t.borrowInfo.upImgSrc,
             agree_to_agreement: t.borrowInfo.agreeNum
           });
           api.borrowIt(form)

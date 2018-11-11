@@ -149,7 +149,6 @@
         this.src = 'http://www.xinyijiamall.com/api/registerLink?token='+token+'';
         api.qualificationBorrow()
           .then(res => {
-            console.log(res)
             if (res.code === 200 && res.msg == '可以借款') {
               this.c_b = true;
               this.msg = res.msg;
