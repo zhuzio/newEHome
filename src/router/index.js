@@ -27,6 +27,7 @@ import upgrade from '@/components/my/upgrade'
 import borrowing from '@/components/my/borrowing'
 import changePassword from '@/components/my/changePassword'
 import classifyDetail from '@/components/store/classifyDetail'
+import zone from '@/components/store/zone'
 
 Vue.use(Router)
 
@@ -60,6 +61,11 @@ export default new Router({
       path: '/classifyDetail/:name/:id', // 分类详情
       name: 'classifyDetail',
       component: classifyDetail
+    },
+    {
+      path: '/zone/:id', // 专区
+      name: 'zone',
+      component: zone
     },
     {
       path: '/shopCar', // 购物车

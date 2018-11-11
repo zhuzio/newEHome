@@ -26,7 +26,7 @@
         <div class="each-floor">
           <div class="floor-title ft1">
             <p>298专区</p>
-            <span>更多>></span>
+            <span><router-link to="/zone/3">更多 >></router-link></span>
           </div>
           <div class="ft1-container">
             <ul>
@@ -44,7 +44,7 @@
         <div class="each-floor">
           <div class="floor-title ft2">
             <p>积分专区</p>
-            <span>更多>></span>
+            <span><router-link to="/zone/1">更多 >></router-link></span>
           </div>
           <div class="ft2-container">
             <ul class="ft2-container-ul">
@@ -69,7 +69,6 @@
                 <li v-for="(bd, index) in bandList"><img :src="imgUrl+bd.logo" :alt="bd.name">
                   <p>{{bd.name}}</p>
                 </li>
-
               </ul>
             </div>
           </div>
@@ -77,7 +76,7 @@
         <div class="each-floor">
           <div class="floor-title ft3">
             <p>积分现金专区</p>
-            <span>更多>></span>
+            <span><router-link to="/zone/2">更多 >></router-link></span>
           </div>
           <div class="ft3-container">
             <ul class="ft2-container-ul">
@@ -180,30 +179,47 @@
         type: 1
       })
         .then(res => {
-         this.integralZone = res.data;
+          for (var i in res.data) {
+            if (i <= 5) {
+              this.integralZone.push(res.data[i])
+            }
+          }
         });
       api.getZone({
         page: 1,
         type: 2
       })
         .then(res => {
-          this.integralMoneyZone = res.data;
+          for (var i in res.data) {
+            if (i <= 5) {
+              this.integralMoneyZone.push(res.data[i])
+            }
+          }
         });
       api.getZone({
         page: 1,
         type: 3
       })
         .then(res => {
-          this.moneyZone = res.data;
+          for (var i in res.data) {
+            if (i <= 5) {
+              this.moneyZone.push(res.data[i])
+            }
+          }
         });
       api.getBand()
         .then(res => {
-          this.bandList = res.data;
+          for (var i in res.data) {
+            if (i <= 2) {
+              this.bandList.push(res.data[i])
+            }
+          };
+          console.log(this.bandList)
         })
       api.getClassify(0)
         .then(res => {
           for (var i in res.data) {
-            if (i <= 4) {
+            if (i <= 3) {
               this.claList.push(res.data[i])
             }
           }
