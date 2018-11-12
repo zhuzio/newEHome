@@ -245,7 +245,7 @@
               let maxSize = {
                 width: 1280,      //图片最大宽度
                 height: 1280,     //图片最大高度
-                level: 0.3      //图片保存质量
+                level: 0.5      //图片保存质量
               };
               //计算缩放比例
               if (w > maxSize.width || h > maxSize.height) {
