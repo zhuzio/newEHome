@@ -1,7 +1,7 @@
 <template>
     <div class="wrapper">
       <div class="search-container">
-        <span class="search-input"><i class="icon icon-search"></i><u>输入关键字</u></span><span class="search-button fr">搜索</span>
+        <router-link to="/search"><span class="search-input"><i class="icon icon-search"></i><u>输入关键字</u></span></router-link><span class="search-button fr">搜索</span>
       </div>
       <swiper :options="swiperOption" ref="mySwiper" @someSwiperEvent="">
         <swiper-slide v-for="(sp, index) in swipeBox" :key="index"><img :src="imgUrl+sp.pic" alt="" class="swiper-image"></swiper-slide>
@@ -10,7 +10,7 @@
       <div class="index-classify">
         <ul>
           <li v-for="(cl, index) in claList"><router-link to="/classify"><img :src="imgUrl+cl.logo" alt=""><span>{{cl.name}}</span></router-link></li>
-          <li><img src="../../assets/images/all.png" alt=""><span>全部</span></li>
+          <li><router-link to="/classify"><img src="../../assets/images/all.png" alt=""><span>全部</span></router-link></li>
         </ul>
       </div>
       <div class="index-ad">
@@ -214,7 +214,6 @@
               this.bandList.push(res.data[i])
             }
           };
-          console.log(this.bandList)
         })
       api.getClassify(0)
         .then(res => {

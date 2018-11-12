@@ -98,13 +98,17 @@ export default {
     // 获得用户购物积分支出按 月 统计
     return Get(`/MoneyPointsMonthExpenses/1?token=${token}`)
   },
+  shopIntegralIncome (params) {
+    // 获得用户购物积分收入列表
+    return Get(`/ShopPointsLog/${params}?token=${token}`)
+  },
   shopIntegralDay (params) {
     // 获得用户购物积分支出按 天 统计
     return Get(`/MoneyPointsDayExpenses?token=${token}&times=${params}`)
   },
   useAbleIntegral (params) {
     // 获得用户可用积分支出列表
-    return Get(`/ReadyPointsExpenses/1?token=${token}`)
+    return Get(`/ReadyPointsExpenses/${params}?token=${token}`)
   },
   withdrawApply (params) {
     // 提现申请
@@ -112,7 +116,7 @@ export default {
   },
   withdrawRecord (params) {
     // 提现申请记录
-    return Get(`/withdrawList/1?token=${token}`)
+    return Get(`/withdrawList/${params}?token=${token}`)
   },
   getBankInfo () {
     // 获得银行信息
@@ -283,6 +287,9 @@ export default {
   },
   registerLink () {
     return Get(`/registerLink?token=${token}`)
+  },
+  search (params) {
+    return Get(`goodsSearch/1?key_words=${params}`)
   }
 }
 export { imgUrl }

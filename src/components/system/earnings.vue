@@ -14,7 +14,7 @@
         </div>
         <div class="earn-team-list" v-for="(el, index) in eList" :key="index" v-if="!isET">
           <p><span class="et-name">{{el.mark}}</span><span class="et-num">+{{el.money}}</span></p>
-          <p><span class="et-day">已解冻</span><span class="et-time">解冻日期：{{el.created_at}}</span></p>
+          <p><span class="et-day">已解冻</span><span class="et-time">解冻日期：{{el.conversion_at}}</span></p>
         </div>
         <p class="add-more" v-if="isMore" @click="eAddMore">点击加载更多</p>
         <div class="container-no-data" v-if="isNo">
@@ -44,13 +44,23 @@ export default {
   },
   methods: {
     etTab (idx) {
-      this.isMore = true;
+      // this.isMore = true;
       switch (idx) {
         case 0:
           this.isET = true;
+          if (this.eFrozen.length === 0) {
+            this.isMore = false;
+          } else {
+            this.isMore = true;
+          }
           break;
         case 1:
           this.isET = false;
+          if (this.eList.length === 0) {
+            this.isMore = false;
+          } else {
+            this.isMore = true;
+          }
           break;
         default:
           return false;

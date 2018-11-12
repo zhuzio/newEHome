@@ -17,7 +17,7 @@
         </div>
       </div>
       <div class="assets-conversion-container">
-        <h1 class="assets-conversion-title">购物记录</h1>
+        <h1 class="assets-conversion-title">购物记录 <router-link to="/shopIntegralIncome"><span>收入记录 >></span></router-link></h1>
         <p class="assets-conversion-month" v-for="(hi, index) in shopIntegralMonth" :key="index" @click="goDetail(hi.times)">
           <span>{{hi.times}}</span>
           <span>共<b>{{hi.total_money}}</b><i class="icon icon-right"></i></span>

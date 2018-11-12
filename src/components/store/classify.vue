@@ -2,7 +2,7 @@
 <template>
     <div class="wrapper">
       <div class="search-container">
-        <span class="search-input"><i class="icon icon-search"></i><u>输入关键字</u></span><span class="search-button fr">搜索</span>
+        <router-link to="/search"><span class="search-input"><i class="icon icon-search"></i><u>输入关键字</u></span></router-link><span class="search-button fr">搜索</span>
       </div>
       <div class="classify-tab-container">
         <div class="tab-head">

@@ -38,9 +38,11 @@
             <p><span>下单时间：</span>{{order.created_at}}</p>
             <p v-if="idx===1 || idx===2 || idx===3">
               <span>支付合计：
-                <i v-if="order.product_type == 2">积分 {{order.total_points}} + ¥ {{order.total_ready}}</i>
-                <i v-if="order.product_type == 1">积分 {{order.total_points}}</i>
-                <i v-if="order.product_type == 3">¥ {{order.total_ready}}</i>
+                <i v-if="order.pay_order.pay_channel == 2">可用积分 {{order.total_points}}</i>
+                <i v-if="order.pay_order.pay_channel == 1">¥ {{order.total_ready}}</i>
+                <i v-if="order.pay_order.pay_channel == 3">购物积分 {{order.total_points}}</i>
+                <i v-if="order.pay_order.pay_channel == 4">可用积分 {{order.total_points}} + ¥ {{order.total_ready}}</i>
+                <i v-if="order.pay_order.pay_channel == 5">购物积分 {{order.total_points}} + ¥ {{order.total_ready}}</i>
               </span>
             </p>
             <p v-if="idx===4"><span>退款合计：<i>星币 {{order.refund_miners}} + ¥ {{order.refund_ready}}</i></span></p>

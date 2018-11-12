@@ -8,7 +8,7 @@
             <div class="sc-goods-container">
               <div class="sc-goods-list" v-for="(goods, idx) in store.child" :key="idx">
                 <div class="sc-goods-check">
-                  <input type="radio" :id="carId+goods.product_id" name="shopCar">
+                  <input type="radio" :id="carId+goods.product_id" name="shopCar" @click="getGoods(goods)">
                   <label :for="carId+goods.product_id"></label>
                 </div>
                 <div class="sc-goods-img"><img :src="imgUrl+goods.products.default_img" alt=""></div>
@@ -24,21 +24,21 @@
                     </div>
                   </div>
                   <div class="sc-goods-price sc-goods-integral-and-money" v-if="goods.products.type == 2">
-                    <p class="scg-integral-money scg-x"><i class="icon icon-x-integral"></i><span>2283.00</span><b>+</b><u>¥</u><span>233.00</span></p>
-                    <p class="scg-integral-money scg-k"><i class="icon icon-y-integral"></i><span>1234.00</span><b>+</b><u>¥</u><span>122.00</span></p>
+                    <p class="scg-integral-money scg-x"><i class="icon icon-x-integral"></i><span>{{goods.spec.points}}</span><b>+</b><u>¥</u><span>{{goods.spec.ready}}</span></p>
+                    <p class="scg-integral-money scg-k"><i class="icon icon-y-integral"></i><span>{{goods.spec.points}}</span><b>+</b><u>¥</u><span>{{goods.spec.ready}}</span></p>
                   </div>
                   <div class="sc-goods-price sc-goods-integral" v-if="goods.products.type == 1">
                     <div class="scg-integral">
-                      <p><i class="icon icon-x-integral"></i><span>3668.00</span></p>
-                      <p><i class="icon icon-y-integral"></i><span>7882.00</span></p>
+                      <p><i class="icon icon-x-integral"></i><span>{{goods.spec.points}}</span></p>
+                      <p><i class="icon icon-y-integral"></i><span>{{goods.spec.points}}</span></p>
                     </div>
                   </div>
                   <div class="sc-goods-price-total">
-                    <div class="sc-goods-price-money"><span v-if="goods.products.type == 3">¥ <i>2262.00</i></span></div>
+                    <div class="sc-goods-price-money"><span v-if="goods.products.type == 3">¥ <i>{{goods.spec.ready}}</i></span></div>
                     <div class="sc-goods-total">
-                      <button>-</button>
+                      <button @click="addSub(goods, true)">-</button>
                       <input type="text" readonly disabled :value="goods.num">
-                      <button>+</button>
+                      <button @click="addSub(goods,false)">+</button>
                     </div>
                   </div>
                 </div>
@@ -47,26 +47,26 @@
           </div>
         </div>
         <div class="shop-car-clear">
-          <div class="sc-total-money">合计:<span v-if="type == 3"><i>¥</i>222.00</span></div>
+          <div class="sc-total-money">合计:<span v-if="type == 3"><i>¥</i>{{totalCash}}</span></div>
           <div class="sc-total-integral">
             <div class="sc-t-integral" v-if="type == 1">
-              <p><i class="icon icon-x-integral"></i><span>2000.00</span></p>
-              <p><i class="icon icon-y-integral"></i><span>5353.00</span></p>
+              <p><i class="icon icon-x-integral"></i><span>{{totalConsumeIntegral}}</span></p>
+              <p><i class="icon icon-y-integral"></i><span>{{totalUseIntegral}}</span></p>
             </div>
             <div class="sc-t-integral-and-money" v-if="type == 2">
-              <p><i class="icon icon-x-integral"></i><span>1258.00</span><b>+</b><u>¥</u><span>213.00</span></p>
-              <p><i class="icon icon-y-integral"></i><span>668.00</span><b>+</b><u>¥</u><span>3241.00</span></p>
+              <p><i class="icon icon-x-integral"></i><span>{{totalConsumeIntegral}}</span><b>+</b><u>¥</u><span>{{totalCash}}</span></p>
+              <p><i class="icon icon-y-integral"></i><span>{{totalUseIntegral}}</span><b>+</b><u>¥</u><span>{{totalCash}}</span></p>
             </div>
           </div>
           <div class="sc-clear-button">
-            <button>结算</button>
+            <button @click="goClear()">结算</button>
           </div>
         </div>
       </div>
       <div class="container-no-data" v-if="isNo">
         <img src="../../assets/images/no_data.png" alt="">
         <p class="no-data-txt1">购物车竟然是空的</p>
-        <p class="no-data-txt2">在忙，也要记得买点什么犒赏自己~</p>
+        <p class="no-data-txt2">再忙，也要记得买点什么犒赏自己~</p>
       </div>
       <tabFoot></tabFoot>
     </div>
@@ -93,10 +93,57 @@
         carId: 'car',
         imgUrl: imgUrl,
         num: 0,
-        type: 3
+        type: 0,
+
+        totalUseIntegral: 0,
+        totalConsumeIntegral: 0,
+        totalCash: 0,
+        currentId: '',
+        checkGoods: []
+
       }
     },
     methods: {
+      getGoods (ele) {
+        this.currentId = ele.id;
+        this.totalUseIntegral = parseFloat(parseFloat(ele.num) * parseFloat(ele.spec.points)).toFixed(2);
+        this.totalConsumeIntegral = parseFloat(parseFloat(ele.num) * parseFloat(ele.spec.points)).toFixed(2);
+        this.totalCash = parseFloat(parseFloat(ele.num) * parseFloat(ele.spec.ready)).toFixed(2);
+        this.type = ele.products.type;
+      },
+      /*
+      * 商品加减
+      * */
+      addSub (item, bool) {
+        if (bool) {
+          item.num--;
+          if (item.num <= 1) {
+            item.num = 1;
+          }
+        } else {
+          item.num++;
+        };
+        this.goodsCheck();
+      },
+      /*
+      * 商品选中
+      * */
+      goodsCheck () {
+        let store = this.carList;
+        store.forEach(storeItem => {
+          let goods = storeItem.child;
+          goods.forEach(goodsItem => {
+            if (goodsItem.id === this.currentId) {
+              this.totalUseIntegral = parseFloat(parseFloat(goodsItem.num) * parseFloat(goodsItem.spec.points)).toFixed(2);
+              this.totalConsumeIntegral = parseFloat(parseFloat(goodsItem.num) * parseFloat(goodsItem.spec.points)).toFixed(2);
+              this.totalCash = parseFloat(parseFloat(goodsItem.num) * parseFloat(goodsItem.spec.ready)).toFixed(2);
+            }
+          })
+        })
+      },
+      /*
+      * 删除购物车商品
+      * */
       deleteCar (e, idx, store, idxs) {
         console.log(e)
         MessageBox({
@@ -112,14 +159,22 @@
               })
               api.shopCarDelete(delForm)
                 .then(res => {
-                  store.child.splice(idx, 1);
+                  /*store.child.splice(idx, 1);
                   if (store.child.length === 0) {
                     this.carList.splice(idxs, 1)
                   }
                   if (this.carList.length === 0) {
                     this.isNo = true
-                  }
-                  Toast(res.msg)
+                  }*/
+
+                  if (res.code === 200) {
+                    Toast(res.msg);
+                    store.child.splice(idx, 1)
+                    setTimeout(() => {
+                      window.location.reload();
+                    },1500);
+                  };
+
                 })
                 .catch(err => {
                   console.log(err)
@@ -128,7 +183,42 @@
               return false
             }
           })
+      },
+      /*
+      * 去结算
+      * */
+      goClear () {
+        // console.log(this.totalUseIntegral)
+        // console.log(this.totalConsumeIntegral)
+        // console.log(!this.currentId)
+        if (!this.currentId) {
+          Toast('您还为选中任何产品！！！');
+          return false;
+        } else {
+          let store = this.carList;
+          store.forEach(storeItem => {
+            let goods = storeItem.child;
+            goods.forEach(goodsItem => {
+              if (goodsItem.id === this.currentId) {
+                console.log(goodsItem)
+                let final = {
+                  t1: goodsItem.specification,
+                  t2: goodsItem.spec.size,
+                  tId: goodsItem.spec.id,
+                  integralX: this.totalConsumeIntegral,
+                  integralY: this.totalUseIntegral,
+                  money: this.totalCash,
+                  num: goodsItem.num,
+                  goods: goodsItem
+                };
+                localStorage.setItem('final', JSON.stringify(final));
+              }
+            });
+          });
+          this.$router.push('/confirmOrder')
+        }
       }
+
     },
     created () {
       api.getCarList(this.page)

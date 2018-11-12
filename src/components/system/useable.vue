@@ -51,7 +51,7 @@
     },
     created () {
       this.total = this.$route.params.num;
-      api.useAbleIntegral()
+      api.useAbleIntegral(1)
         .then(res => {
           if (res.code === 200){
             this.haveUse = res.total

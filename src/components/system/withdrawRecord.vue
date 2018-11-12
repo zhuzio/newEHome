@@ -5,7 +5,7 @@
     </div>
     <div class="wdr-container">
       <div class="wdr-center">
-        <ul>
+        <ul v-if="!isNo">
           <li v-for="(wl, index) in list" :key="index">
             <div class="wdr-card-img">
               <img :src="imgUrl+wl.bank_card.logo.bank_logo" alt="">
@@ -26,6 +26,11 @@
             </div>
           </li>
         </ul>
+        <div class="container-no-data" v-if="isNo">
+          <img src="../../assets/images/no_data.png" alt="">
+          <p class="no-data-txt2">您还没有此项列表数据</p>
+        </div>
+        <p class="add-more" v-if="isMore" @click="addWic">点击加载更多</p>
       </div>
     </div>
   </div>
@@ -40,17 +45,51 @@
     data () {
       return{
         list: [],
-        imgUrl: imgUrl
+        imgUrl: imgUrl,
+        isNo: false,
+        page: 1,
+        isMore: false
       }
     },
     methods: {
-
+      addWic () {
+        this.page += 1;
+        api.withdrawRecord(this.page)
+          .then(res => {
+            if (res.code === 200) {
+              if (res.data.length === 0) {
+                this.isMore = false;
+                Toast('没有哦更多了');
+              } else {
+                for (var i in res.data){
+                  this.list.push((res.data[i]));
+                }
+              }
+            } else {
+              Toast(res.msg)
+            }
+          })
+          .catch(err => {
+            console.log(err)
+          })
+      }
     },
     created () {
-      api.withdrawRecord()
+      api.withdrawRecord(this.page)
         .then(res => {
           if (res.code === 200) {
-            this.list = res.data
+            if (res.data.length === 0) {
+              this.isNo = true;
+              this.isMore = false;
+            } else if (res.data.length < 9) {
+              this.isNo = false;
+              this.isMore = false;
+              this.list = res.data;
+            } else {
+              this.isNo = false;
+              this.isMore = true;
+              this.list = res.data;
+            }
           } else {
             Toast(res.msg)
           }

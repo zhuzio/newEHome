@@ -235,7 +235,6 @@
             IMG.src = this.result;
             self.borrowInfo.imgs = IMG.src
             self.borrowInfo.isUp = true
-            console.log(IMG.src)
             IMG.onload = function () {
               let w = this.naturalWidth,
                 h = this.naturalHeight,
@@ -282,10 +281,6 @@
               //base64,最终输出的压缩文件
               self.base64 = canvas.toDataURL('image/jpeg', maxSize.level);
               self.borrowInfo.upImgSrc = self.base64
-              // self.num += 1;
-              // self.imgType = 0;
-              // self.img_loading = false;
-              // self.imgData.push(self.base64)
             }
           };
         }

@@ -28,6 +28,8 @@ import borrowing from '@/components/my/borrowing'
 import changePassword from '@/components/my/changePassword'
 import classifyDetail from '@/components/store/classifyDetail'
 import zone from '@/components/store/zone'
+import shopIntegralIncome from '@/components/system/shopIntegralIncome'
+import search from '@/components/store/search'
 
 Vue.use(Router)
 
@@ -66,6 +68,11 @@ export default new Router({
       path: '/zone/:id', // 专区
       name: 'zone',
       component: zone
+    },
+    {
+      path: '/search', // 搜索
+      name: 'search',
+      component: search
     },
     {
       path: '/shopCar', // 购物车
@@ -111,6 +118,11 @@ export default new Router({
       path: '/shopIntegral/:num', // 购物积分
       name: 'shopIntegral',
       component: shopIntegral
+    },
+    {
+      path: '/shopIntegralIncome', // 购物积分收入记录
+      name: 'shopIntegralIncome',
+      component: shopIntegralIncome
     },
     {
       path: '/useable/:num', // 可用积分
