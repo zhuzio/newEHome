@@ -38,7 +38,7 @@
             <div class="bit-center">
               <img :src="borrowInfo.imgs" alt="" v-if="borrowInfo.isUp">
               <img src="../../assets/images/upp.jpg" alt="" v-if="!borrowInfo.isUp">
-              <input type="file" multiple="multiple" accept="image/*" @change = 'addImg'>
+              <input type="file"  ref="inputer"  accept="image/*" @change = 'addImg'>
             </div>
           </div>
         </div>
@@ -121,6 +121,7 @@
 <script>
   import api from '@/assets/js/api.js'
   import { imgUrl } from '@/assets/js/api.js'
+  import EXIF from '@/assets/js/exif.js';
   import { Toast } from 'mint-ui'
   let token = localStorage.getItem('token')
   export default {
@@ -144,13 +145,34 @@
         an:'top:0rem;transition-duration: .8s;',
         an0:'top:100%;transition-duration: .8s;',
         btnTxt: '申请借款',
-        isC: true
+        isC: true,
+
+        num:0,  //上传图片数量
+        base64:'' ,  //压缩后的图片
+        imgData:[],   //图片
+        data:{base64:''},
+        imgType:2,     //图片上传的状态  0：图片已经成功上传  1表示图片在上传中 2表示图片还没上传,
+        img_loading:false,
+        Orientation:''  ,    //图片的拍摄角度
+
       }
     },
     methods: {
       // 上传图片
       addImg (event) {
-        var file = event.target.files[0];
+        let that=this;
+        let inputDOM = this.$refs.inputer;
+        // console.log(inputDOM)
+        // 通过DOM取文件数据
+        for(let i in inputDOM.files){
+          this.file= inputDOM.files[i];
+          this.imgPreview(this.file);
+          EXIF.getData(this.file, function() {
+            that.Orientation = EXIF.getTag(this, 'Orientation');
+          });
+        }
+
+        /*var file = event.target.files[0];
         var _this = this;
         if(!/image\/\w+/.test(file.type)) {
           alert('请确保文件为图像类型');
@@ -190,8 +212,83 @@
             _this.borrowInfo.upImgSrc = data
 
           }
-        }
+        }*/
 
+      },
+      imgPreview (file) {   //base64 格式
+        this.imgType = 1;
+        this.img_loading = true;
+        let self = this;
+        let imgContent = {};
+        imgContent.name = file.name;
+        // 看支持不支持FileReader
+        if (!file || !window.FileReader) return;
+
+        if (/^image/.test(file.type)) {
+          // 创建一个reader
+          var reader = new FileReader();
+          // 将图片将转成 base64 格式
+          reader.readAsDataURL(file);
+          // 读取成功后的回调
+          reader.onloadend = function () {
+            let IMG = new Image();
+            IMG.src = this.result;
+            self.borrowInfo.imgs = IMG.src
+            self.borrowInfo.isUp = true
+            console.log(IMG.src)
+            IMG.onload = function () {
+              let w = this.naturalWidth,
+                h = this.naturalHeight,
+                resizeW = 0,
+                resizeH = 0;
+              //压缩设置
+              let maxSize = {
+                width: 1280,      //图片最大宽度
+                height: 1280,     //图片最大高度
+                level: 0.3      //图片保存质量
+              };
+              //计算缩放比例
+              if (w > maxSize.width || h > maxSize.height) {
+                let multiple = Math.max(w / maxSize.width, h / maxSize.height);
+                resizeW = w / multiple;
+                resizeH = h / multiple;
+              } else {
+                resizeW = w;
+                resizeH = h;
+              }
+              let canvas = document.createElement("canvas"),
+                cxt = canvas.getContext('2d');
+              //根据拍摄的角度进行图片旋转调整
+              if (self.Orientation == 3) {
+                canvas.width = resizeW;
+                canvas.height = resizeH;
+                cxt.rotate(Math.PI);
+                cxt.drawImage(IMG, 0, 0, -resizeW, -resizeH)
+              } else if (self.Orientation == 8) {
+                canvas.width = resizeH;
+                canvas.height = resizeW;
+                cxt.rotate(Math.PI * 3 / 2);
+                cxt.drawImage(IMG, 0, 0, -resizeW, resizeH)
+              } else if (self.Orientation == 6) {
+                canvas.width = resizeH;
+                canvas.height = resizeW;
+                cxt.rotate(Math.PI / 2);
+                cxt.drawImage(IMG, 0, 0, resizeW, -resizeH)
+              } else {
+                canvas.width = resizeW;
+                canvas.height = resizeH;
+                cxt.drawImage(IMG, 0, 0, resizeW, resizeH)
+              }
+              //base64,最终输出的压缩文件
+              self.base64 = canvas.toDataURL('image/jpeg', maxSize.level);
+              self.borrowInfo.upImgSrc = self.base64
+              // self.num += 1;
+              // self.imgType = 0;
+              // self.img_loading = false;
+              // self.imgData.push(self.base64)
+            }
+          };
+        }
       },
       borrowMoney () {
         let t = this;
