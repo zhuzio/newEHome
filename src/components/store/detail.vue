@@ -219,7 +219,13 @@
               integralY: this.integralY,
               money: this.money,
               num: this.value,
-              goods: this.goodsInfo
+              goods: {
+                name: this.goodsInfo.name,
+                storeName: this.goodsInfo.store.name,
+                default_img: this.goodsInfo.default_img,
+                type: this.goodsInfo.type,
+                id: this.goodsInfo.id
+              }
             };
             localStorage.setItem('final', JSON.stringify(final));
             this.$router.push('/confirmOrder')

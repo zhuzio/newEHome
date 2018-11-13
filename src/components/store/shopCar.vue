@@ -209,7 +209,13 @@
                   integralY: this.totalUseIntegral,
                   money: this.totalCash,
                   num: goodsItem.num,
-                  goods: goodsItem
+                  goods: {
+                    name: goodsItem.products.name,
+                    storeName: goodsItem.shop_name,
+                    default_img: goodsItem.products.default_img,
+                    type: goodsItem.products.type,
+                    id:  goodsItem.products.id
+                  }
                 };
                 localStorage.setItem('final', JSON.stringify(final));
               }

@@ -15,7 +15,7 @@
       </div>
     </router-link>
     <div class="confirm-order-goods">
-      <p class="co-goods-name">{{goodsInfo.goods.store.name}}</p>
+      <p class="co-goods-name">{{goodsInfo.goods.storeName}}</p>
       <div class="co-goods-center">
         <div class="co-goods-img"><img :src="imgUrl+goodsInfo.goods.default_img" alt=""></div>
         <div class="co-goods-info">
@@ -37,7 +37,7 @@
       </div>
       <div class="co-other">
         <div class="co-other-list"><span>购买数量</span><span>{{goodsInfo.num}}</span></div>
-        <div class="co-other-list"><span>运费</span><span>¥ 0</span></div>
+        <!--<div class="co-other-list"><span>运费</span><span>¥ 0</span></div>-->
         <div class="co-other-list"><span>买家留言：</span><input type="text" placeholder="（选填）填写您的留言" v-model="buyerMsg"></div>
       </div>
       <div class="co-final-price">
@@ -144,9 +144,9 @@
           console.log(err)
         })
       this.goodsInfo = JSON.parse(localStorage.getItem('final'));
-      this.finalIntegralX = parseFloat(this.goodsInfo.integralX) * parseFloat(this.goodsInfo.num);
-      this.finalIntegralY = parseFloat(this.goodsInfo.integralY) * parseFloat(this.goodsInfo.num);
-      this.finalMoney = parseFloat(this.goodsInfo.money) * parseFloat(this.goodsInfo.num);
+      this.finalIntegralX = parseFloat(parseFloat(this.goodsInfo.integralX) * parseFloat(this.goodsInfo.num)).toFixed(2);
+      this.finalIntegralY = parseFloat(parseFloat(this.goodsInfo.integralY) * parseFloat(this.goodsInfo.num)).toFixed(2);
+      this.finalMoney = parseFloat(parseFloat(this.goodsInfo.money) * parseFloat(this.goodsInfo.num)).toFixed(2);
     }
   }
 </script>

@@ -246,9 +246,21 @@ export default {
     // 取消订单
     return Post(`/cancelOrder`, params);
   },
+  refund (params) {
+    // 退款
+    return Post(`/createReundOrder`, params)
+  },
+  receiveOrder (params) {
+    // 确认收货
+    return Post(`/orderReceive`, params)
+  },
   getOrderData (params) {
     // 获取商城订单列表数据
     return Get(`/orderget/${params.page}?token=${token}&status=${params.stu}`)
+  },
+  getOrderRefund (params) {
+    // 获取商城订单列表数据
+    return Get(`/order/refund/${params}?token=${token}`);
   },
   borrowQualification () {
     // 获得用户是否有贷款资格

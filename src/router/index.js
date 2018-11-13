@@ -30,6 +30,7 @@ import classifyDetail from '@/components/store/classifyDetail'
 import zone from '@/components/store/zone'
 import shopIntegralIncome from '@/components/system/shopIntegralIncome'
 import search from '@/components/store/search'
+import applyRefund from '@/components/my/applyRefund'
 
 Vue.use(Router)
 
@@ -173,6 +174,11 @@ export default new Router({
       path: '/order', // 我的订单
       name: 'order',
       component: order
+    },
+    {
+      path: '/applyRefund', // 申请退货
+      name: 'applyRefund',
+      component: applyRefund
     },
     {
       path: '/upgrade', // 升级

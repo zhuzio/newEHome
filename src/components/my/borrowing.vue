@@ -171,49 +171,6 @@
             that.Orientation = EXIF.getTag(this, 'Orientation');
           });
         }
-
-        /*var file = event.target.files[0];
-        var _this = this;
-        if(!/image\/\w+/.test(file.type)) {
-          alert('请确保文件为图像类型');
-          return false;
-        }
-        if(file.size > 5 * 1024 * 1024) {
-          alert('上传图片不能超过5M');
-          return false;
-        }
-        var reader = new FileReader();
-        reader.readAsDataURL(file);
-        reader.onload = function(e) {
-          var result = this.result;
-          console.log(result)
-          _this.borrowInfo.imgs = result;
-          _this.borrowInfo.isUp = true;
-          var image = new Image();
-          var rate = 1;
-          if(file.size>=200 && file.size<=500){
-            rate = 0.7;
-          }else if(file.size>500 && file.size<=1024){
-            rate = 0.5;
-          }else if(file.size>1024){
-            rate = 0.3
-          }
-          var canvas = document.createElement("canvas");
-          var ctx = canvas.getContext('2d');
-          image.src = result;
-          image.onload = function(){
-            var w = image.naturalWidth,
-              h = image.naturalHeight;
-            canvas.width = w;
-            canvas.height = h;
-            ctx.drawImage(image, 0, 0, w, h, 0, 0, w, h);
-            var data = canvas.toDataURL("image/jpeg", rate);
-            console.log(data)
-            _this.borrowInfo.upImgSrc = data
-
-          }
-        }*/
-
       },
       imgPreview (file) {   //base64 格式
         this.imgType = 1;

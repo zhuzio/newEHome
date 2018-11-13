@@ -16,7 +16,6 @@
             <div class="eol-info fl">
               <p class="eol-nam">&nbsp;{{order.product.name}}</p>
               <p class="eol-type" style="width: 4.2rem;height: .3rem;overflow: hidden">{{order.spec1}}，{{order.spec.size}}</p>
-              <!--<p class="eol-enc">星币 {{order.spec.gold}} + ¥ {{order.spec.cash}}</p>-->
               <div class="co-goods-integral-money" v-if="order.product_type == 2">
                 <p><i class="icon icon-x-integral"></i><span>{{order.spec.points}}</span><b>+</b><u>¥</u><span>{{order.spec.ready}}</span></p>
                 <p><i class="icon icon-y-integral"></i><span>{{order.spec.points}}</span><b>+</b><u>¥</u><span>{{order.spec.ready}}</span></p>
@@ -25,12 +24,11 @@
                 <p><i class="icon icon-x-integral"></i><span>{{order.spec.points}}</span></p>
                 <p><i class="icon icon-y-integral"></i><span>{{order.spec.points}}</span></p>
               </div>
-              <div class="co-goods-price-total">
-                <p><span v-if="order.product_type == 3">¥ {{order.spec.ready}}</span></p>
-                <!--<p class="co-goods-total">X <span>{{goodsInfo.num}}</span></p>-->
+              <div class="co-goods-price-total" v-if="order.product_type == 3">
+                <p><span >¥ {{order.spec.ready}}</span></p>
               </div>
             </div>
-            <span class="eol-totle" v-if="idx!==4">X {{order.total_num}}</span>
+            <span class="eol-totle">X {{order.total_num}}</span>
           </div>
           <div class="myOrderInfo">
             <p  v-if="idx!==4"><span>订单编号：</span>{{order.sn}}</p>
@@ -45,11 +43,17 @@
                 <i v-if="order.pay_order.pay_channel == 5">购物积分 {{order.total_points}} + ¥ {{order.total_ready}}</i>
               </span>
             </p>
-            <p v-if="idx===4"><span>退款合计：<i>星币 {{order.refund_miners}} + ¥ {{order.refund_ready}}</i></span></p>
-            <p v-if="idx===2 || idx===3"><span>快递单号：<input :id="order.tracking_num" :value="order.tracking_num" readonly></span><i @click="copyTxt(order.tracking_num)" class="copy">一键复制</i></p>
-            <p><span>运　　费：0</span></p>
+            <p v-if="idx===4"><span>退款合计：
+                <i v-if="order.pay_order.pay_channel == 2">可用积分 {{order.refund_points}}</i>
+                <i v-if="order.pay_order.pay_channel == 1">¥ {{order.refund_ready}}</i>
+                <i v-if="order.pay_order.pay_channel == 3">购物积分 {{order.refund_points}}</i>
+                <i v-if="order.pay_order.pay_channel == 4">可用积分 {{order.refund_points}} + ¥ {{order.refund_ready}}</i>
+                <i v-if="order.pay_order.pay_channel == 5">购物积分 {{order.refund_points}} + ¥ {{order.refund_ready}}</i>
+            </span></p>
+            <p v-if="idx===2 || idx===3"><span>快递单号：<input :id="order.tracking_num" :value="order.tracking_num" readonly></span></p>
+            <!--<p><span>运　　费：0</span></p>-->
           </div>
-          <div class="myOrder_receive">
+          <div class="myOrder_receive"  v-if="idx!==4">
             <div class="or_left fl"></div>
             <div class="or_right fl">
               <p><span>收货人：{{order.address.name}}</span> <span class="fr" style="color: black">{{order.address.phone}}</span></p>
@@ -111,23 +115,27 @@
         switch (_idx) {
           case 0:
             this.way = '1';
+            this.getOrderDatas(this.way, 1);
             break;
           case 1:
             this.way = '2';
+            this.getOrderDatas(this.way, 1);
             break;
           case 2:
             this.way = '3';
+            this.getOrderDatas(this.way, 1);
             break;
           case 3:
             this.way = '4';
+            this.getOrderDatas(this.way, 1);
             break;
           case 4:
             this.way = '5';
+            this.getRefund(1);
             break;
           default:
             return false;
         }
-        this.getOrderDatas(this.way, 1)
       },
       // 取消订单
       cancelOrder (e, idx) {
@@ -190,7 +198,11 @@
                 .then(res => {
                   if (res.code === 200) {
                     Toast(res.msg)
-                  }
+                    setTimeout(() => {
+                      window.location.reload()
+                    },1500)
+                  };
+
                 })
                 .catch(err => {
                   console.log(err)
@@ -205,14 +217,6 @@
         localStorage.setItem('applyRefundGoods', JSON.stringify(e))
         this.$router.push({
           path: '/applyRefund'
-        })
-      },
-      applyReturnGoodsDetail () {},
-      copyTxt (txt) {
-        this.$copyText(txt).then(function (e) {
-          Toast('复制成功')
-        }, function (e) {
-          Toast('复制失败')
         })
       },
       // 获取对应数据
@@ -238,6 +242,18 @@
             console.log(err)
           })
       },
+      getRefund (x) {
+        api.getOrderRefund(x)
+          .then(res => {
+            let noGoods = res.data == '' || res.data == undefined || res.data == null;
+            if (noGoods) {
+              this.noData = true;
+            } else {
+              this.noData = false;
+              this.orderList = res.data
+            }
+          })
+      }
     },
     created () {
       this.getOrderDatas(1,1)
