@@ -50,8 +50,10 @@
 }
 .bz-container{
   width: 100%;
-  height: auto;
-  margin: 1rem auto;
+  //height: 10.4rem;
+  margin: 1rem auto 0;
+  //position: fixed;
+  //top: 1rem;
   .bz-head{
     width: 94%;
     height: auto;
@@ -84,50 +86,52 @@
       }
     }
   }
-  ul{
-    margin: .2rem auto 0;
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between;
-    align-items: center;
-    width: 94%;
-    background: #fff;
-    padding: .2rem 3% .5rem;
-    position: fixed;
-    top: 3rem;
-    height: 7.85rem;
-    overflow: scroll;
-    &.bz-goods-container::-webkit-scrollbar{
+  .bz-center{
+    width: 100%;
+    height: auto;
+    /*&.bz-center::-webkit-scrollbar{
       display: none;
-    }
-    li{
-      width: 49%;
-      height: 4.8rem;
-      margin-bottom: .15rem;
-      border: 1px solid hsla(0,0%,80%,.21);
-      border-radius: 5px;
-      img{
-        display: block;
-        max-width: 100%;
-        height: auto;
+    }*/
+    ul{
+      margin: .2rem auto 0;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+      width: 94%;
+      background: #fff;
+      padding: .2rem 3%;
+      //height: 7.85rem;
+      //overflow: scroll;
+      li{
+        width: 49%;
+        height: 4.8rem;
+        margin-bottom: .15rem;
+        border: 1px solid hsla(0,0%,80%,.21);
         border-radius: 5px;
-      }
-      .bz-goods-name{
-        width: 2.4rem;
-        padding: 0.068rem 0.128rem;
-        height: auto;
-        background-color: #4f98f5;
-        border-radius: 0.188rem;
-        margin: 0.171rem auto 0.162rem;
-        overflow: hidden;
-        text-overflow: ellipsis;
-        display: -webkit-box;
-        -webkit-line-clamp:2;
-        /* autoprefixer: off */
-        -webkit-box-orient: vertical;
-        /* autoprefixer: on */
-        font-size: 0.239rem;
-        color: #ffffff;
+        img{
+          display: block;
+          max-width: 100%;
+          height: auto;
+          border-radius: 5px;
+        }
+        .bz-goods-name{
+          width: 2.4rem;
+          padding: 0.068rem 0.128rem;
+          height: auto;
+          background-color: #4f98f5;
+          border-radius: 0.188rem;
+          margin: 0.171rem auto 0.162rem;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          display: -webkit-box;
+          -webkit-line-clamp:2;
+          /* autoprefixer: off */
+          -webkit-box-orient: vertical;
+          /* autoprefixer: on */
+          font-size: 0.239rem;
+          color: #ffffff;
+        }
       }
     }
   }

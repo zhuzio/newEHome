@@ -79,9 +79,11 @@
                 <span class="banner-more fr"><router-link to="/band">更多 >></router-link></span>
               </p>
               <ul class="goods-banner-list">
-                <li v-for="(bd, index) in bandList">
-                  <div class="goods-img-box"><img :src="imgUrl+bd.logo" :alt="bd.name"></div>
-                  <p>{{bd.name}}</p>
+                <li v-for="(bd, index) in bandList" :key="index">
+                  <router-link  :to="/bandZone/+bd.id">
+                    <div class="goods-img-box"><img :src="imgUrl+bd.logo" :alt="bd.name"></div>
+                    <p>{{bd.name}}</p>
+                  </router-link>
                 </li>
               </ul>
             </div>

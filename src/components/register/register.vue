@@ -4,7 +4,7 @@
       <div class="register-center">
         <div class="register-list">
           <span class="register-title">推荐码</span>
-          <input type="text" readonly disabled class="register-input" v-model="recommendCode">
+          <input type="text" class="register-input" v-model="recommendCode">
         </div>
         <!--<div class="register-list">
           <span class="register-title">会员等级</span>
