@@ -150,8 +150,13 @@
         if (!this.password) {
           Toast('请填写登录密码!');
           return false;
-        } else if (this.password.length < 6 || this.password.length > 16) {
+        };
+        if (this.password.length < 6 || this.password.length > 16) {
           Toast('请输入6-16位密码');
+          return false;
+        };
+        if (this.password !== this.confirmPassword) {
+          Toast('两次密码不一致，请重新核对！！！');
           return false;
         };
         if (!/^\d{6}$/.test(this.applyPassword)){
@@ -175,6 +180,7 @@
           realname: this.realName,
           password: this.password,
           payment_password:this.applyPassword,
+          code: this.verificationCode
           // account_type: this.memberDeg
         });
         api.register(form)
