@@ -54,7 +54,7 @@
           </router-link>
           <div @click="borrow" v-if="c_b"><i class="icon icon-borrowing"></i>借款<i class="icon icon-right fr"></i></div>
           <router-link to="/addressManage"><div><i class="icon icon-address"></i>收货地址<i class="icon icon-right fr"></i></div></router-link>
-          <div><i class="icon icon-about"></i>关于我们<i class="icon icon-right fr"></i></div>
+          <router-link to="/aboutUs"><div><i class="icon icon-about"></i>关于我们<i class="icon icon-right fr"></i></div></router-link>
         </div>
       </div>
       <tabFoot></tabFoot>

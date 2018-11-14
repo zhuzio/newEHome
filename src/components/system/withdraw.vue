@@ -59,8 +59,7 @@
     methods: {
 
       withdraw () {
-        this.payPop = true
-       /* if (this.withdrawCount == 0) {
+        if (this.withdrawCount == 0) {
           Toast('暂无提现次数！');
           return false;
         };
@@ -71,7 +70,8 @@
         if (parseInt(this.withdrawNum) > parseInt(this.balance)) {
           Toast('提现金额不能大于余额！');
           return false;
-        };*/
+        };
+        this.payPop = true;
       },
       hiddenShow () {
         let that = this;
@@ -90,7 +90,6 @@
          });
          api.withdrawApply(form)
            .then(res => {
-             console.log(res)
              if (res.code === 200) {
                Toast({
                  message: res.msg,
@@ -120,10 +119,25 @@
         api.getDefaultCard()
           .then(res => {
             if (res.code === 200) {
-              this.defaultCard.img = res.data.logo.bank_logo;
-              this.defaultCard.name = res.data.bank;
-              this.defaultCard.num = res.data.card;
-              this.defaultCard.id = res.data.id;
+              if (res.data.length === 0) {
+                MessageBox({
+                  title: '提示',
+                  message: '您还没有银行卡，是否去添加？',
+                  showCancelButton: true
+                })
+                  .then(res => {
+                    if (res == 'confirm') {
+                      this.$router.push('/bankManage/0');
+                    } else {
+                      window.history.go(-1);
+                    }
+                  })
+              } else {
+                this.defaultCard.img = res.data.logo.bank_logo;
+                this.defaultCard.name = res.data.bank;
+                this.defaultCard.num = res.data.card;
+                this.defaultCard.id = res.data.id;
+              }
             };
           })
           .catch(err => {

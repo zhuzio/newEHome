@@ -17,7 +17,7 @@
                   <p class="card-name">{{card.logo.bank_name}}</p>
                   <p class="card-type">持卡人：{{card.account}}</p>
                 </div>
-                <div class="card-delete" @click="deleteCard(card.id, index)">
+                <div class="card-delete" @click="deleteCard(card.id, index)" v-if="way == 1">
                   <span>删除</span>
                 </div>
               </div>

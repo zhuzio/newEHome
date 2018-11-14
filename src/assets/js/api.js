@@ -281,12 +281,18 @@ export default {
     // 申请升级
     return Post(`/applyAgent`, params);
   },
+  verifyLoginPsd (params) {
+    return Post(`/verifyPasswd`, params)
+  },
+  verifyPayPsd (params) {
+    return Post(`/verifyPaymentPasswd`, params)
+  },
   resetLogin (params) {
     // 重置登录密码
     return Post(`/resetPassword`, params)
   },
   resetPay (params) {
-    // 重置登录密码
+    // 重置支付密码
     return Post(`/resetPayment`, params)
   },
   forgetLoginPsd (params) {
@@ -294,14 +300,31 @@ export default {
     return Post(`/forgetPassword`, params)
   },
   forgetPayPsd (params) {
-    // 忘记登录密码
+    // 忘记支付密码
     return Post(`/forgetPaymentPassword`, params)
   },
   registerLink () {
     return Get(`/registerLink?token=${token}`)
   },
   search (params) {
-    return Get(`goodsSearch/1?key_words=${params}`)
+    // 搜索
+    return Get(`/goodsSearch/1?key_words=${params}`)
+  },
+  bandList (params) {
+    // 获取所有品牌
+    return Get(`/brandList/${params}`)
+  },
+  bandZone (params) {
+    // 获得品牌下的产品
+    return Get(`/brandGoodsList/${params.page}?brand_id=${params.id}`)
+  },
+  announcements () {
+    // 系统公告
+    return Get(`/post`)
+  },
+  aboutUs () {
+    // 关于我们
+    return Get(`/aboutus`)
   }
 }
 export { imgUrl }

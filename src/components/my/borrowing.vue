@@ -8,8 +8,8 @@
         <h1 class="borrowing-head-title">借款金额</h1>
         <div class="borrowing-head-chose">
           <p><input type="radio" id="v1" name="borrow-num" value="1" v-model="borrowInfo.money"><label for="v1">30000</label></p>
-          <p><input type="radio" id="v2" name="borrow-num" value="2" v-model="borrowInfo.money"><label for="v2">60000</label></p>
-          <p><input type="radio" id="v3" name="borrow-num" value="3" v-model="borrowInfo.money"><label for="v3">90000</label></p>
+          <!--<p><input type="radio" id="v2" name="borrow-num" value="2" v-model="borrowInfo.money"><label for="v2">60000</label></p>-->
+          <!--<p><input type="radio" id="v3" name="borrow-num" value="3" v-model="borrowInfo.money"><label for="v3">90000</label></p>-->
         </div>
       </div>
       <div class="borrowing-info">
@@ -129,7 +129,7 @@
     data () {
       return {
         borrowInfo: {
-          money: '',
+          money: '1',
           imgs: '',
           isUp: false,
           realName: '',

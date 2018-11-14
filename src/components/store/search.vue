@@ -21,7 +21,7 @@
           </div>
         </div>
         <div class="search-list">
-          <ul>
+          <ul v-if="!isNull">
             <li v-for="(item,index) in searchList" :key="index">
               <router-link :to="{path: '/detail/'+item.id}" class="search-box">
                 <div class="search-img">
@@ -44,6 +44,11 @@
               </router-link>
             </li>
           </ul>
+          <div class="container-no-data" v-if="isNull">
+            <img src="../../assets/images/no_data.png" alt="">
+            <p class="no-data-txt2">未搜到相关产品</p>
+          </div>
+          <!--<p class="add-more">点击加载更多</p>-->
         </div>
       </div>
     </div>
@@ -56,6 +61,7 @@
 <script>
   import { imgUrl } from '../../assets/js/api.js'
   import api from '../../assets/js/api.js'
+  import { Toast } from 'mint-ui'
   export default {
     data () {
       return {
@@ -75,16 +81,22 @@
     },
     methods: {
       search () {
-        api.search(this.key_words)
-          .then((res) => {
-            this.isHot = false
-            if (res.data.length == 0) {
-              this.isNull = true
-            } else {
-              this.isNull = false
-              this.searchList = res.data
-            }
-          })
+        if (!this.key_words) {
+          Toast('请输入关键词！！！');
+          return false
+        } else {
+          api.search(this.key_words)
+         .then((res) => {
+           this.isHot = false;
+           if (res.data.length == 0) {
+             this.isNull = true
+           } else {
+             this.isNull = false;
+             this.searchList = res.data
+           }
+         })
+        }
+
       },
       hotA () {
         this.key_words = this.hot1

@@ -13,8 +13,8 @@
       <div class="set-center">
         <p class="set-title">安全设置</p>
         <router-link to="/bankManage/1"><p class="set-list"><span>银行卡管理</span><i class="icon icon-right"></i></p></router-link>
-        <p class="set-list"><span>修改登录密码</span><i class="icon icon-right"></i></p>
-        <p class="set-list"><span>修改支付密码</span><i class="icon icon-right"></i></p>
+        <router-link to="/modifyPassword/0"><p class="set-list"><span>修改登录密码</span><i class="icon icon-right"></i></p></router-link>
+        <router-link to="/modifyPassword/1"><p class="set-list"><span>修改支付密码</span><i class="icon icon-right"></i></p></router-link>
       </div>
       <button class="set-quit-login" @click="quitLogin">退出登录</button>
     </div>

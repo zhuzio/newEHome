@@ -9,18 +9,23 @@
       </swiper>
       <div class="index-classify">
         <ul>
-          <li v-for="(cl, index) in claList"><router-link to="/classify"><img :src="imgUrl+cl.logo" alt=""><span>{{cl.name}}</span></router-link></li>
+          <li v-for="(cl, index) in claList" :key="index"><router-link to="/classify"><img :src="imgUrl+cl.logo" alt=""><span>{{cl.name}}</span></router-link></li>
           <li><router-link to="/classify"><img src="../../assets/images/all.png" alt=""><span>全部</span></router-link></li>
         </ul>
       </div>
       <div class="index-ad">
         <div class="ad-logo"></div>
         <div class="marquee_box">
-          <ul class="marquee_list" :style="{ 'top': -num + 'rem'}" :class="{'marquee_top':num}">
-            <li v-for="(item, index) in marqueeList" :key="index">{{item}}</li>
+         <!-- <ul class="marquee_list" :style="{ 'top': -num + 'rem'}" :class="{'marquee_top':num}">
+            &lt;!&ndash;<li v-for="(item, index) in marqueeList" :key="index">{{item}}</li>&ndash;&gt;
+            <li>{{marqueeList}}</li>
+          </ul>-->
+          <ul class="marquee_list">
+            <li>{{marqueeList}}</li>
           </ul>
         </div>
         <div class="ad-more">更多 >></div>
+        <!--<div class="ad-more"><router-link to="/announcement">更多 >></router-link></div>-->
       </div>
       <div class="floor-container">
         <div class="each-floor">
@@ -42,43 +47,11 @@
           </div>
         </div>
         <div class="each-floor">
-          <div class="floor-title ft2">
-            <p>积分专区</p>
-            <span><router-link to="/zone/1">更多 >></router-link></span>
-          </div>
-          <div class="ft2-container">
-            <ul class="ft2-container-ul">
-              <li v-for="(iz, index) in integralZone" :key="index">
-                <router-link :to="/detail/+iz.id">
-                  <img :src="imgUrl+iz.default_img" alt="">
-                  <p class="goods-name">{{iz.name}}</p>
-                  <div class="goods-price">
-                    <p><i class="icon icon-x-integral"></i><span>{{iz.spec.points}}</span></p>
-                    <p><i class="icon icon-y-integral"></i><span>{{iz.spec.points}}</span></p>
-                  </div>
-                  <!--<p class="goods-price-rmb"><span>¥</span>139.60</p>-->
-                </router-link>
-              </li>
-            </ul>
-            <div class="goods-banner-container">
-              <p class="goods-banner-title">
-                <span class="banner-txt fl">品牌街</span>
-                <span class="banner-more fr">更多 >></span>
-              </p>
-              <ul class="goods-banner-list">
-                <li v-for="(bd, index) in bandList"><img :src="imgUrl+bd.logo" :alt="bd.name">
-                  <p>{{bd.name}}</p>
-                </li>
-              </ul>
-            </div>
-          </div>
-        </div>
-        <div class="each-floor">
           <div class="floor-title ft3">
             <p>积分现金专区</p>
             <span><router-link to="/zone/2">更多 >></router-link></span>
           </div>
-          <div class="ft3-container">
+          <div class="ft2-container">
             <ul class="ft2-container-ul">
               <li v-for="(imz, index) in integralMoneyZone" :key="index">
                 <router-link :to="/detail/+imz.id">
@@ -100,9 +73,43 @@
                 </router-link>
               </li>
             </ul>
+            <div class="goods-banner-container">
+              <p class="goods-banner-title">
+                <span class="banner-txt fl">品牌街</span>
+                <span class="banner-more fr"><router-link to="/band">更多 >></router-link></span>
+              </p>
+              <ul class="goods-banner-list">
+                <li v-for="(bd, index) in bandList">
+                  <div class="goods-img-box"><img :src="imgUrl+bd.logo" :alt="bd.name"></div>
+                  <p>{{bd.name}}</p>
+                </li>
+              </ul>
+            </div>
           </div>
         </div>
-        <p style="text-align: center;color: #4e4c50;font-size: .2rem" onclick="window.location.href='http://www.miitbeian.gov.cn'">豫ICP备18038220号</p>
+        <div class="each-floor">
+          <div class="floor-title ft2">
+            <p>积分专区</p>
+            <span><router-link to="/zone/1">更多 >></router-link></span>
+          </div>
+          <div class="ft3-container">
+            <ul class="ft2-container-ul">
+              <li v-for="(iz, index) in integralZone" :key="index">
+                <router-link :to="/detail/+iz.id">
+                  <img :src="imgUrl+iz.default_img" alt="">
+                  <p class="goods-name">{{iz.name}}</p>
+                  <div class="goods-price">
+                    <p><i class="icon icon-x-integral"></i><span>{{iz.spec.points}}</span></p>
+                    <p><i class="icon icon-y-integral"></i><span>{{iz.spec.points}}</span></p>
+                  </div>
+                  <!--<p class="goods-price-rmb"><span>¥</span>139.60</p>-->
+                </router-link>
+              </li>
+            </ul>
+
+          </div>
+        </div>
+        <p style="text-align: center;color: #4e4c50;font-size: .2rem" onclick="window.location.href='http://www.miitbeian.gov.cn'"></p>
       </div>
       <tabFoot></tabFoot>
     </div>
@@ -222,6 +229,12 @@
               this.claList.push(res.data[i])
             }
           }
+        });
+      api.announcements()
+        .then(res => {
+          // console.log(res)
+          this.marqueeList = res.data;
+          // console.log(this.marqueeList)
         })
     },
   }

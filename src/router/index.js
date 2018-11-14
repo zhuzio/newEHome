@@ -31,6 +31,11 @@ import zone from '@/components/store/zone'
 import shopIntegralIncome from '@/components/system/shopIntegralIncome'
 import search from '@/components/store/search'
 import applyRefund from '@/components/my/applyRefund'
+import modifyPassword from '@/components/my/modifyPassword'
+import band from '@/components/store/band'
+import bandZone from '@/components/store/bandZone'
+import announcement from '@/components/store/announcement'
+import aboutUs from '@/components/my/aboutUs'
 
 Vue.use(Router)
 
@@ -69,6 +74,16 @@ export default new Router({
       path: '/zone/:id', // 专区
       name: 'zone',
       component: zone
+    },
+    {
+      path: '/band', // 品牌列表
+      name: 'band',
+      component: band
+    },
+    {
+      path: '/bandZone/:id', // 品牌详情
+      name: 'bandZone',
+      component: bandZone
     },
     {
       path: '/search', // 搜索
@@ -194,6 +209,21 @@ export default new Router({
       path: '/changePassword/:id', // 修改登录密码
       name: 'changePassword',
       component: changePassword
+    },
+    {
+      path: '/modifyPassword/:way', // 修改密码
+      name: 'modifyPassword',
+      component: modifyPassword
+    },
+    {
+      path: '/announcement', // 系统公告
+      name: 'announcement',
+      component: announcement
+    },
+    {
+      path: '/aboutUs', // 关于我们
+      name: 'aboutUs',
+      component: aboutUs
     }
   ]
 })

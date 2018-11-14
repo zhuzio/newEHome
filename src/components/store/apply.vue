@@ -32,13 +32,13 @@
             <i class="icon icon-pay-weChat"></i><span>微信支付</span>
           </div>
           <div @click="choseApply(1)" :class="{'apply-way-on': 1===applyClass}" v-if="order.type == 1">
-            <i class="icon icon-pay-integral-x"></i><span>消费积分</span>
+            <i class="icon icon-pay-integral-x"></i><span>购物积分</span>
           </div>
           <div @click="choseApply(2)" :class="{'apply-way-on': 2===applyClass}" v-if="order.type == 1">
             <i class="icon icon-pay-integral-y"></i><span>可用积分</span>
           </div>
           <div @click="choseApply(3)" :class="{'apply-way-on': 3===applyClass}" v-if="order.type == 2">
-            <i class="icon icon-pay-integral-x-weChat"></i><span>消费积分 + 微信支付</span>
+            <i class="icon icon-pay-integral-x-weChat"></i><span>购物积分 + 微信支付</span>
           </div>
           <div @click="choseApply(4)" :class="{'apply-way-on': 4===applyClass}" v-if="order.type == 2">
             <i class="icon icon-pay-integral-y-weChat"></i><span>可用积分 + 微信支付</span>
