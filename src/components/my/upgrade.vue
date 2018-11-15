@@ -79,7 +79,16 @@
         });
         api.applyUpgrade(form)
           .then(res => {
-            console.log(res)
+            if (res.code === 200) {
+              Toast({
+                message: '您的申请已提交，请等待审核....',
+                position: 'middle',
+                duration: 2000
+              });
+              setTimeout(() => {
+                this.$router.back(-1)
+              },2300)
+            };
           })
           .catch(err => {
             console.log(err)
@@ -115,7 +124,7 @@
       };
       api.upgradeQualification(this.upgradeType)
         .then(res => {
-          console.log(res)
+          // console.log(res)
           if (res.code === 200) {
             this.teamInfo.agent = res.data.agent;
             this.teamInfo.team = res.data.team;

@@ -82,17 +82,23 @@
         src:'',
         link: false,
         c_b: false,
-        msg: ''
+        msg: '',
+        borrowQualification: false,
       }
     },
     methods: {
       borrow () {
-        if (this.c_b &&  this.msg == '可以借款') {
-          this.$router.push('/borrowing');
-        };
-        if (this.c_b &&  this.msg == '有未处理的借款') {
-          Toast('您的借款申请正在审核中，请耐心等待...')
-        };
+        if (this.borrowQualification) {
+          if (this.c_b &&  this.msg == '可以借款') {
+            this.$router.push('/borrowing');
+          };
+          if (this.c_b &&  this.msg == '有未处理的借款') {
+            Toast('您的借款申请正在审核中，请耐心等待...')
+          };
+        } else {
+          Toast('您还未在298专区消费过，暂时没有借款资格！！！');
+        }
+
        /* api.borrowQualification()
           .then(res => {
             if (res.code !== 200) {
@@ -147,6 +153,14 @@
         localStorage.removeItem('borrow');
         localStorage.removeItem('borrowLeave');
         this.src = 'http://www.xinyijiamall.com/api/registerLink?token='+token+'';
+        api.borrowQualification()
+          .then(res => {
+            if (res.code === 200) {
+              this.borrowQualification = true;
+            } else {
+              this.borrowQualification = false;
+            }
+          })
         api.qualificationBorrow()
           .then(res => {
             if (res.code === 200 && res.msg == '可以借款') {

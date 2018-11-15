@@ -15,11 +15,11 @@
               <span v-if="tl.account_type == 4">联创</span>
               <span v-if="tl.account_type == 5">合伙人</span>
             </p>
-            <p class="t-deg">
+            <!--<p class="t-deg">
               <span v-if="tl.level == 1" style="color: purple">VIP1</span>
               <span v-if="tl.level == 2" style="color: #801051">VIP2</span>
               <span v-if="tl.level == 3" style="color: #803f0c">VIP3</span>
-            </p>
+            </p>-->
           </div>
         </div>
         <p class="add-more" @click="teamAddMore" v-if="isMore">点击加载更多</p>
@@ -63,7 +63,7 @@
     created () {
       api.getTeams(1)
         .then(res => {
-          console.log(res.data.length)
+          // console.log(res.data.length)
          if (res.code === 200) {
            if (res.data.length >= 10) {
              this.teamList = res.data;
