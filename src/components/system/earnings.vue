@@ -45,31 +45,33 @@ export default {
   methods: {
     etTab (idx) {
       // this.isMore = true;
+      this.page = 1;
       switch (idx) {
         case 0:
           this.isET = true;
-          if (this.eFrozen.length === 0) {
+         /* if (this.eFrozen.length === 0) {
             this.isMore = false;
           } else {
             this.isMore = true;
-          }
+          }*/
+         this.getF(this.page);
           break;
         case 1:
           this.isET = false;
-          if (this.eList.length === 0) {
+         /* if (this.eList.length === 0) {
             this.isMore = false;
           } else {
             this.isMore = true;
-          }
+          }*/
+          this.getE(this.page);
           break;
         default:
           return false;
       };
     },
     eAddMore () {
-
+      this.page += 1;
       if (this.isET) {
-        this.page += 1;
         api.getEarningsFrozen(this.page)
           .then(res => {
             if (res.data.length !== 0) {
@@ -90,8 +92,7 @@ export default {
             console.log(err)
           });
       } else {
-        this.page0 += 1;
-        api.getEarnings(this.page0)
+        api.getEarnings(this.page)
           .then(res => {
             if (res.data.length !== 0) {
               for (var i in res.data) {
@@ -103,7 +104,7 @@ export default {
                 position: 'bottom',
                 duration: 1000
               });
-              this.page0 = this.page0 -1;
+              this.page0 = this.page -1;
               this.isMore = false;
             }
           })
@@ -111,41 +112,46 @@ export default {
             console.log(err)
           });
       }
+    },
+    getF (p) {
+      api.getEarningsFrozen(p)
+        .then(res => {
+          if (res.code === 200) {
+            if (res.data.length !== 0) {
+              this.eFrozen = res.data;
+              this.isNo = false;
+              this.isMore = true;
+            } else {
+              this.isNo = true;
+              this.isMore = false;
+            }
+          }
+        })
+        .catch(err => {
+          console.log(err)
+        });
+    },
+    getE () {
+      api.getEarnings(1)
+        .then(res => {
+          if (res.code === 200) {
+            if (res.data.length !== 0) {
+              this.eList = res.data;
+              this.isNo = false;
+              this.isMore = true;
+            } else {
+              this.isNo = true;
+              this.isMore = false;
+            }
+          }
+        })
+        .catch(err => {
+          console.log(err)
+        });
     }
   },
   created () {
-    api.getEarningsFrozen(1)
-      .then(res => {
-        if (res.code === 200) {
-          if (res.data.length !== 0) {
-            this.eFrozen = res.data;
-            this.isNo = false;
-            this.isMore = true;
-          } else {
-            this.isNo = true;
-            this.isMore = false;
-          }
-        }
-      })
-      .catch(err => {
-        console.log(err)
-      });
-    api.getEarnings(1)
-      .then(res => {
-        if (res.code === 200) {
-          if (res.data.length !== 0) {
-            this.eList = res.data;
-            this.isNo = false;
-            this.isMore = true;
-          } else {
-            this.isNo = true;
-            this.isMore = false;
-          }
-        }
-      })
-      .catch(err => {
-        console.log(err)
-      });
+   this.getF(this.page)
   }
 }
 </script>

@@ -277,6 +277,9 @@ export default {
   upgradeQualification (params) {
     return Get(`/myTeam?token=${token}&apply_type=${params}`)
   },
+  upgradeWeather (params) {
+    return Get(`/applyCondition?apply_type=${params}`)
+  },
   applyUpgrade (params) {
     // 申请升级
     return Post(`/applyAgent`, params);

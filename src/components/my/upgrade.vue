@@ -73,7 +73,12 @@
     },
     methods: {
       upgrade () {
-        let form = this.$qs.stringify({
+        api.upgradeWeather(this.upgradeType)
+          .then(res => {
+            console.log(res)
+          })
+
+        /*let form = this.$qs.stringify({
           token: token,
           apply_type: this.upgradeType
         });
@@ -92,7 +97,7 @@
           })
           .catch(err => {
             console.log(err)
-          })
+          })*/
       }
     },
     created () {
