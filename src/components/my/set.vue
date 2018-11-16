@@ -47,19 +47,25 @@
         this.userTel = this.userInfo.phone;
         switch (parseInt(this.userInfo.account_type)) {
           case 1:
-            this.idDeg = '代理';
+            this.idDeg = '会员';
             break;
           case 2:
-            this.idDeg = '区代';
+            this.idDeg = '代理';
             break;
           case 3:
             this.idDeg = '总代';
             break;
           case 4:
-            this.idDeg = '联创';
+            this.idDeg = '总监';
             break;
           case 5:
+            this.idDeg = '联创';
+            break;
+          case 6:
             this.idDeg = '合伙人';
+            break;
+          case 7:
+            this.idDeg = '股东';
             break;
         }
       }

@@ -49,10 +49,10 @@
         </div>
         <div class="my-order-treasure">
           <p class="my-order-treasure-title">服务</p>
-          <router-link to="/upgrade">
+         <!-- <router-link to="/upgrade">
             <div><i class="icon icon-about"></i>升级<i class="icon icon-right fr"></i></div>
-          </router-link>
-          <div @click="borrow" v-if="c_b"><i class="icon icon-borrowing"></i>借款<i class="icon icon-right fr"></i></div>
+          </router-link>-->
+          <div @click="borrow"><i class="icon icon-borrowing"></i>借款<i class="icon icon-right fr"></i></div>
           <router-link to="/addressManage"><div><i class="icon icon-address"></i>收货地址<i class="icon icon-right fr"></i></div></router-link>
           <router-link to="/aboutUs"><div><i class="icon icon-about"></i>关于我们<i class="icon icon-right fr"></i></div></router-link>
         </div>
@@ -88,32 +88,15 @@
     },
     methods: {
       borrow () {
-        if (this.borrowQualification) {
-          if (this.c_b &&  this.msg == '可以借款') {
-            this.$router.push('/borrowing');
-          };
-          if (this.c_b &&  this.msg == '有未处理的借款') {
-            Toast('您的借款申请正在审核中，请耐心等待...')
-          };
-        } else {
-          Toast('您还未在298专区消费过，暂时没有借款资格！！！');
-        }
-
-       /* api.borrowQualification()
+        api.qualificationBorrow()
           .then(res => {
             if (res.code !== 200) {
-              Toast({
-                message: res.msg,
-                position: 'middle',
-                duration: 2000
-              });
+              Toast(res.msg);
+              return false
             } else {
-              this.$router.push('/borrowing')
+              this.$router.push('/borrowing');
             }
           })
-          .catch(err => {
-            console.log(err)
-          })*/
       },
       CLink (idx) {
         switch (idx) {
@@ -135,46 +118,30 @@
         this.userInfo = JSON.parse(localStorage.getItem('userInfo'));
         switch (parseInt(this.userInfo.account_type)) {
           case 1:
-            this.idDeg = '代理';
+            this.idDeg = '会员';
             break;
           case 2:
-            this.idDeg = '区代';
+            this.idDeg = '代理';
             break;
           case 3:
             this.idDeg = '总代';
             break;
           case 4:
-            this.idDeg = '联创';
+            this.idDeg = '总监';
             break;
           case 5:
+            this.idDeg = '联创';
+            break;
+          case 6:
             this.idDeg = '合伙人';
+            break;
+          case 7:
+            this.idDeg = '股东';
             break;
         };
         localStorage.removeItem('borrow');
         localStorage.removeItem('borrowLeave');
         this.src = 'http://www.xinyijiamall.com/api/registerLink?token='+token+'';
-        api.borrowQualification()
-          .then(res => {
-            if (res.code === 200) {
-              this.borrowQualification = true;
-            } else {
-              this.borrowQualification = false;
-            }
-          })
-        api.qualificationBorrow()
-          .then(res => {
-            if (res.code === 200 && res.msg == '可以借款') {
-              this.c_b = true;
-              this.msg = res.msg;
-            };
-            if (res.code === 500 && res.msg == '有未处理的借款') {
-              this.c_b = true;
-              this.msg = res.msg;
-            };
-            if (res.code === 500 && res.msg == '已经有借款了') {
-              this.c_b = false;
-            };
-          })
       }
     },
   }

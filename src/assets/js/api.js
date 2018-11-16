@@ -272,7 +272,7 @@ export default {
   },
   qualificationBorrow () {
     // 是否借款
-    return Get(`/whetherToBorrow?token=${token}`)
+    return Get(`/whetherToBorrow?token=${token}&apply_level=1`)
   },
   upgradeQualification (params) {
     return Get(`/myTeam?token=${token}&apply_type=${params}`)
