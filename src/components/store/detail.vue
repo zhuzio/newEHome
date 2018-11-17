@@ -56,16 +56,16 @@
             </div>
           </div>
           <div class="pop-style">
-            <div class="pop-style-type1">
+            <div class="pop-style-type2">
               <p class="style-head">{{goodsInfo.spec_name1}}</p>
               <div class="style-type-center">
-                <span @click="choseStyle(0, index, st1)" :class="{'style-on':st1Idex===index}" v-for="(st1, index) in style1" :key="index">{{st1}}</span>
+                <span @click="choseStyle(1, index, st2)" :class="{'style-on':st2Idex===index}" v-for="(st2, index) in style2" :key="index">{{st2}}</span>
               </div>
             </div>
-            <div class="pop-style-type2">
+            <div class="pop-style-type1">
               <p class="style-head">{{goodsInfo.spec_name2}}</p>
               <div class="style-type-center">
-                <span @click="choseStyle(1, index, st2)" :class="{'style-on':st2Idex===index}" v-for="(st2, index) in style2" :key="index">{{st2.size}}</span>
+                <span @click="choseStyle(0, index, st1)" :class="{'style-on':st1Idex===index}" v-for="(st1, index) in style1" :key="index">{{st1.size}}</span>
               </div>
             </div>
           </div>
@@ -237,15 +237,18 @@
           case 0:
             this.st1Idex = eleIndex;
             this.choseS1 = ele;
-            break;
-          case 1:
             this.integralX = ele.points;
             this.integralY = ele.points;
             this.money =  ele.ready;
             this.inventory = ele.stock;
             this.styleID = ele.id;
+            break;
+          case 1:
+
             this.choseS2 = ele.size;
             this.st2Idex = eleIndex;
+
+            // console.log( this.integralX, this.integralY,this.money)
             break;
           default:
             return false;
@@ -257,9 +260,9 @@
         .then(res => {
           if (res.code === 200) {
             this.goodsInfo = res.data;
-            this.style1 = this.goodsInfo.spec1;
-            this.choseS1 = this.goodsInfo.spec1[0];
-            this.style2 = this.goodsInfo.specs;
+            this.style1 = this.goodsInfo.specs;
+            this.choseS1 = this.goodsInfo.specs[0].value[0];
+            this.style2 = this.goodsInfo.specs[0].value;
             this.choseS2 = this.goodsInfo.specs[0].size;
             this.inventory = this.goodsInfo.specs[0].stock;
             this.integralX = this.goodsInfo.specs[0].points;
@@ -267,6 +270,7 @@
             this.money =  this.goodsInfo.specs[0].ready;
             this.styleID = this.goodsInfo.specs[0].id;
             this.storeId = this.goodsInfo.store.id;
+            // console.log(this.choseS1,this.choseS2)
           }
         })
         .catch(err => {
