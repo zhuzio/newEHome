@@ -10,7 +10,7 @@
     <div class="assets-container">
       <div class="assets-head">
         <div class="assets-head-center">
-          <p class="assets-integral-txt">总积分</p>
+          <p class="assets-integral-txt">总资产</p>
           <h1 class="assets-integral-num">{{available}}</h1>
         </div>
         <div class="assets-others">

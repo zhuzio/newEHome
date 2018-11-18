@@ -82,6 +82,10 @@ export default {
     // 登录
     return Post( `/login?phone=${params.account}&password=${params.password}`)
   },
+  getUserInfo () {
+    // 获得用户基本信息
+    return Get(`/getUserinfo?token=${token}`)
+  },
   availableIntegral () {
     // 获得用户积分资产: 总积分 可用积分 购物积分
     return Get(`/availablePoints?token=${token}`)

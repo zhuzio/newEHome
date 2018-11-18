@@ -202,7 +202,7 @@
       }
     },
     created () {
-      this.height = document.documentElement.clientHeight;
+      this.height = window.screen.height;
       // console.log(document.documentElement.clientHeight)
       // console.log(this.height)
       let url = window.location.href.substring()

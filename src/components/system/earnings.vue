@@ -8,6 +8,7 @@
         <span :class="{'et-on': isET}" @click="etTab(0)">冻结中</span><span :class="{'et-on': !isET}" @click="etTab(1)">已解冻</span>
       </div>
       <div class="earn-team-center">
+        <!--<div class="earn-team1"></div>-->
         <div class="earn-team-list" v-for="(ef, index) in eFrozen" :key="index" v-if="isET">
           <p><span class="et-name">{{ef.mark}}</span><span class="et-num">{{ef.money}}</span></p>
           <p><span class="et-day">冻结天数：<i>{{ef.countdown}}</i> 天</span><span class="et-time">冻结日期：{{ef.created_at}}</span></p>

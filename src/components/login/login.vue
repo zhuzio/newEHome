@@ -54,7 +54,7 @@
               Toast('登录成功！');
               // this.$router.push('/index');
               localStorage.setItem('token', res.data.token)
-              localStorage.setItem('userInfo', JSON.stringify(res.data.userinfo))
+              // localStorage.setItem('userInfo', JSON.stringify(res.data.userinfo))
               window.location.href = '/index'
             } else {
               Toast(res.msg);
@@ -67,7 +67,9 @@
       }
     },
     created () {
-      this.height = document.documentElement.clientHeight;
+      this.height = window.screen.height;
+      // this.height = document.documentElement.clientHeight;
+      // console.log(window.screen.height)
     }
   }
 </script>

@@ -92,8 +92,8 @@
       }
     },
     created () {
-      this.hig = document.documentElement.clientHeight;
-      console.log(this._h)
+      this.hig = window.screen.height;
+      // console.log(this._h)
       api.getBankCard()
         .then(res => {
           if (res.code === 200) {

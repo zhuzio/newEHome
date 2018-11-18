@@ -116,30 +116,39 @@
       if (!token) {
         window.location.href = '/#/login'
       } else {
-        this.userInfo = JSON.parse(localStorage.getItem('userInfo'));
-        switch (parseInt(this.userInfo.account_type)) {
-          case 1:
-            this.idDeg = '会员';
-            break;
-          case 2:
-            this.idDeg = '代理';
-            break;
-          case 3:
-            this.idDeg = '总代';
-            break;
-          case 4:
-            this.idDeg = '总监';
-            break;
-          case 5:
-            this.idDeg = '联创';
-            break;
-          case 6:
-            this.idDeg = '合伙人';
-            break;
-          case 7:
-            this.idDeg = '股东';
-            break;
-        };
+        api.getUserInfo()
+          .then(res => {
+            // console.log(res)
+            this.userInfo = res.data;
+            switch (parseInt(this.userInfo.account_type)) {
+              case 1:
+                this.idDeg = '会员';
+                break;
+              case 2:
+                this.idDeg = '代理';
+                break;
+              case 3:
+                this.idDeg = '总代';
+                break;
+              case 4:
+                this.idDeg = '总监';
+                break;
+              case 5:
+                this.idDeg = '联创';
+                break;
+              case 6:
+                this.idDeg = '合伙人';
+                break;
+              case 7:
+                this.idDeg = '股东';
+                break;
+            };
+          })
+          .catch(err => {
+            console.log(err)
+          })
+        //  = JSON.parse(localStorage.getItem('userInfo'));
+
         localStorage.removeItem('borrow');
         localStorage.removeItem('borrowLeave');
         this.src = 'http://www.xinyijiamall.com/api/registerLink?token='+token+'';
