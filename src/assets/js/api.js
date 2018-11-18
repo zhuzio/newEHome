@@ -14,7 +14,7 @@ export function Post (url, params) {
   return new Promise((resolve, reject) => {
     axios.post(url, params)
       .then(response => {
-        if (response.data.code === 200) {
+        if (response.data.code === 200 || response.data.code === 500) {
           resolve(response.data)
         } else if (response.data.code === 403) {
           Toast({

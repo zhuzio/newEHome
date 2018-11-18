@@ -9,11 +9,13 @@
           <p class="team-name-tel"><span class="t-name">{{tl.realname}}</span><span class="t-tel">{{tl.phone}}</span></p>
           <div class="team-deg">
             <p class="t-id">身份：
-              <span v-if="tl.account_type == 1">代理</span>
-              <span v-if="tl.account_type == 2">区代</span>
+              <span v-if="tl.account_type == 1">会员</span>
+              <span v-if="tl.account_type == 2">代理</span>
               <span v-if="tl.account_type == 3">总代</span>
-              <span v-if="tl.account_type == 4">联创</span>
-              <span v-if="tl.account_type == 5">合伙人</span>
+              <span v-if="tl.account_type == 4">总监</span>
+              <span v-if="tl.account_type == 5">联创</span>
+              <span v-if="tl.account_type == 6">合伙人</span>
+              <span v-if="tl.account_type == 7">股东</span>
             </p>
             <!--<p class="t-deg">
               <span v-if="tl.level == 1" style="color: purple">VIP1</span>

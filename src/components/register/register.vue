@@ -202,7 +202,9 @@
       }
     },
     created () {
-      this.height = window.screen.availHeight;
+      this.height = document.documentElement.clientHeight;
+      // console.log(document.documentElement.clientHeight)
+      // console.log(this.height)
       let url = window.location.href.substring()
       // let url = 'http://wap.xinyijiamall.com/#/register?phone=15236058819&account_type=3'
       if (url.indexOf('?') == -1) {

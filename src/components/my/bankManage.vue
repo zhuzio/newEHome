@@ -4,7 +4,7 @@
       <a href="javascript:window.history.go(-1)"></a>银行卡管理
       <div class="addCard"><router-link to="/addBanKCard"><span>+</span></router-link></div>
     </div>
-    <div class="bm-container">
+    <div class="bm-container" :style="{'height': hig + 'px'}">
       <div class="bm-list-center">
         <ul v-if="!nod">
           <li v-for="(card, index) in cardList" :key="index" :class="cardClass+card.logo.id" @click="backWay(card)">
@@ -47,7 +47,8 @@
         imgUrl: imgUrl,
         cardClass: 'card-bg',
         way: this.$route.params.id,
-        nod: false
+        nod: false,
+        hig: 0
       }
     },
     methods: {
@@ -91,6 +92,8 @@
       }
     },
     created () {
+      this.hig = document.documentElement.clientHeight;
+      console.log(this._h)
       api.getBankCard()
         .then(res => {
           if (res.code === 200) {

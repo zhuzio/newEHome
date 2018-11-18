@@ -56,6 +56,8 @@
               localStorage.setItem('token', res.data.token)
               localStorage.setItem('userInfo', JSON.stringify(res.data.userinfo))
               window.location.href = '/index'
+            } else {
+              Toast(res.msg);
             }
           })
           .catch(err => {
@@ -65,7 +67,7 @@
       }
     },
     created () {
-      this.height = window.screen.availHeight;
+      this.height = document.documentElement.clientHeight;
     }
   }
 </script>
