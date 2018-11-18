@@ -92,7 +92,7 @@
       }
     },
     created () {
-      this.hig = window.screen.height;
+      this.hig = document.documentElement.clientHeight;
       // console.log(this._h)
       api.getBankCard()
         .then(res => {

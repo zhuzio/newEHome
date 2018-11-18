@@ -67,8 +67,8 @@
       }
     },
     created () {
-      this.height = window.screen.height;
-      // this.height = document.documentElement.clientHeight;
+      // this.height = window.screen.height;
+      this.height = document.documentElement.clientHeight;
       // console.log(window.screen.height)
     }
   }
