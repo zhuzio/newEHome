@@ -7,7 +7,9 @@
       <ul v-if="!isNo">
         <li v-for="(zl, index) in zoneList" :key="index">
           <router-link :to="/detail/+zl.id">
-            <img :src="imgUrl + zl.default_img" alt="">
+            <div class="cd-goods-img">
+              <img :src="imgUrl + zl.default_img" alt="">
+            </div>
             <p class="cd-goods-name">{{zl.name}}</p>
             <div class="goods-price"  v-if="zl.type == 1">
               <p><i class="icon icon-x-integral"></i><span>{{zl.spec.points}}</span></p>

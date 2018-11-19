@@ -55,7 +55,9 @@
             <ul class="ft2-container-ul">
               <li v-for="(imz, index) in integralMoneyZone" :key="index">
                 <router-link :to="/detail/+imz.id">
-                  <img :src="imgUrl+imz.default_img" alt="">
+                  <div class="goods-img-box">
+                    <img :src="imgUrl+imz.default_img" alt="">
+                  </div>
                   <p class="goods-name">{{imz.name}}</p>
                   <div class="goods-price-integral">
                     <div>
@@ -98,7 +100,9 @@
             <ul class="ft2-container-ul">
               <li v-for="(iz, index) in integralZone" :key="index">
                 <router-link :to="/detail/+iz.id">
-                  <img :src="imgUrl+iz.default_img" alt="">
+                  <div class="goods-img-box">
+                    <img :src="imgUrl+iz.default_img" alt="">
+                  </div>
                   <p class="goods-name">{{iz.name}}</p>
                   <div class="goods-price">
                     <p><i class="icon icon-x-integral"></i><span>{{iz.spec.points}}</span></p>
