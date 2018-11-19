@@ -124,14 +124,22 @@
             });
             api.editAddress(form1)
               .then(res => {
-                Toast({
-                  message: res.msg,
-                  position: 'middle',
-                  duration: 2000
-                });
-                setTimeout(() => {
-                  this.$router.back(-1)
-                },2300)
+                if (res.code === 200) {
+                  Toast({
+                    message: res.msg,
+                    position: 'middle',
+                    duration: 2000
+                  });
+                  setTimeout(() => {
+                    this.$router.back(-1)
+                  },2300)
+                } else {
+                  Toast({
+                    message: res.msg,
+                    position: 'middle',
+                    duration: 2000
+                  });
+                }
               })
               .catch(error => {
                 console.log(error)

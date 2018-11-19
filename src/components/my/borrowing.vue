@@ -126,7 +126,7 @@
         aClass: '',
         an:'top:0rem;transition-duration: .8s;',
         an0:'top:100%;transition-duration: .8s;',
-        btnTxt: '申请借款',
+        btnTxt: '申请分期',
         isC: true,
 
         num:0,  //上传图片数量
@@ -284,11 +284,13 @@
                   this.$router.back(-1);
                 },2300)
               } else {
+                Toast(res.msg);
                 this.isC = true;
-                this.btnTxt = '申请借款';
+                this.btnTxt = '申请分期';
               }
             })
-            .then(err => {
+            .catch(err => {
+              Toast(err)
               console.log(err)
             })
         } else {

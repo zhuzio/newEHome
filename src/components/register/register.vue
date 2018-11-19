@@ -194,6 +194,12 @@
               setTimeout(() => {
                 this.$router.push('/login')
               },2300);
+            } else {
+              Toast({
+                message: res.msg,
+                position: 'bottom',
+                duration: 2000
+              });
             }
           })
           .catch(err => {
