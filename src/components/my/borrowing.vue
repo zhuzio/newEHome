@@ -15,12 +15,12 @@
       <div class="borrowing-info">
         <h1 class="borrowing-head-title">个人信息</h1>
         <div class="borrowing-info-center">
-          <router-link to="/bankManage/1">
+          <!--<router-link to="/bankManage/1">
             <div class="borrowing-info-list">
               <span class="borrowing-info-title">银行账户</span>
               <input type="text" placeholder="请选择到账账户" readonly disabled v-model="bankAccount">
             </div>
-          </router-link>
+          </router-link>-->
           <div class="borrowing-info-list">
             <span class="borrowing-info-title">真实姓名</span>
             <input type="text" placeholder="请输入真实姓名" v-model="borrowInfo.realName">
@@ -239,10 +239,10 @@
           Toast('请填写身份证账号！！！');
           return false;
         };
-        if (!t.bankAccount) {
+        /*if (!t.bankAccount) {
           Toast('请选择银行卡号！！！');
           return false;
-        };
+        };*/
         if (!t.borrowInfo.tel) {
           Toast('请填写预留手机号！！！');
           return false;
@@ -264,7 +264,7 @@
           this.btnTxt = '正在提交中，请稍等...';
           let form = this.$qs.stringify({
             token: token,
-            bank_id: t.bankId,
+            // bank_id: t.bankId,
             id_number: t.borrowInfo.idNum,
             apply_level: t.borrowInfo.money,
             name: t.borrowInfo.realName,

@@ -69,7 +69,11 @@
         applyPsd: '',
         payPop: false,
         orderSN:'',
-        way: this.$route.params.way
+        way: this.$route.params.way,
+        integralUse: '',
+        integralShop: '',
+        finalIntegralUse: '',
+        finalIntegralShop: ''
       }
     },
     components: {
@@ -98,15 +102,41 @@
             this.payWay = 'wx';
             break;
           case 1:
-            this.payWay = 'shop_points';
+            if (this.finalIntegralShop > this.integralShop) {
+              Toast('购物积分不足，请选择其他购物方式！！！');
+              this.applyClass = -1;
+              this.payWay = '';
+            } else {
+              this.payWay = 'shop_points';
+            };
             break;
           case 2:
-            this.payWay = 'ready_points';
+            if (this.finalIntegralUse > this.integralUse) {
+              Toast('可用积分积分不足，请选择其他购物方式！！！');
+              this.applyClass = -1;
+              this.payWay = '';
+            } else {
+              this.payWay = 'ready_points';
+            };
             break;
           case 3:
+            if (this.finalIntegralShop > this.integralShop) {
+              Toast('购物积分不足，请选择其他购物方式！！！');
+              this.applyClass = -1;
+              this.payWay = '';
+            } else {
+              this.payWay = 'shop_points';
+            };
             this.payWay = 'wx_shop_points';
             break;
           case 4:
+            if (this.finalIntegralUse > this.integralUse) {
+              Toast('可用积分积分不足，请选择其他购物方式！！！');
+              this.applyClass = -1;
+              this.payWay = '';
+            } else {
+              this.payWay = 'ready_points';
+            };
             this.payWay = 'wx_ready_points';
             break;
           default:
@@ -181,18 +211,13 @@
                      return false;
                  }
                } else {
-                 Toast(res.msg)
+                 Toast(res.msg);
                };
              })
              .catch(err => {
                console.log(err)
              })
          }
-
-
-
-
-
        };
       },
       passwordGro (e) {
@@ -219,6 +244,13 @@
     },
     created () {
       this.order = JSON.parse(localStorage.getItem('applyOrder'));
+      this.finalIntegralUse = parseFloat( parseFloat(this.order.ix).toFixed(2) *  parseFloat(this.order.list.num).toFixed(2)).toFixed(2)
+      this.finalIntegralShop = parseFloat( parseFloat(this.order.iy).toFixed(2) *  parseFloat(this.order.list.num).toFixed(2)).toFixed(2)
+      api.availableIntegral()
+        .then(res => {
+          this.integralUse = res.data.ready_points;
+          this.integralShop = res.data.shop_points;
+        })
     },
   }
 </script>
