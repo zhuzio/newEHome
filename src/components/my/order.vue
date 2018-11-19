@@ -256,6 +256,7 @@
       }
     },
     created () {
+      localStorage.removeItem('confirmAddress');
       this.getOrderDatas(1,1)
     }
   }

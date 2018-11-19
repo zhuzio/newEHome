@@ -166,7 +166,7 @@ export default new Router({
       component: addBankCard
     },
     {
-      path: '/addressManage', // 地址管理
+      path: '/addressManage/:way', // 地址管理
       name: 'addressManage',
       component: addressManage
     },

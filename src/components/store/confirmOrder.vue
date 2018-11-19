@@ -4,7 +4,7 @@
       <a href="javascript:window.history.go(-1)"></a>
       确认订单
     </div>
-    <router-link to="">
+    <router-link to="/addressManage/1">
       <div class="confirm-order-container">
         <div class="co-address"><i class="icon icon-confirm-address"></i></div>
         <div class="co-info">
@@ -79,7 +79,7 @@
         finalIntegralY: 0,
         finalMoney: 0,
         buyerMsg: '',
-        imgUrl: imgUrl
+        imgUrl: imgUrl,
       }
     },
     methods : {
@@ -103,23 +103,16 @@
       }
     },
     created () {
-      api.getDefaultAddress()
-        .then(res => {
-          if (res.code === 500) {
-            MessageBox({
-              title: '提示',
-              message: '您还没有地址，是否去添加？',
-              showCancelButton: true
-            })
-              .then(res => {
-                if (res == 'confirm') {
-                  this.$router.push('/addAddress/2');
-                } else {
-                  window.history.go(-1);
-                }
-              })
-          } else if (res.code === 200) {
-            if (res.data.length === 0) {
+      let cad = JSON.parse(localStorage.getItem('confirmAddress'));
+      if (cad) {
+        this.coReceiver = cad.name;
+        this.coTel = cad.phone;
+        this.coAds = cad.province + cad.city + cad.area + cad.detail;
+        this.AdsId = cad.id;
+      } else {
+        api.getDefaultAddress()
+          .then(res => {
+            if (res.code === 500) {
               MessageBox({
                 title: '提示',
                 message: '您还没有地址，是否去添加？',
@@ -132,17 +125,33 @@
                     window.history.go(-1);
                   }
                 })
-            } else {
-              this.coReceiver = res.data.name;
-              this.coTel = res.data.phone;
-              this.coAds = res.data.province + res.data.city + res.data.area + res.data.detail;
-              this.AdsId = res.data.id;
+            } else if (res.code === 200) {
+              if (res.data.length === 0) {
+                MessageBox({
+                  title: '提示',
+                  message: '您还没有地址，是否去添加？',
+                  showCancelButton: true
+                })
+                  .then(res => {
+                    if (res == 'confirm') {
+                      this.$router.push('/addAddress/2');
+                    } else {
+                      window.history.go(-1);
+                    }
+                  })
+              } else {
+                this.coReceiver = res.data.name;
+                this.coTel = res.data.phone;
+                this.coAds = res.data.province + res.data.city + res.data.area + res.data.detail;
+                this.AdsId = res.data.id;
+              }
             }
-          }
-        })
-        .catch(err => {
-          console.log(err)
-        })
+          })
+          .catch(err => {
+            console.log(err)
+          });
+      }
+
       this.goodsInfo = JSON.parse(localStorage.getItem('final'));
       this.finalIntegralX = parseFloat(parseFloat(this.goodsInfo.integralX) * parseFloat(this.goodsInfo.num)).toFixed(2);
       this.finalIntegralY = parseFloat(parseFloat(this.goodsInfo.integralY) * parseFloat(this.goodsInfo.num)).toFixed(2);

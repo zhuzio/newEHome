@@ -227,6 +227,7 @@
 
     },
     created () {
+      localStorage.removeItem('confirmAddress');
       api.getCarList(this.page)
         .then(res => {
           if (res.data.length === 0) {

@@ -182,6 +182,7 @@
       },
     },
     created () {
+      localStorage.removeItem('confirmAddress');
       this.showMarquee(this.num)
       api.swipe()
         .then(res => {

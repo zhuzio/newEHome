@@ -53,7 +53,7 @@
             <div><i class="icon icon-about"></i>升级<i class="icon icon-right fr"></i></div>
           </router-link>-->
           <div @click="borrow"><i class="icon icon-borrowing"></i>代理费分期<i class="icon icon-right fr"></i></div>
-          <router-link to="/addressManage"><div><i class="icon icon-address"></i>收货地址<i class="icon icon-right fr"></i></div></router-link>
+          <router-link to="/addressManage/0"><div><i class="icon icon-address"></i>收货地址<i class="icon icon-right fr"></i></div></router-link>
           <router-link to="/aboutUs"><div><i class="icon icon-about"></i>关于我们<i class="icon icon-right fr"></i></div></router-link>
         </div>
       </div>

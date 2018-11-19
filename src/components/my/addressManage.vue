@@ -5,10 +5,10 @@
     </div>
     <div class="ads-container">
       <div class="ads-center" v-if="isNo">
-        <div class="ads-list" v-for="(ad, index) in  adsList" :key="index">
+        <div class="ads-list" v-for="(ad, index) in  adsList" :key="index" @click="choseAddressInfo(ad)">
           <p class="ads-user-name"><span class="fl">{{ad.name}}</span><span class="fr">{{ad.phone}}</span></p>
           <p class="ads-user-ads">{{ad.province}} {{ad.city}} {{ad.area}} {{ad.detail}}</p>
-          <div class="ads-do">
+          <div class="ads-do" v-if="way == 0">
             <div class="ads-default">
               <input type="radio" :id="id+ad.id" name="setDef" :checked="ad.is_default" @click="setDefAds(ad.id)">
               <label :for="id+ad.id">设为默认地址</label>
@@ -41,7 +41,8 @@ export default {
     return {
       isNo: true,
       adsList: [],
-      id:'ads-radio'
+      id:'ads-radio',
+      way: parseInt(this.$route.params.way)
     }
   },
   methods: {
@@ -110,6 +111,12 @@ export default {
     compile (ele) {
       localStorage.setItem('address', JSON.stringify(ele))
       this.$router.push('/addAddress/1');
+    },
+    choseAddressInfo (ele) {
+      if (this.way === 1) {
+        localStorage.setItem('confirmAddress',JSON.stringify(ele));
+        window.history.go(-1);
+      };
     }
   },
   created () {

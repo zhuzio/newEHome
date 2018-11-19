@@ -59,13 +59,13 @@
             <div class="pop-style-type2">
               <p class="style-head">{{goodsInfo.spec_name1}}</p>
               <div class="style-type-center">
-                <span @click="choseStyle(1, index, st2)" :class="{'style-on':st2Idex===index}" v-for="(st2, index) in style2" :key="index">{{st2}}</span>
+                <span @click="choseStyle(0, index, st1)" :class="{'style-on':st1Idex===index}" v-for="(st1, index) in style1" :key="index">{{st1.size}}</span>
               </div>
             </div>
             <div class="pop-style-type1">
               <p class="style-head">{{goodsInfo.spec_name2}}</p>
               <div class="style-type-center">
-                <span @click="choseStyle(0, index, st1)" :class="{'style-on':st1Idex===index}" v-for="(st1, index) in style1" :key="index">{{st1.size}}</span>
+                <span @click="choseStyle(1, index, st2)" :class="{'style-on':st2Idex===index}" v-for="(st2, index) in style2" :key="index">{{st2}}</span>
               </div>
             </div>
           </div>
@@ -177,6 +177,9 @@
       },
       detailConfirm () {
         this.popupVisible = false;
+        // console.log(this.choseS1)
+        // console.log(this.choseS2)
+
         switch (this.choseWay) {
           // 加入购物车
           case 0:
@@ -235,19 +238,24 @@
       choseStyle (idx, eleIndex, ele) {
         switch (idx) {
           case 0:
+            // console.log(ele)
             this.st1Idex = eleIndex;
-            this.choseS1 = ele;
+            this.choseS1 = ele.size;
             this.integralX = ele.points;
             this.integralY = ele.points;
+            this.style2 = ele.value
             this.money =  ele.ready;
             this.inventory = ele.stock;
             this.styleID = ele.id;
+            this.st2Idex = 0;
+            this.choseS2 = ele.value[0];
+            // console.log(this.choseS2)
             break;
           case 1:
 
-            this.choseS2 = ele.size;
+            this.choseS2 = ele;
             this.st2Idex = eleIndex;
-
+            // console.log(this.choseS2)
             // console.log( this.integralX, this.integralY,this.money)
             break;
           default:
@@ -256,21 +264,22 @@
       }
     },
     created () {
+      localStorage.removeItem('confirmAddress');
       api.getGoodsDetail(this.goodsId)
         .then(res => {
           if (res.code === 200) {
             this.goodsInfo = res.data;
             this.style1 = this.goodsInfo.specs;
-            this.choseS1 = this.goodsInfo.specs[0].value[0];
+            this.choseS1 = this.goodsInfo.specs[0].size;
             this.style2 = this.goodsInfo.specs[0].value;
-            this.choseS2 = this.goodsInfo.specs[0].size;
+            this.choseS2 = this.goodsInfo.specs[0].value[0] ;
             this.inventory = this.goodsInfo.specs[0].stock;
             this.integralX = this.goodsInfo.specs[0].points;
             this.integralY = this.goodsInfo.specs[0].points;
             this.money =  this.goodsInfo.specs[0].ready;
             this.styleID = this.goodsInfo.specs[0].id;
             this.storeId = this.goodsInfo.store.id;
-            // console.log(this.choseS1,this.choseS2)
+            // console.log( this.style1,this.style2)
           }
         })
         .catch(err => {

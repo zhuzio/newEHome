@@ -65,6 +65,7 @@
       }
     },
     created() {
+      localStorage.removeItem('confirmAddress');
       api.getClassify(0)
         .then(res => {
           this.tabName = res.data;
