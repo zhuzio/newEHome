@@ -16,16 +16,12 @@
       <div class="index-ad">
         <div class="ad-logo"></div>
         <div class="marquee_box">
-         <!-- <ul class="marquee_list" :style="{ 'top': -num + 'rem'}" :class="{'marquee_top':num}">
-            &lt;!&ndash;<li v-for="(item, index) in marqueeList" :key="index">{{item}}</li>&ndash;&gt;
-            <li>{{marqueeList}}</li>
-          </ul>-->
-          <ul class="marquee_list">
-            <li>{{marqueeList}}</li>
+          <ul class="marquee_list" :style="{ 'top': -num + 'rem'}" :class="{'marquee_top':num}">
+            <li v-for="(item, index) in marqueeList" :key="index">{{item}}</li>
           </ul>
         </div>
-        <div class="ad-more">更多 >></div>
-        <!--<div class="ad-more"><router-link to="/announcement">更多 >></router-link></div>-->
+        <!--<div class="ad-more">更多 >></div>-->
+        <div class="ad-more"><router-link to="/announcement">更多 >></router-link></div>
       </div>
       <div class="floor-container">
         <div class="each-floor">
@@ -170,7 +166,7 @@
     methods: {
       showMarquee:function (num) {
         this.marqueeList.push(this.marqueeList[0]);
-        var max = this.marqueeList.length;
+        var max = this.marqueeList.length-1;
         var that = this;
         var marqueetimer =  setInterval(function(){
           num++;

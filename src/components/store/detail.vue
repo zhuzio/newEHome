@@ -6,7 +6,7 @@
             <span class="detail-back" @click="detailBack"><i class="icon icon-detail-back"></i></span>
             <span class="detail-car"><i class="icon icon-detail-car"></i></span>
           </p>
-          <swiper :options="swiperOption" ref="mySwiper" @someSwiperEvent="">
+          <swiper :options="swiperOption" ref="mySwiper">
             <swiper-slide v-for="(sp, index) in goodsInfo.main_img" :key="index"><img :src="imgUrl+sp" alt="" class="swiper-image"></swiper-slide>
             <div class="swiper-pagination"  slot="pagination"></div>
           </swiper>
@@ -40,7 +40,7 @@
         <div class="detail-pop-center">
           <div class="pop-head">
             <div class="detail-small-img">
-              <img src="../../assets/images/goods_pic1.png" alt="">
+              <img :src="imgUrl + goodsInfo.default_img" alt="">
             </div>
             <div class="pop-detail-txt">
               <p class="pop-price" v-if="goodsInfo.type == 3"><span>¥</span>{{money}}</p>
@@ -98,10 +98,10 @@
     data () {
       return {
         swiperOption: {
-          autoplay:true,
-          loop:true,
+          autoplay: true,
+          loop: true,
           delay: 1000,
-          effect : 'fade',
+          // effect : 'fade',
           pagination: {
             el: '.swiper-pagination',
           },
