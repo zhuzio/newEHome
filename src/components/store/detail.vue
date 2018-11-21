@@ -13,14 +13,15 @@
         </div>
       </div>
       <div class="detail-name-price">
-        <p class="detail-goods-price" v-if="goodsInfo.type == 3"><span>¥</span>{{money}}</p>
+        <p class="detail-goods-price" v-if="goodsInfo.type == 3"><span>¥</span>{{market}}</p>
         <div class="detail-goods-integral" v-if="goodsInfo.type == 1">
-          <p><i class="icon icon-x-integral"></i><span>{{integralX}}</span></p>
-          <p><i class="icon icon-y-integral"></i><span>{{integralY}}</span></p>
+          <p><i class="icon icon-y-integral"></i><span style="color: #888888">{{integralX}}</span></p>
+          <p class="detail-goods-price"><span>¥</span>{{money}}</p>
         </div>
         <div class="detail-goods-integral-and-money" v-if="goodsInfo.type == 2">
-          <p><i class="icon icon-x-integral"></i><span>{{integralX}}</span><b>+</b><u>¥</u>{{money}}</p>
-          <p><i class="icon icon-y-integral"></i><span>{{integralY}}</span><b>+</b><u>¥</u>{{money}}</p>
+          <p>市场价：<span>¥<i>{{market}}</i></span></p>
+          <p class="aa">会员价：<i class="icon icon-y-integral"></i><span>{{integralX}}</span><b>+</b><u>¥</u><span>{{money}}</span></p>
+          <!--<p><i class="icon icon-y-integral"></i><span>{{integralY}}</span><b>+</b><u>¥</u>{{money}}</p>-->
         </div>
         <p class="detail-goods-name">{{goodsInfo.name}}</p>
       </div>
@@ -45,11 +46,13 @@
             <div class="pop-detail-txt">
               <p class="pop-price" v-if="goodsInfo.type == 3"><span>¥</span>{{money}}</p>
               <div class="pop-integral" v-if="goodsInfo.type == 1">
-                <p><i class="icon icon-x-integral"></i><span>{{integralX}}</span></p>
+                <!--<p><i class="icon icon-x-integral"></i><span>{{integralX}}</span></p>-->
+                <p class="bb"><i>¥</i>{{money}}</p>
                 <p><i class="icon icon-y-integral"></i><span>{{integralY}}</span></p>
               </div>
               <div class="pop-integral-money" v-if="goodsInfo.type == 2">
-                <p><i class="icon icon-x-integral"></i><span>{{integralX}}</span><b>+</b><u>¥</u><span>{{money}}</span></p>
+                <!--<p><i class="icon icon-x-integral"></i><span>{{integralX}}</span><b>+</b><u>¥</u><span>{{money}}</span></p>-->
+                <p class="bb"><i>¥</i>{{market}}</p>
                 <p><i class="icon icon-y-integral"></i><span>{{integralY}}</span><b>+</b><u>¥</u><span>{{money}}</span></p>
               </div>
               <p class="pop-inventory">库存 {{inventory}} 件</p>
@@ -125,7 +128,8 @@
         styleID: 0,
         storeID: 0,
         choseS1: '',
-        choseS2: ''
+        choseS2: '',
+        market: '',
       }
     },
     computed: {
@@ -220,6 +224,7 @@
               tId: this.styleID,
               integralX: this.integralX,
               integralY: this.integralY,
+              market: this.market,
               money: this.money,
               num: this.value,
               goods: {
@@ -243,7 +248,8 @@
             this.choseS1 = ele.size;
             this.integralX = ele.points;
             this.integralY = ele.points;
-            this.style2 = ele.value
+            this.style2 = ele.value;
+            this.market = ele.market;
             this.money =  ele.ready;
             this.inventory = ele.stock;
             this.styleID = ele.id;
@@ -276,6 +282,7 @@
             this.inventory = this.goodsInfo.specs[0].stock;
             this.integralX = this.goodsInfo.specs[0].points;
             this.integralY = this.goodsInfo.specs[0].points;
+            this.market = this.goodsInfo.specs[0].market;
             this.money =  this.goodsInfo.specs[0].ready;
             this.styleID = this.goodsInfo.specs[0].id;
             this.storeId = this.goodsInfo.store.id;

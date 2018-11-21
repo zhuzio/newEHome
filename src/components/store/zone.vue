@@ -16,7 +16,7 @@
               <p><i class="icon icon-y-integral"></i><span>{{zl.spec.points}}</span></p>
             </div>
             <div class="goods-price-integral" v-if="zl.type == 2">
-              <div>
+              <!--<div>
                 <p class="spec"><i class="icon icon-x-integral"></i><span>{{zl.spec.points}}</span></p>
                 <u>+</u>
                 <p><span class="price-rmb">¥</span>{{zl.spec.ready}}</p>
@@ -25,6 +25,18 @@
                 <p class="spec"><i class="icon icon-y-integral"></i><span>{{zl.spec.points}}</span></p>
                 <u>+</u>
                 <p><span class="price-rmb">¥</span>{{zl.spec.ready}}</p>
+              </div>-->
+              <p class="goods-price-rmb"><u>市场价：</u><b><span>¥</span>{{zl.spec.market}}</b></p>
+              <!--<div>
+                  <p class="spec"><i class="icon icon-x-integral"></i><span>{{imz.spec.points}}</span></p>
+                  <u>+</u>
+                  <p><span class="price-rmb">¥</span>{{imz.spec.ready}}</p>
+                </div>-->
+              <h3>会员价：<span>现金 + 积分</span></h3>
+              <div>
+                <p><span class="price-rmb">¥</span>{{zl.spec.ready}}</p>
+                <u>+</u>
+                <p class="spec"><i class="icon icon-y-integral"></i><span>{{zl.spec.points}}</span></p>
               </div>
             </div>
             <div class="goods-price-rmb" v-if="zl.type == 3">

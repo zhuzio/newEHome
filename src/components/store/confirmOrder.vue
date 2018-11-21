@@ -22,12 +22,14 @@
           <p class="co-goods-info-name">{{goodsInfo.goods.name}}</p>
           <p class="co-goods-info-style">{{goodsInfo.t1}}；{{goodsInfo.t2}}</p>
           <div class="co-goods-integral-money" v-if="goodsInfo.goods.type == 2">
-            <p><i class="icon icon-x-integral"></i><span>{{goodsInfo.integralX}}</span><b>+</b><u>¥</u><span>{{goodsInfo.money}}</span></p>
+            <!--<p><i class="icon icon-x-integral"></i><span>{{goodsInfo.integralX}}</span><b>+</b><u>¥</u><span>{{goodsInfo.money}}</span></p>-->
             <p><i class="icon icon-y-integral"></i><span>{{goodsInfo.integralY}}</span><b>+</b><u>¥</u><span>{{goodsInfo.money}}</span></p>
+            <p><i>¥</i>{{finalMarket}}</p>
           </div>
           <div class="co-goods-integral" v-if="goodsInfo.goods.type == 1">
-            <p><i class="icon icon-x-integral"></i><span>{{goodsInfo.integralX}}</span></p>
+            <!--<p><i class="icon icon-x-integral"></i><span>{{goodsInfo.integralX}}</span></p>-->
             <p><i class="icon icon-y-integral"></i><span>{{goodsInfo.integralY}}</span></p>
+            <p><i>¥</i>{{finalMoney}}</p>
           </div>
           <div class="co-goods-price-total">
             <p><span v-if="goodsInfo.goods.type == 3">¥ {{goodsInfo.money}}</span></p>
@@ -47,12 +49,14 @@
         <div class="co-final-price-center">
           <p class="co-spec" v-if="goodsInfo.goods.type == 3">¥ {{finalMoney}}</p>
           <div class="co-goods-integral-money" v-if="goodsInfo.goods.type == 2">
-            <p><i class="icon icon-x-integral"></i><span>{{finalIntegralX}}</span><b>+</b><u>¥</u><span>{{finalMoney}}</span></p>
+            <!--<p><i class="icon icon-x-integral"></i><span>{{finalIntegralX}}</span><b>+</b><u>¥</u><span>{{finalMoney}}</span></p>-->
             <p><i class="icon icon-y-integral"></i><span>{{finalIntegralY}}</span><b>+</b><u>¥</u><span>{{finalMoney}}</span></p>
+            <p><i>¥</i>{{finalMarket}}</p>
           </div>
           <div class="co-goods-integral" v-if="goodsInfo.goods.type == 1">
-            <p><i class="icon icon-x-integral"></i><span>{{finalIntegralX}}</span></p>
+            <!--<p><i class="icon icon-x-integral"></i><span>{{finalIntegralX}}</span></p>-->
             <p><i class="icon icon-y-integral"></i><span>{{finalIntegralY}}</span></p>
+            <p><i>¥</i>{{finalMoney}}</p>
           </div>
         </div>
       </div>
@@ -78,6 +82,7 @@
         finalIntegralX: 0,
         finalIntegralY: 0,
         finalMoney: 0,
+        finalMarket: 0,
         buyerMsg: '',
         imgUrl: imgUrl,
       }
@@ -155,6 +160,7 @@
       this.goodsInfo = JSON.parse(localStorage.getItem('final'));
       this.finalIntegralX = parseFloat(parseFloat(this.goodsInfo.integralX) * parseFloat(this.goodsInfo.num)).toFixed(2);
       this.finalIntegralY = parseFloat(parseFloat(this.goodsInfo.integralY) * parseFloat(this.goodsInfo.num)).toFixed(2);
+      this.finalMarket = parseFloat(parseFloat(this.goodsInfo.market) * parseFloat(this.goodsInfo.num)).toFixed(2);
       this.finalMoney = parseFloat(parseFloat(this.goodsInfo.money) * parseFloat(this.goodsInfo.num)).toFixed(2);
     }
   }

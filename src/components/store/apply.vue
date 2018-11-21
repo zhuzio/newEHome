@@ -166,11 +166,9 @@
                    case 0:
                    case 3:
                    case 4:
-                     window.location.href = 'http://www.xinyijiamall.com/api/OrderPay?order_sn='+ res.data +'';
-                     break;
                    case 1:
                    case 2:
-                     this.payPop = true;
+                     window.location.href = 'http://www.xinyijiamall.com/api/OrderPay?order_sn='+ res.data +'';
                      break;
                    default:
                      return false;

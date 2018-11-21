@@ -44,7 +44,7 @@
         </div>
         <div class="each-floor">
           <div class="floor-title ft3">
-            <p>积分现金专区</p>
+            <p>会员专区</p>
             <span><router-link to="/zone/2">更多 >></router-link></span>
           </div>
           <div class="ft2-container">
@@ -55,19 +55,20 @@
                     <img :src="imgUrl+imz.default_img" alt="">
                   </div>
                   <p class="goods-name">{{imz.name}}</p>
+                  <p class="goods-price-rmb"><u>市场价：</u><b><span>¥</span>{{imz.spec.market}}</b></p>
                   <div class="goods-price-integral">
-                    <div>
+                    <!--<div>
                       <p class="spec"><i class="icon icon-x-integral"></i><span>{{imz.spec.points}}</span></p>
                       <u>+</u>
                       <p><span class="price-rmb">¥</span>{{imz.spec.ready}}</p>
-                    </div>
+                    </div>-->
+                    <h3>会员价：<span>现金 + 积分</span></h3>
                     <div>
-                      <p class="spec"><i class="icon icon-y-integral"></i><span>{{imz.spec.points}}</span></p>
-                      <u>+</u>
                       <p><span class="price-rmb">¥</span>{{imz.spec.ready}}</p>
+                      <u>+</u>
+                      <p class="spec"><i class="icon icon-y-integral"></i><span>{{imz.spec.points}}</span></p>
                     </div>
                   </div>
-                  <!--<p class="goods-price-rmb"><span>¥</span>139.60</p>-->
                 </router-link>
               </li>
             </ul>
@@ -89,7 +90,7 @@
         </div>
         <div class="each-floor">
           <div class="floor-title ft2">
-            <p>积分专区</p>
+            <p>数字兑换专区</p>
             <span><router-link to="/zone/1">更多 >></router-link></span>
           </div>
           <div class="ft3-container">
@@ -101,10 +102,11 @@
                   </div>
                   <p class="goods-name">{{iz.name}}</p>
                   <div class="goods-price">
-                    <p><i class="icon icon-x-integral"></i><span>{{iz.spec.points}}</span></p>
+                    <!--<p><i class="icon icon-x-integral"></i><span>{{iz.spec.points}}</span></p>-->
                     <p><i class="icon icon-y-integral"></i><span>{{iz.spec.points}}</span></p>
+                    <p class="goods-price-rmb"><b><span>¥</span>{{iz.spec.ready}}</b></p>
                   </div>
-                  <!--<p class="goods-price-rmb"><span>¥</span>139.60</p>-->
+
                 </router-link>
               </li>
             </ul>

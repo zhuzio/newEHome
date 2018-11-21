@@ -17,14 +17,18 @@
         <ul v-if="!isNo" class="bz-goods-container">
           <li class="bz-goods" v-for="(bz, index) in bzList" :key="index">
             <router-link :to="/detail/+bz.id">
-              <img :src="imgUrl + bz.default_img" :alt="bz.name">
+              <div class="goods-img-box">
+                <img :src="imgUrl + bz.default_img" :alt="bz.name">
+              </div>
               <p class="bz-goods-name">{{bz.name}}</p>
               <div class="goods-price"  v-if="bz.type == 1">
-                <p><i class="icon icon-x-integral"></i><span>{{bz.spec.points}}</span></p>
-                <p><i class="icon icon-y-integral"></i><span>{{bz.spec.points}}</span></p>
+                <div>
+                  <p><i class="icon icon-x-integral"></i><span>{{bz.spec.points}}</span></p>
+                  <p class="mm"><i>¥</i><span>{{bz.spec.ready}}</span></p>
+                </div>
               </div>
               <div class="goods-price-integral" v-if="bz.type == 2">
-                <div>
+                <!--<div>
                   <p class="spec"><i class="icon icon-x-integral"></i><span>{{bz.spec.points}}</span></p>
                   <u>+</u>
                   <p><span class="price-rmb">¥</span>{{bz.spec.ready}}</p>
@@ -33,10 +37,24 @@
                   <p class="spec"><i class="icon icon-y-integral"></i><span>{{bz.spec.points}}</span></p>
                   <u>+</u>
                   <p><span class="price-rmb">¥</span>{{bz.spec.ready}}</p>
+                </div>-->
+                <p class="goods-price-rmb"><u>市场价：</u><b><span>¥</span>{{bz.spec.market}}</b></p>
+                <!--<div>
+                    <p class="spec"><i class="icon icon-x-integral"></i><span>{{imz.spec.points}}</span></p>
+                    <u>+</u>
+                    <p><span class="price-rmb">¥</span>{{imz.spec.ready}}</p>
+                  </div>-->
+                <h3>会员价：<span>现金 + 积分</span></h3>
+                <div>
+                  <p><span class="price-rmb">¥</span>{{bz.spec.ready}}</p>
+                  <u>+</u>
+                  <p class="spec"><i class="icon icon-y-integral"></i><span>{{bz.spec.points}}</span></p>
                 </div>
               </div>
-              <div class="goods-price-rmb" v-if="bz.type == 3">
-                ¥ <span>{{bz.spec.ready}}</span>
+              <div class="goods-price-rmb-box" v-if="bz.type == 3">
+                <div class="goods-price-rmb">
+                  ¥ <span>{{bz.spec.ready}}</span>
+                </div>
               </div>
             </router-link>
           </li>
