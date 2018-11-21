@@ -216,7 +216,7 @@ export default {
   },
   getClassifyDetail (params) {
     // 获得品牌
-    return Get(`/productList/1?cate_id=${params}`)
+    return Get(`/productList/${params.page}?cate_id=${params.id}`)
   },
   addShopCar (params) {
     // 加入购物车

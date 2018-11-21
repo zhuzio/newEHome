@@ -13,14 +13,17 @@
         </div>
       </div>
       <div class="detail-name-price">
-        <p class="detail-goods-price" v-if="goodsInfo.type == 3"><span>¥</span>{{market}}</p>
+        <div class="detail-goods-price" v-if="goodsInfo.type == 3">
+          <p><i>会员价：</i><span>¥</span>{{money}}</p>
+          <p class="ac"><i>市场价：</i><span>¥</span><s>{{market}}</s></p>
+        </div>
         <div class="detail-goods-integral" v-if="goodsInfo.type == 1">
           <p><i class="icon icon-y-integral"></i><span style="color: #888888">{{integralX}}</span></p>
           <p class="detail-goods-price"><span>¥</span>{{money}}</p>
         </div>
         <div class="detail-goods-integral-and-money" v-if="goodsInfo.type == 2">
           <p>市场价：<span>¥<i>{{market}}</i></span></p>
-          <p class="aa">会员价：<i class="icon icon-y-integral"></i><span>{{integralX}}</span><b>+</b><u>¥</u><span>{{money}}</span></p>
+          <p class="aa">会员价：<u>¥</u><span>{{money}}</span><b>+</b><i class="icon icon-y-integral"></i><span>{{integralX}}</span></p>
           <!--<p><i class="icon icon-y-integral"></i><span>{{integralY}}</span><b>+</b><u>¥</u>{{money}}</p>-->
         </div>
         <p class="detail-goods-name">{{goodsInfo.name}}</p>

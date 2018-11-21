@@ -61,7 +61,7 @@ export default new Router({
       component: register
     },
     {
-      path: '/classify', // 分类
+      path: '/classify/:id/:idx', // 分类
       name: 'classify',
       component: classify
     },

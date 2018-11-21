@@ -23,7 +23,7 @@
           <p class="co-goods-info-style">{{goodsInfo.t1}}；{{goodsInfo.t2}}</p>
           <div class="co-goods-integral-money" v-if="goodsInfo.goods.type == 2">
             <!--<p><i class="icon icon-x-integral"></i><span>{{goodsInfo.integralX}}</span><b>+</b><u>¥</u><span>{{goodsInfo.money}}</span></p>-->
-            <p><i class="icon icon-y-integral"></i><span>{{goodsInfo.integralY}}</span><b>+</b><u>¥</u><span>{{goodsInfo.money}}</span></p>
+            <p><u>¥</u><span>{{goodsInfo.money}}</span><b>+</b><i class="icon icon-y-integral"></i><span>{{goodsInfo.integralY}}</span></p>
             <p><i>¥</i>{{finalMarket}}</p>
           </div>
           <div class="co-goods-integral" v-if="goodsInfo.goods.type == 1">

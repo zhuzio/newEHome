@@ -9,8 +9,8 @@
       </swiper>
       <div class="index-classify">
         <ul>
-          <li v-for="(cl, index) in claList" :key="index"><router-link to="/classify"><img :src="imgUrl+cl.logo" alt=""><span>{{cl.name}}</span></router-link></li>
-          <li><router-link to="/classify"><img src="../../assets/images/all.png" alt=""><span>全部</span></router-link></li>
+          <li v-for="(cl, index) in claList" :key="index"><router-link :to="/classify/ + cl.id + '/' + index"><img :src="imgUrl+cl.logo" alt=""><span>{{cl.name}}</span></router-link></li>
+          <li><router-link to="/classify/0/0"><img src="../../assets/images/all.png" alt=""><span>全部</span></router-link></li>
         </ul>
       </div>
       <div class="index-ad">

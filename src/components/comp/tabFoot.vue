@@ -6,7 +6,7 @@
         <!--首页-->
       </mt-tab-item>
     </router-link>
-    <router-link to="/classify" active-class="active">
+    <router-link to="/classify/0/0" active-class="active">
       <mt-tab-item id="classify">
         <i slot="icon" class="icon icon-classify"></i>
         <!--分类-->
