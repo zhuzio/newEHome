@@ -77,10 +77,32 @@
     },
     created() {
       let cacheData = this.cache.getCache('leaveClassify');
-      let c =parseInt((new Date().getTime())/1000);
-      let proTime = c - cacheData.lt;
-      let cacheId = cacheData.cd.id;
-      if (proTime >= 3600 || this.comeId !== cacheId) {
+      if (cacheData) {
+        let c =parseInt((new Date().getTime())/1000);
+        let proTime = c - cacheData.lt;
+        let cacheId = cacheData.cd.id;
+        if (proTime >= 3600 || this.comeId !== cacheId) {
+          api.getClassify(0)
+            .then(res => {
+              if (res.data.length < 6) {
+                this.cls.width = 6.4
+              } else {
+                this.cls.width = (res.data.length) * 1.2;
+              }
+              this.cls.tabName = res.data;
+              this.cls.tabTxt = this.cls.tabName[this.cls.idx].name;
+              this.cls.tabIdx = this.cls.idx;
+              this.cls.firstId = this.cls.id;
+              if (this.cls.id === 0) {
+                this.getClassifyDetail(this.cls.tabName[0].id)
+              } else {
+                this.getClassifyDetail(this.cls.firstId)
+              };
+            });
+        } else {
+          this.cls = cacheData.cd;
+        }
+      } else {
         api.getClassify(0)
           .then(res => {
             if (res.data.length < 6) {
@@ -98,11 +120,8 @@
               this.getClassifyDetail(this.cls.firstId)
             };
           });
-      } else {
-        this.cls = cacheData.cd;
       }
       localStorage.removeItem('confirmAddress');
-
     }
   }
 </script>

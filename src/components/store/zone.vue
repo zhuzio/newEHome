@@ -102,7 +102,7 @@
       this.cache.setCache('leaveZo', {cd:currentData,lt:d})
     },
     created () {
-      /*let cacheData = this.cache.getCache('leaveClassify');
+      let cacheData = this.cache.getCache('leaveZo');
       if (cacheData) {
         let c =parseInt((new Date().getTime())/1000);
         let proTime = c - cacheData.lt;
@@ -142,10 +142,7 @@
           this.zo = cacheData.cd;
         }
       } else {
-
-      }*/
-
-      switch (this.zo.id) {
+switch (this.zo.id) {
         case 1:
           this.zo.title = '资产兑换专区';
           break;
@@ -175,6 +172,38 @@
             this.zo.zoneList = res.data;
           }
         })
+      }
+
+      /*switch (this.zo.id) {
+        case 1:
+          this.zo.title = '资产兑换专区';
+          break;
+        case 2:
+          this.zo.title = '会员专区';
+          break;
+        case 3:
+          this.zo.title = '298专区';
+          break;
+      };
+      api.getZone({
+        page: this.zo.page,
+        type: this.zo.id
+      })
+        .then(res => {
+          if (res.code === 200) {
+            if (res.data.length === 0) {
+              this.zo.isNo = true;
+              this.zo.isMore = false;
+            } else if (res.data.length >= 10) {
+              this.zo.isMore = true;
+              this.zo.isNo = false;
+            } else {
+              this.zo.isMore = false;
+              this.zo.isNo = false;
+            };
+            this.zo.zoneList = res.data;
+          }
+        })*/
     },
   }
 </script>
