@@ -12,8 +12,9 @@
             </div>
             <p class="cd-goods-name">{{zl.name}}</p>
             <div class="goods-price"  v-if="zl.type == 1">
-              <p><i class="icon icon-x-integral"></i><span>{{zl.spec.points}}</span></p>
-              <p><i class="icon icon-y-integral"></i><span>{{zl.spec.points}}</span></p>
+              <!--<p><i class="icon icon-x-integral"></i><span>{{zl.spec.points}}</span></p>-->
+              <p><i class="icon icon-y-integral"></i><span style="color: #ff3b30">{{zl.spec.points}}</span></p>
+              <p style="color: #c3c3c3"><s>¥{{zl.spec.ready}}</s></p>
             </div>
             <div class="goods-price-integral" v-if="zl.type == 2">
               <!--<div>
@@ -26,7 +27,7 @@
                 <u>+</u>
                 <p><span class="price-rmb">¥</span>{{zl.spec.ready}}</p>
               </div>-->
-              <p class="goods-price-rmb"><u>市场价：</u><b><span>¥</span>{{zl.spec.market}}</b></p>
+              <p class="goods-price-rmb" style="color: #c3c3c3"><u>市场价：</u><b><span>¥</span>{{zl.spec.market}}</b></p>
               <!--<div>
                   <p class="spec"><i class="icon icon-x-integral"></i><span>{{imz.spec.points}}</span></p>
                   <u>+</u>

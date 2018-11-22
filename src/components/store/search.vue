@@ -30,8 +30,9 @@
                 <div class="search-desc">
                   <p class="search-title">{{item.name}}</p>
                   <div class="co-goods-integral-money" v-if="item.type == 2">
-                    <p><i class="icon icon-x-integral"></i><span>{{item.spec.points}}</span><b>+</b><u>¥</u><span>{{item.spec.ready}}</span></p>
-                    <p><i class="icon icon-y-integral"></i><span>{{item.spec.points}}</span><b>+</b><u>¥</u><span>{{item.spec.ready}}</span></p>
+                    <!--<p><i class="icon icon-x-integral"></i><span>{{item.spec.points}}</span><b>+</b><u>¥</u><span>{{item.spec.ready}}</span></p>-->
+                    <p>会员价：<i class="icon icon-y-integral"></i><span>{{item.spec.points}}</span><b>+</b><u>¥</u><span>{{item.spec.ready}}</span></p>
+                    <p>市场价：<i>￥<span>{{item.spec.market}}</span></i></p>
                   </div>
                   <div class="co-goods-integral" v-if="item.type == 1">
                     <p><i class="icon icon-x-integral"></i><span>{{item.spec.points}}</span></p>
@@ -48,7 +49,7 @@
             <img src="../../assets/images/no_data.png" alt="">
             <p class="no-data-txt2">未搜到相关产品</p>
           </div>
-          <!--<p class="add-more">点击加载更多</p>-->
+          <p class="add-more" style="padding-top:.2rem" v-if="isMore" @click="sAdd">点击加载更多</p>
         </div>
       </div>
     </div>
@@ -73,7 +74,9 @@
         value: '',
         key_words: '',
         imgUrl: imgUrl,
-        searchList: []
+        searchList: [],
+        isMore: false,
+        page: 1
       };
     },
     computed: {
@@ -85,13 +88,17 @@
           Toast('请输入关键词！！！');
           return false
         } else {
-          api.search(this.key_words)
+          api.search({
+            page: this.page,
+            key: this.key_words
+          })
          .then((res) => {
            this.isHot = false;
            if (res.data.length == 0) {
              this.isNull = true
            } else {
              this.isNull = false;
+             this.isMore = true;
              this.searchList = res.data
            }
          })
@@ -109,6 +116,24 @@
       hotC () {
         this.key_words = this.hot3
         this.search()
+      },
+      sAdd () {
+        this.page += 1;
+        api.search({
+          page: this.page,
+          key: this.key_words
+        })
+          .then(res => {
+            if (res.data.length === 0) {
+              Toast('到底了....');
+              this.isMore = false;
+              return false;
+            } else {
+              for (var i in res.data) {
+                this.searchList.push((res.data)[i]);
+              }
+            }
+          })
       }
     }
   }

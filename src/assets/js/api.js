@@ -210,6 +210,10 @@ export default {
     // 获得品牌
     return Get(`/brandList/1`)
   },
+  getFloor () {
+    // 获得首页图片
+    return Get(`/floor`)
+  },
   getClassify (params) {
     // 获得品牌
     return Get(`/cateList?cate_id=${params}`)
@@ -315,7 +319,7 @@ export default {
   },
   search (params) {
     // 搜索
-    return Get(`/goodsSearch/1?key_words=${params}`)
+    return Get(`/goodsSearch/${params.page}?key_words=${params.key}`)
   },
   bandList (params) {
     // 获取所有品牌

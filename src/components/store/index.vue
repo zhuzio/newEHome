@@ -38,7 +38,7 @@
               </li>
             </ul>
             <div class="ft1-ad">
-              <img src="../../assets/images/ft1_ad.png" alt="">
+              <img src="../../assets/images/indexAD.jpg" alt="">
             </div>
           </div>
         </div>
@@ -90,7 +90,7 @@
         </div>
         <div class="each-floor">
           <div class="floor-title ft2">
-            <p>数字兑换专区</p>
+            <p>资产兑换专区</p>
             <span><router-link to="/zone/1">更多 >></router-link></span>
           </div>
           <div class="ft3-container">
@@ -104,7 +104,7 @@
                   <div class="goods-price">
                     <!--<p><i class="icon icon-x-integral"></i><span>{{iz.spec.points}}</span></p>-->
                     <p><i class="icon icon-y-integral"></i><span>{{iz.spec.points}}</span></p>
-                    <p class="goods-price-rmb"><b><span>¥</span>{{iz.spec.ready}}</b></p>
+                    <p class="goods-price-rmb"><b><span>¥</span><s>{{iz.spec.ready}}</s></b></p>
                   </div>
 
                 </router-link>
@@ -240,6 +240,10 @@
           // console.log(res)
           this.marqueeList = res.data;
           // console.log(this.marqueeList)
+        })
+      api.getFloor()
+        .then(res => {
+          console.log(res)
         })
     },
   }
