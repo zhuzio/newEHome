@@ -28,7 +28,7 @@
         </div>-->
         <div class="apply-way">
           <p class="apply-title">支付方式：</p>
-          <div @click="choseApply(0)" :class="{'apply-way-on': 0===applyClass}">
+          <div @click="choseApply(0)" :class="{'apply-way-on': 0===applyClass}" v-if="order.type !== 1">
             <i class="icon icon-pay-weChat"></i><span>微信支付</span>
           </div>
           <div @click="choseApply(1)" :class="{'apply-way-on': 1===applyClass}" v-if="order.type == 1">
@@ -95,6 +95,10 @@
           })
       },
       choseApply(idx) {
+        console.log(this.finalIntegralShop)
+        console.log(this.integralShop)
+        console.log(this.finalIntegralUse)
+        console.log(this.integralUse)
         this.showModel = false;
         this.applyClass = idx;
         switch (idx) {

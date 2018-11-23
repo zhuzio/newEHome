@@ -4,7 +4,7 @@
         <div class="detail-swipe-container" :style="{'height': nowHeight + 'px'}">
           <p class="detail-back-car">
             <span class="detail-back" @click="detailBack"><i class="icon icon-detail-back"></i></span>
-            <span class="detail-car"><i class="icon icon-detail-car"></i></span>
+            <span class="detail-car"><router-link to="/shopCar"><i class="icon icon-detail-car"></i></router-link></span>
           </p>
           <swiper :options="swiperOption" ref="mySwiper">
             <swiper-slide v-for="(sp, index) in goodsInfo.main_img" :key="index"><img :src="imgUrl+sp" alt="" class="swiper-image"></swiper-slide>
@@ -13,12 +13,13 @@
         </div>
       </div>
       <div class="detail-name-price">
+        <p class="detail-goods-name">{{goodsInfo.name}}</p>
         <div class="detail-goods-price" v-if="goodsInfo.type == 3">
           <p><i></i><span>¥</span>{{money}}</p>
           <!--<p class="ac"><i>市场价：</i><s>¥</s><s>{{market}}</s></p>-->
         </div>
         <div class="detail-goods-integral" v-if="goodsInfo.type == 1">
-          <p><i class="icon icon-y-integral"></i><span style="color: #ff3b30">{{integralX}}</span></p>
+          <p><i class="icon icon-y-integral"></i><span style="color: #ff3b30;font-size: .35rem">{{integralX}}</span></p>
           <p class="detail-goods-price" style="color: #c3c3c3"><span style="color: #c3c3c3;font-size: .32rem">¥</span><s class="ss">{{money}}</s></p>
         </div>
         <div class="detail-goods-integral-and-money" v-if="goodsInfo.type == 2">
@@ -26,7 +27,6 @@
           <p class="aa">会员价：<b>¥</b><span>{{money}}</span><b>+</b><i class="icon icon-y-integral"></i><span>{{integralX}}</span></p>
           <!--<p><i class="icon icon-y-integral"></i><span>{{integralY}}</span><b>+</b><u>¥</u>{{money}}</p>-->
         </div>
-        <p class="detail-goods-name">{{goodsInfo.name}}</p>
       </div>
       <div class="detail-goods-detail">
         <p class="detail-title"><span></span>商品详情</p>
@@ -230,6 +230,7 @@
               market: this.market,
               money: this.money,
               num: this.value,
+              freight: this.goodsInfo.shipping_money,
               goods: {
                 name: this.goodsInfo.name,
                 storeName: this.goodsInfo.store.name,

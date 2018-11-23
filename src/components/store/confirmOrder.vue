@@ -39,7 +39,7 @@
       </div>
       <div class="co-other">
         <div class="co-other-list"><span>购买数量</span><span>{{goodsInfo.num}}</span></div>
-        <!--<div class="co-other-list"><span>运费</span><span>¥ 0</span></div>-->
+        <div class="co-other-list" v-if="goodsInfo.goods.type == 1"><span>运费</span><span>¥ {{goodsInfo.freight}}</span></div>
         <div class="co-other-list"><span>买家留言：</span><input type="text" placeholder="（选填）填写您的留言" v-model="buyerMsg"></div>
       </div>
       <div class="co-final-price">
