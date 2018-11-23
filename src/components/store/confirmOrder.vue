@@ -96,7 +96,7 @@
             num: this.goodsInfo.num,
             spec_id: this.goodsInfo.tId,
           },
-          color: this.goodsInfo.t1,
+          color: this.goodsInfo.t2,
           remark: this.buyerMsg,
           type: this.goodsInfo.goods.type,
           ix: this.finalIntegralX,
