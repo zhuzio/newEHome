@@ -194,7 +194,7 @@
               token: token,
               product_id: this.goodsInfo.id,
               spec_id: this.styleID,
-              specification: this.choseS1,
+              specification: this.choseS2,
               num: this.value,
               shop_id: this.storeId
             });

@@ -16,21 +16,23 @@
                   <p class="sc-goods-name">{{goods.products.name}}</p>
                   <div class="sc-goods-type-del">
                     <div class="sc-goods-type">
-                      <p><span>{{goods.products.spec_name1}}：</span>{{goods.specification}}</p>
-                      <p><span>{{goods.products.spec_name2}}：</span>{{goods.spec.size}}</p>
+                      <p><span>{{goods.products.spec_name1}}：</span>{{goods.spec.size}}</p>
+                      <p><span>{{goods.products.spec_name2}}：</span>{{goods.specification}}</p>
                     </div>
                     <div class="sc-goods-del">
                       <button @click="deleteCar(goods, idx, store, index)">删除</button>
                     </div>
                   </div>
                   <div class="sc-goods-price sc-goods-integral-and-money" v-if="goods.products.type == 2">
-                    <p class="scg-integral-money scg-x"><i class="icon icon-x-integral"></i><span>{{goods.spec.points}}</span><b>+</b><u>¥</u><span>{{goods.spec.ready}}</span></p>
-                    <p class="scg-integral-money scg-k"><i class="icon icon-y-integral"></i><span>{{goods.spec.points}}</span><b>+</b><u>¥</u><span>{{goods.spec.ready}}</span></p>
+                    <!--<p class="scg-integral-money scg-x"><i class="icon icon-x-integral"></i><span>{{goods.spec.points}}</span><b>+</b><u>¥</u><span>{{goods.spec.ready}}</span></p>-->
+                    <p class="scg-integral-money scg-k"><u>¥</u><span style="color:#ff3b30;font-size: .3rem">{{goods.spec.ready}}</span><b>+</b><i class="icon icon-y-integral"></i><span style="color:#ff3b30;font-size: .3rem">{{goods.spec.points}}</span></p>
+                    <h3 style="color: #c3c3c3;font-size: .23rem">￥ <i>{{goods.spec.market}}</i></h3>
                   </div>
                   <div class="sc-goods-price sc-goods-integral" v-if="goods.products.type == 1">
                     <div class="scg-integral">
-                      <p><i class="icon icon-x-integral"></i><span>{{goods.spec.points}}</span></p>
-                      <p><i class="icon icon-y-integral"></i><span>{{goods.spec.points}}</span></p>
+                      <!--<p><i class="icon icon-x-integral"></i><span>{{goods.spec.points}}</span></p>-->
+                      <p><i class="icon icon-y-integral"></i><span style="font-size: .3rem">{{goods.spec.points}}</span></p>
+                      <p style="color: #c3c3c3">￥ <s>{{goods.spec.ready}}</s></p>
                     </div>
                   </div>
                   <div class="sc-goods-price-total">
@@ -47,15 +49,18 @@
           </div>
         </div>
         <div class="shop-car-clear">
-          <div class="sc-total-money">合计:<span v-if="type == 3"><i>¥</i>{{totalCash}}</span></div>
+          <div class="sc-total-money">合计:</div>
           <div class="sc-total-integral">
+            <p v-if="type == 3" style="line-height: .8rem;font-size: .32rem;color: #ff3b30"><i>¥</i>{{totalCash}}</p>
             <div class="sc-t-integral" v-if="type == 1">
-              <p><i class="icon icon-x-integral"></i><span>{{totalConsumeIntegral}}</span></p>
-              <p><i class="icon icon-y-integral"></i><span>{{totalUseIntegral}}</span></p>
+              <!--<p><i class="icon icon-x-integral"></i><span>{{totalConsumeIntegral}}</span></p>-->
+              <p><i class="icon icon-y-integral"></i><span style="color: #ff3b30;font-size: .25rem">{{totalUseIntegral}}</span></p>
+              <p style="color: #c3c3c3">￥ <s>{{totalCash}}</s></p>
             </div>
             <div class="sc-t-integral-and-money" v-if="type == 2">
-              <p><i class="icon icon-x-integral"></i><span>{{totalConsumeIntegral}}</span><b>+</b><u>¥</u><span>{{totalCash}}</span></p>
-              <p><i class="icon icon-y-integral"></i><span>{{totalUseIntegral}}</span><b>+</b><u>¥</u><span>{{totalCash}}</span></p>
+              <!--<p><i class="icon icon-x-integral"></i><span>{{totalConsumeIntegral}}</span><b>+</b><u>¥</u><span>{{totalCash}}</span></p>-->
+              <p><u>¥</u><span style="color:#ff3b30;">{{totalCash}}</span><b>+</b><i class="icon icon-y-integral"></i><span style="color:#ff3b30;">{{totalUseIntegral}}</span></p>
+              <h3 style="font-size: .23rem;line-height: normal;color: #c3c3c3">￥ <i>{{totalMarket}}</i></h3>
             </div>
           </div>
           <div class="sc-clear-button">
@@ -98,6 +103,7 @@
         totalUseIntegral: 0,
         totalConsumeIntegral: 0,
         totalCash: 0,
+        totalMarket: 0,
         currentId: '',
         checkGoods: []
 
@@ -109,6 +115,7 @@
         this.totalUseIntegral = parseFloat(parseFloat(ele.num) * parseFloat(ele.spec.points)).toFixed(2);
         this.totalConsumeIntegral = parseFloat(parseFloat(ele.num) * parseFloat(ele.spec.points)).toFixed(2);
         this.totalCash = parseFloat(parseFloat(ele.num) * parseFloat(ele.spec.ready)).toFixed(2);
+        this.totalMarket = parseFloat(parseFloat(ele.num) * parseFloat(ele.spec.market)).toFixed(2);
         this.type = ele.products.type;
       },
       /*
@@ -137,6 +144,7 @@
               this.totalUseIntegral = parseFloat(parseFloat(goodsItem.num) * parseFloat(goodsItem.spec.points)).toFixed(2);
               this.totalConsumeIntegral = parseFloat(parseFloat(goodsItem.num) * parseFloat(goodsItem.spec.points)).toFixed(2);
               this.totalCash = parseFloat(parseFloat(goodsItem.num) * parseFloat(goodsItem.spec.ready)).toFixed(2);
+              this.totalMarket = parseFloat(parseFloat(goodsItem.num) * parseFloat(goodsItem.spec.market)).toFixed(2);
             }
           })
         })
@@ -207,8 +215,10 @@
                   tId: goodsItem.spec.id,
                   integralX: this.totalConsumeIntegral,
                   integralY: this.totalUseIntegral,
+                  market: goodsItem.spec.market,
                   money: this.totalCash,
                   num: goodsItem.num,
+                  freight: goodsItem.products.shipping_money,
                   goods: {
                     name: goodsItem.products.name,
                     storeName: goodsItem.shop_name,

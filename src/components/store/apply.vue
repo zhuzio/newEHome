@@ -95,10 +95,19 @@
           })
       },
       choseApply(idx) {
+       /* console.log(parseFloat(this.finalIntegralShop) > parseFloat(this.integralShop))
+        console.log(parseFloat(this.finalIntegralUse) > parseFloat(this.integralUse))
+        console.log(this.finalIntegralShop > this.integralShop)
+        console.log(this.finalIntegralUse > this.integralUse)
         console.log(this.finalIntegralShop)
         console.log(this.integralShop)
         console.log(this.finalIntegralUse)
         console.log(this.integralUse)
+
+        console.log(parseFloat(this.finalIntegralShop))
+        console.log(parseFloat(this.integralShop))
+        console.log(parseFloat(this.finalIntegralUse))
+        console.log(parseFloat(this.integralUse))*/
         this.showModel = false;
         this.applyClass = idx;
         switch (idx) {
@@ -106,7 +115,7 @@
             this.payWay = 'wx';
             break;
           case 1:
-            if (this.finalIntegralShop > this.integralShop) {
+            if (parseFloat(this.finalIntegralShop) > parseFloat(this.integralShop)) {
               Toast('购物积分不足，请选择其他购物方式！！！');
               this.applyClass = -1;
               this.payWay = '';
@@ -115,7 +124,7 @@
             };
             break;
           case 2:
-            if (this.finalIntegralUse > this.integralUse) {
+            if (parseFloat(this.finalIntegralUse) > parseFloat(this.integralUse)) {
               Toast('可用积分积分不足，请选择其他购物方式！！！');
               this.applyClass = -1;
               this.payWay = '';
@@ -124,7 +133,7 @@
             };
             break;
           case 3:
-            if (this.finalIntegralShop > this.integralShop) {
+            if (parseFloat(this.finalIntegralShop) > parseFloat(this.integralShop)) {
               Toast('购物积分不足，请选择其他购物方式！！！');
               this.applyClass = -1;
               this.payWay = '';
@@ -134,7 +143,7 @@
             this.payWay = 'wx_shop_points';
             break;
           case 4:
-            if (this.finalIntegralUse > this.integralUse) {
+            if (parseFloat(this.finalIntegralUse) > parseFloat(this.integralUse)) {
               Toast('可用积分积分不足，请选择其他购物方式！！！');
               this.applyClass = -1;
               this.payWay = '';
@@ -244,8 +253,10 @@
     },
     created () {
       this.order = JSON.parse(localStorage.getItem('applyOrder'));
-      this.finalIntegralUse = parseFloat( parseFloat(this.order.ix).toFixed(2) *  parseFloat(this.order.list.num).toFixed(2)).toFixed(2)
-      this.finalIntegralShop = parseFloat( parseFloat(this.order.iy).toFixed(2) *  parseFloat(this.order.list.num).toFixed(2)).toFixed(2)
+      this.finalIntegralUse = parseFloat( parseFloat(this.order.ix)).toFixed(2);
+      this.finalIntegralShop = parseFloat( parseFloat(this.order.iy)).toFixed(2);
+      // this.finalIntegralUse = parseFloat( parseFloat(this.order.ix).toFixed(2) *  parseFloat(this.order.list.num).toFixed(2)).toFixed(2)
+      // this.finalIntegralShop = parseFloat( parseFloat(this.order.iy).toFixed(2) *  parseFloat(this.order.list.num).toFixed(2)).toFixed(2)
       api.availableIntegral()
         .then(res => {
           this.integralUse = res.data.ready_points;
