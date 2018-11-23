@@ -15,14 +15,14 @@
         </div>
       </router-link>
       <div class="wd-center">
-        <p class="wd-count">提现金额（手续费10%，剩余次数<span>{{withdrawCount}}</span>次）</p>
+        <p class="wd-count">提现金额（剩余次数<span>{{withdrawCount}}</span>次）</p>
         <div class="wd-num">
           <span>¥</span>
           <input type="number" placeholder="0" v-model="withdrawNum">
         </div>
         <p class="wd-balance">余额<span>{{balance}}</span>积分</p>
       </div>
-      <button class="wd-btn" @click='withdraw'>预计48小时到账，确认提现</button>
+      <button class="wd-btn" @click='withdraw'>预计24小时到账，确认提现</button>
     </div>
     <pay @hidden="hiddenShow" @password="passwordGro" :password="applyPsd" v-show="payPop"></pay>
   </div>
