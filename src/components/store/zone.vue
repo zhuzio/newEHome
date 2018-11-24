@@ -3,49 +3,49 @@
     <div class="moduleHead">
       <a href="javascript:window.history.go(-1)"></a> {{zo.title}}
     </div>
-    <div class="cd-container">
-      <ul v-if="!zo.isNo">
-        <li v-for="(zl, index) in zo.zoneList" :key="index">
-          <router-link :to="/detail/+zl.id">
-            <div class="cd-goods-img">
-              <img :src="zo.imgUrl + zl.default_img" alt="">
-            </div>
-            <p class="cd-goods-name">{{zl.name}}</p>
-            <div class="goods-price"  v-if="zl.type == 1">
-              <!--<p><i class="icon icon-x-integral"></i><span>{{zl.spec.points}}</span></p>-->
-              <p><i class="icon icon-y-integral"></i><span style="color: #ff3b30">{{zl.spec.points}}</span></p>
-              <p style="color: #c3c3c3"><s>¥{{zl.spec.ready}}</s></p>
-            </div>
-            <div class="goods-price-integral" v-if="zl.type == 2">
-              <!--<div>
-                <p class="spec"><i class="icon icon-x-integral"></i><span>{{zl.spec.points}}</span></p>
-                <u>+</u>
-                <p><span class="price-rmb">¥</span>{{zl.spec.ready}}</p>
+    <div class="cd-container ">
+        <ul v-if="!zo.isNo">
+          <li v-for="(zl, index) in zo.zoneList" :key="index">
+            <router-link :to="/detail/+zl.id">
+              <div class="cd-goods-img">
+                <img :src="zo.imgUrl + zl.default_img" alt="">
               </div>
-              <div>
-                <p class="spec"><i class="icon icon-y-integral"></i><span>{{zl.spec.points}}</span></p>
-                <u>+</u>
-                <p><span class="price-rmb">¥</span>{{zl.spec.ready}}</p>
-              </div>-->
-              <p class="goods-price-rmb" style="color: #c3c3c3"><u>市场价：</u><b><span>¥</span>{{zl.spec.market}}</b></p>
-              <!--<div>
-                  <p class="spec"><i class="icon icon-x-integral"></i><span>{{imz.spec.points}}</span></p>
+              <p class="cd-goods-name">{{zl.name}}</p>
+              <div class="goods-price"  v-if="zl.type == 1">
+                <!--<p><i class="icon icon-x-integral"></i><span>{{zl.spec.points}}</span></p>-->
+                <p><i class="icon icon-y-integral"></i><span style="color: #ff3b30;font-size: .3rem">{{zl.spec.points}}</span></p>
+                <p style="color: #c3c3c3"><s>¥{{zl.spec.ready}}</s></p>
+              </div>
+              <div class="goods-price-integral" v-if="zl.type == 2">
+                <!--<div>
+                  <p class="spec"><i class="icon icon-x-integral"></i><span>{{zl.spec.points}}</span></p>
                   <u>+</u>
-                  <p><span class="price-rmb">¥</span>{{imz.spec.ready}}</p>
+                  <p><span class="price-rmb">¥</span>{{zl.spec.ready}}</p>
+                </div>
+                <div>
+                  <p class="spec"><i class="icon icon-y-integral"></i><span>{{zl.spec.points}}</span></p>
+                  <u>+</u>
+                  <p><span class="price-rmb">¥</span>{{zl.spec.ready}}</p>
                 </div>-->
-              <h3>会员价：<span>现金 + 积分</span></h3>
-              <div>
-                <p><span class="price-rmb">¥</span>{{zl.spec.ready}}</p>
-                <u>+</u>
-                <p class="spec"><i class="icon icon-y-integral"></i><span>{{zl.spec.points}}</span></p>
+                <p class="goods-price-rmb" style="color: #c3c3c3"><u>市场价：</u><b><span>¥</span>{{zl.spec.market}}</b></p>
+                <!--<div>
+                    <p class="spec"><i class="icon icon-x-integral"></i><span>{{imz.spec.points}}</span></p>
+                    <u>+</u>
+                    <p><span class="price-rmb">¥</span>{{imz.spec.ready}}</p>
+                  </div>-->
+                <h3>会员价：<span>现金 + 积分</span></h3>
+                <div>
+                  <p><span class="price-rmb">¥</span>{{zl.spec.ready}}</p>
+                  <u>+</u>
+                  <p class="spec"><i class="icon icon-y-integral"></i><span>{{zl.spec.points}}</span></p>
+                </div>
               </div>
-            </div>
-            <div class="goods-price-rmb" v-if="zl.type == 3">
-              ¥ <span>{{zl.spec.ready}}</span>
-            </div>
-          </router-link>
-        </li>
-      </ul>
+              <div class="goods-price-rmb" v-if="zl.type == 3">
+                ¥ <span>{{zl.spec.ready}}</span>
+              </div>
+            </router-link>
+          </li>
+        </ul>
       <div class="container-no-data" v-if="zo.isNo">
         <img src="../../assets/images/no_data.png" alt="">
         <p class="no-data-txt2">暂无此专区产品~</p>
@@ -71,7 +71,7 @@
           zoneList: [],
           imgUrl: imgUrl,
           isNo: false,
-          isMore: false,
+          isMore: true,
         },
         cache: cache,
         comeId: parseInt(this.$route.params.id),
@@ -95,7 +95,7 @@
               };
             };
           });
-      }
+      },
     },
     beforeDestroy () {
       let currentData = this.zo;
@@ -143,7 +143,7 @@
           this.zo = cacheData.cd;
         }
       } else {
-switch (this.zo.id) {
+      switch (this.zo.id) {
         case 1:
           this.zo.title = '资产兑换专区';
           break;

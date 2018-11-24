@@ -1,7 +1,10 @@
 <template>
     <div class="wrapper">
-      <div class="search-container">
-        <router-link to="/search"><span class="search-input"><i class="icon icon-search"></i><u>输入关键字</u></span></router-link><span class="search-button fr">搜索</span>
+      <div class="search-container" :style="{'background':this.searchBG?'#ffffff':'rgba(231, 227, 227, .4)'}">
+        <router-link to="/search">
+          <span class="search-input" :style="{'background':this.searchBG?'#efeff4':'#efeff48f'}">
+          <i class="icon icon-search"></i><u>输入关键字</u></span>
+        </router-link><span class="search-button fr">搜索</span>
       </div>
       <swiper :options="swiperOption" ref="mySwiper" @someSwiperEvent="">
         <swiper-slide v-for="(sp, index) in swipeBox" :key="index"><img :src="imgUrl+sp.pic" alt="" class="swiper-image"></swiper-slide>
@@ -154,7 +157,8 @@
         integralZone: [],
         integralMoneyZone: [],
         bandList: [],
-        claList:[]
+        claList:[],
+        searchBG:false
       }
     },
     computed: {
@@ -163,7 +167,11 @@
       }
     },
     mounted() {
-      this.swiper.slideTo(1, 1000, true)
+      this.swiper.slideTo(1, 1000, true);
+      window.addEventListener('scroll',this.handleScroll);
+    },
+    beforeDestroy () {
+      window.removeEventListener('scroll',this.handleScroll)
     },
     methods: {
       showMarquee:function (num) {
@@ -178,6 +186,17 @@
           that.num=num*0.286;
         }, 3000);
       },
+      handleScroll(){
+        var scrollTop = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop
+        var offsetTop = document.querySelector('.search-container').offsetTop
+        if (scrollTop > offsetTop) {
+          this.searchBG = false;
+        } else {
+          this.searchBG = true;
+        }
+
+      }
+
     },
     created () {
       localStorage.removeItem('confirmAddress');
@@ -243,7 +262,7 @@
         })
       api.getFloor()
         .then(res => {
-          console.log(res)
+          // console.log(res)
         })
     },
   }
