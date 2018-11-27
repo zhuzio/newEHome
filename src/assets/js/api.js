@@ -210,6 +210,10 @@ export default {
     // 获得品牌
     return Get(`/brandList/1`)
   },
+  getStore (params) {
+    // 获得店铺下商品
+    return Get(`/storeGoodsList/${params.page}?store_id=${params.id}`)
+  },
   getFloor () {
     // 获得首页图片
     return Get(`/floor`)

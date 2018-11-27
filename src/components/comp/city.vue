@@ -10,7 +10,7 @@
           <span :class="{'area_on':cls2}" @click="choseAddress(2)">{{choseDistrict}}</span>
         </p>
         <div class="area_center">
-          <div class="area_con" ref="area">
+          <div class="area_con" :style="an">
             <div class="area_province">
               <p v-for="(province,$index) in province" :key="$index" @click="getCity(province,$index)" :class="{'act':provinceIdx === $index}">{{province.name}}</p>
             </div>
@@ -57,7 +57,10 @@ export default {
       provinceIdx: -1,
       cityIdx: -1,
       districtIdx: -1,
-      finalAddress: []
+      finalAddress: [],
+      an:'',
+      an0:'transform: translateX(0rem);transition-duration: .5s;',
+      an1:'transform: translateX(-3.23rem);transition-duration: .5s;',
     }
   },
   methods: {
@@ -71,42 +74,42 @@ export default {
       })
     },
     getCity (pro,idx) {
-      this.provinceIdx = idx
-      this.index_p = pro.id
-      this.cityIdx = -1
-      this.districtIdx = -1
-      this.choseProvince = pro.name
-      this.choseCity = '请选择'
-      this.choseDistrict = '请选择'
-      this.cls = false
-      this.cls1 = true
-      this.cls2 = false
-      this.district = []
+      this.provinceIdx = idx;
+      this.index_p = pro.id;
+      this.cityIdx = -1;
+      this.districtIdx = -1;
+      this.choseProvince = pro.name;
+      this.choseCity = '请选择';
+      this.choseDistrict = '请选择';
+      this.cls = false;
+      this.cls1 = true;
+      this.cls2 = false;
+      this.district = [];
       // this.$http.get(url + 'city/'+pro.id+'')
       api.getAddressPCA(pro.id)
       .then((value) => {
-        this.city = value.data
+        this.city = value.data;
       }, (error) => {
         console.log(error)
       })
     },
     getDistrict (city,idx) {
-      this.cityIdx = idx
-      this.index_c = city.id
-      this.districtIdx = -1
-      this.choseCity = city.name
-      this.choseDistrict = '请选择'
-      this.cls = false
-      this.cls1 = false
-      this.cls2 = true
+      this.cityIdx = idx;
+      this.index_c = city.id;
+      this.districtIdx = -1;
+      this.choseCity = city.name;
+      this.choseDistrict = '请选择';
+      this.cls = false;
+      this.cls1 = false;
+      this.cls2 = true;
       // this.$http.get(url + 'city/'+city.id+'')
       api.getAddressPCA(city.id)
         .then((value) => {
-        this.district = value.data
+        this.district = value.data;
       }, (error) => {
         console.log(error)
       })
-      this.$refs.area.style.left = '-3.23rem'
+      this.an = this.an1;
     },
     // 进行最后一步选择后，将address addressArr 值返回
     getAds (dis,idx) {
@@ -123,20 +126,20 @@ export default {
     choseAddress (idx) {
       switch (idx) {
         case 0:
-          this.cls = true
-          this.cls1 = false
-          this.cls2 = false
-          this.$refs.area.style.left = '0rem'
+          this.cls = true;
+          this.cls1 = false;
+          this.cls2 = false;
+          this.an = this.an0;
           break
         case 1:
-          this.cls = false
-          this.cls1 = true
-          this.cls2 = false
-          this.$refs.area.style.left = '0rem'
+          this.cls = false;
+          this.cls1 = true;
+          this.cls2 = false;
+          this.an = this.an0;
           break
         case 2:
           if (this.choseDistrict != '请选择') {
-            this.$refs.area.style.left = '-3.23rem'
+            this.an = this.an1;
             this.cls = false
             this.cls1 = false
             this.cls2 = true
@@ -145,7 +148,7 @@ export default {
       }
     },
     cancelAds () {
-      this.$emit('hidden',this.finalAddress)
+      this.$emit('hidden',this.finalAddress);
       this.provinceIdx = -1;
       this.cityIdx = -1;
       this.districtIdx = -1;
@@ -154,7 +157,7 @@ export default {
       this.choseProvince = '请选择';
       this.choseCity = '请选择';
       this.choseDistrict = '请选择';
-      this.$refs.area.style.left = '0rem';
+      this.an = this.an0;
       this.cls = true;
       this.cls1 = false;
       this.cls2 = false;

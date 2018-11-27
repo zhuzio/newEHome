@@ -36,6 +36,7 @@ import band from '@/components/store/band'
 import bandZone from '@/components/store/bandZone'
 import announcement from '@/components/store/announcement'
 import aboutUs from '@/components/my/aboutUs'
+import storeDetail from '@/components/store/storeDetail'
 
 Vue.use(Router)
 
@@ -84,6 +85,11 @@ export default new Router({
       path: '/bandZone/:id', // 品牌详情
       name: 'bandZone',
       component: bandZone
+    },
+    {
+      path:'/storeDetail/:id', // 店铺详情
+      name: 'storeDetail',
+      component: storeDetail
     },
     {
       path: '/search', // 搜索

@@ -35,7 +35,9 @@
         </div>
       </div>
       <div class="detail-clear">
-        <div class="detail-clear-store"><i class="icon icon-detail-service"></i><p>店铺</p></div>
+        <div class="detail-clear-store">
+          <i class="icon icon-detail-service"></i><p>店铺</p>
+        </div>
         <div class="detail-clear-service"><a href="tel:0377—63186665"><i class="icon icon-detail-store"></i><p>客服</p></a></div>
         <div class="detail-clear-join-car" @click="joinBuy(0)">加入购物车</div>
         <div class="detail-clear-buy-now" @click="joinBuy(1)">立即购买</div>

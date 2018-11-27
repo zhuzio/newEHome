@@ -71,6 +71,10 @@
           Toast('提现金额不能大于余额！');
           return false;
         };
+        if (parseInt(this.withdrawNum) < 500) {
+          Toast('提现金额不能小于500！');
+          return false;
+        };
         this.payPop = true;
       },
       hiddenShow () {
@@ -99,6 +103,12 @@
                setTimeout(() => {
                  window.history.go(-1)
                },2500)
+             } else {
+               Toast({
+                 message: res.msg,
+                 position: 'center',
+                 duration: 2000
+               })
              }
            })
            .catch(err => {
