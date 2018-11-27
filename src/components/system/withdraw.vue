@@ -71,8 +71,8 @@
           Toast('提现金额不能大于余额！');
           return false;
         };
-        if (parseInt(this.withdrawNum) < 500) {
-          Toast('提现金额不能小于500！');
+        if (parseInt(this.withdrawNum)%100 !== 0) {
+          Toast('提现金额须为100的整倍数！');
           return false;
         };
         this.payPop = true;
