@@ -29,6 +29,8 @@
         </div>
       </div>
       <div class="detail-goods-detail">
+        <p class="detail-title" v-if="goodsDescrible"><span></span>温馨提示</p>
+        <div class="detail-desc" v-if="goodsDescrible"><span>{{goodsDescrible}}</span></div>
         <p class="detail-title"><span></span>商品详情</p>
         <div class="detail-img">
           <img :src="imgUrl+dimg" alt="" v-for="(dimg, index) in goodsInfo.detail_img" :key="index">
@@ -135,6 +137,7 @@
         choseS1: '',
         choseS2: '',
         market: '',
+        goodsDescrible:'',
       }
     },
     computed: {
@@ -292,6 +295,8 @@
             this.money =  this.goodsInfo.specs[0].ready;
             this.styleID = this.goodsInfo.specs[0].id;
             this.storeId = this.goodsInfo.store.id;
+            this.goodsDescrible = this.goodsInfo.desc;
+
             // console.log( this.style1,this.style2)
           }
         })
