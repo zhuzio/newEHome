@@ -41,7 +41,9 @@
               </li>
             </ul>
             <div class="ft1-ad">
-              <img src="../../assets/images/indexAD.jpg" alt="">
+              <a :href="f1PicLink">
+                <img :src="imgUrl + f1Pic" alt="">
+              </a>
             </div>
           </div>
         </div>
@@ -158,7 +160,9 @@
         integralMoneyZone: [],
         bandList: [],
         claList:[],
-        searchBG:false
+        searchBG:false,
+        f1Pic: '',
+        f1PicLink: ''
       }
     },
     computed: {
@@ -262,6 +266,8 @@
         })
       api.getFloor()
         .then(res => {
+          this.f1Pic = res.data[0].pic;
+          this.f1PicLink = res.data[0].href;
           // console.log(res)
         })
     },
