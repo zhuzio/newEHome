@@ -1,8 +1,8 @@
 import axios from 'axios'
 import { Toast } from 'mint-ui'
 
-var url = 'http://www.xinyijiamall.com/api/'
-// var url = 'http://appliance.test/api/'
+// var url = 'http://www.xinyijiamall.com/api/'
+var url = 'http://appliance.test/api/'
 var imgUrl = 'http://img.nyycstar.com/'
 let token = localStorage.getItem('token')
 // axios 配置
@@ -210,6 +210,10 @@ export default {
     // 获得品牌
     return Get(`/brandList/1`)
   },
+  getStore (params) {
+    // 获得店铺下商品
+    return Get(`/storeGoodsList/${params.page}?store_id=${params.id}`)
+  },
   getFloor () {
     // 获得首页图片
     return Get(`/floor`)
@@ -281,6 +285,18 @@ export default {
   qualificationBorrow () {
     // 是否借款
     return Get(`/whetherToBorrow?token=${token}&apply_level=1`)
+  },
+  firstInstallmentPay (params) {
+    // 首期分期支付创建订单
+    return Get(`/applyloan/OrderPay?order_sn=${params}`)
+  },
+  installmentBill () {
+    // 账单
+    return Get(`/stag/stagingLog?token=${token}`)
+  },
+  createdInstallmentOrder (params) {
+    // 创建分期账单
+    return Post(`/stag/createOrder`, params)
   },
   upgradeQualification (params) {
     return Get(`/myTeam?token=${token}&apply_type=${params}`)

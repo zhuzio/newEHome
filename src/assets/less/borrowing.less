@@ -159,6 +159,35 @@
     }
   }
 }
+.borrowing-pop{
+  left: 0;
+  right: 0;
+  transform: translate3d(0, 0, 0);
+  .borrowing-pop-container{
+    width: 100%;
+    background: white;
+    .borrowing-pay-way{
+      background: white;
+      padding: .2rem 3%;
+      width: 94%;
+      .borrowing-each-pay{
+        width: 30%;
+        padding: .25rem;
+        margin: 0 auto;
+        text-align: center;
+        border:1px solid #ccc;
+        border-radius: .15rem;
+        font-size: .24rem;
+        *{
+          vertical-align: middle;
+        }
+        span{
+          margin-left: .1rem;
+        }
+      }
+    }
+  }
+}
 input[type='radio']+label::before,
 input[type='checkbox']+label::before {
   width:0.35rem;
@@ -170,6 +199,7 @@ input[type='radio']:checked+label::before,
 input[type='checkbox']:checked+label::before{
   color: #fff;/*对号的颜色*/
   background: #2f90e1;
+  border: 1px rgba(204, 204, 204, 0.2) solid;
 }
 label{
   color: black;

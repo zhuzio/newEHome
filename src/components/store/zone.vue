@@ -4,7 +4,8 @@
       <a href="javascript:window.history.go(-1)"></a> {{zo.title}}
     </div>
     <div class="cd-container ">
-        <ul v-if="!zo.isNo">
+      <v-scroll :on-refresh="onRefresh" :on-infinite="onInfinite">
+        <ul>
           <li v-for="(zl, index) in zo.zoneList" :key="index">
             <router-link :to="/detail/+zl.id">
               <div class="cd-goods-img">
@@ -46,11 +47,14 @@
             </router-link>
           </li>
         </ul>
-      <div class="container-no-data" v-if="zo.isNo">
+        <p class="add-more" style="margin-top: .15rem" v-if="zo.isMore"><mt-spinner type="triple-bounce"></mt-spinner></p>
+        <p class="add-more" style="margin-top: .15rem" v-if="!zo.isMore">没有更多了</p>
+     <!-- <div class="container-no-data" v-if="zo.isNo">
         <img src="../../assets/images/no_data.png" alt="">
         <p class="no-data-txt2">暂无此专区产品~</p>
       </div>
-      <p class="add-more" style="margin-top: .15rem" v-if="zo.isMore" @click="zAdd">点击加载更多</p>
+      <p class="add-more" style="margin-top: .15rem" v-if="zo.isMore" @click="zAdd">点击加载更多</p>-->
+      </v-scroll>
     </div>
   </div>
 </template>
@@ -60,8 +64,12 @@
   import { imgUrl } from '../../assets/js/api.js'
   import { Toast } from 'mint-ui'
   import cache from '@/assets/js/catch.js'
+  import Scroll from '../comp/scroll.vue';
   export default {
     name: "zone",
+    components : {
+      'v-scroll': Scroll
+    },
     data () {
       return {
         zo: {
@@ -96,6 +104,60 @@
             };
           });
       },
+      getZoneList () {
+        api.getZone({
+          page: 1,
+          type: this.zo.id
+        })
+          .then(res => {
+            if (res.code === 200) {
+              if (res.data.length === 0) {
+                this.zo.isNo = true;
+                this.zo.isMore = false;
+              } else if (res.data.length >= 10) {
+                this.zo.isMore = true;
+                this.zo.isNo = false;
+              } else {
+                this.zo.isMore = false;
+                this.zo.isNo = false;
+              };
+              this.zo.zoneList = res.data;
+            }
+          })
+      },
+      onRefresh (done) {
+        this.cache.remove('leaveZo');
+        setTimeout(() => {
+          window.location.reload()
+        },2000);
+        done();
+      },
+      onInfinite (done){
+        if (this.zo.isMore) {
+          setTimeout(() => {
+            this.zo.page += 1;
+            api.getZone({
+              page: this.zo.page,
+              type: this.zo.id
+            })
+              .then(res => {
+                if (res.data.length === 0) {
+                  this.$el.querySelector('.load-more').style.display = 'none';
+                  this.zo.isMore = false;
+                  Toast('到底了......');
+                  this.page = this.zo.page - 1;
+                } else {
+                  for (var i in res.data) {
+                    this.zo.zoneList.push((res.data)[i]);
+                  };
+                  done();
+                };
+              });
+          },2500)
+        } else {
+          this.$el.querySelector('.load-more').style.display = 'none';
+        }
+      }
     },
     beforeDestroy () {
       let currentData = this.zo;
@@ -120,25 +182,7 @@
               this.zo.title = '298专区';
               break;
           };
-          api.getZone({
-            page: this.zo.page,
-            type: this.zo.id
-          })
-            .then(res => {
-              if (res.code === 200) {
-                if (res.data.length === 0) {
-                  this.zo.isNo = true;
-                  this.zo.isMore = false;
-                } else if (res.data.length >= 10) {
-                  this.zo.isMore = true;
-                  this.zo.isNo = false;
-                } else {
-                  this.zo.isMore = false;
-                  this.zo.isNo = false;
-                };
-                this.zo.zoneList = res.data;
-              }
-            })
+          this.getZoneList();
         } else {
           this.zo = cacheData.cd;
         }
@@ -154,25 +198,7 @@
           this.zo.title = '298专区';
           break;
       };
-      api.getZone({
-        page: this.zo.page,
-        type: this.zo.id
-      })
-        .then(res => {
-          if (res.code === 200) {
-            if (res.data.length === 0) {
-              this.zo.isNo = true;
-              this.zo.isMore = false;
-            } else if (res.data.length >= 10) {
-              this.zo.isMore = true;
-              this.zo.isNo = false;
-            } else {
-              this.zo.isMore = false;
-              this.zo.isNo = false;
-            };
-            this.zo.zoneList = res.data;
-          }
-        })
+      this.getZoneList();
       }
 
       /*switch (this.zo.id) {
