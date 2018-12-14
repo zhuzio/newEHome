@@ -4,8 +4,9 @@
       <a href="javascript:window.history.go(-1)"></a> {{cdl.title}}
     </div>
     <div class="cd-container">
-      <ul>
-        <li v-for="(cd, index) in cdl.cdList" :key="index">
+      <v-scroll :on-refresh="onRefresh" :on-infinite="onInfinite">
+        <ul>
+          <li v-for="(cd, index) in cdl.cdList" :key="index">
           <router-link :to="/detail/+cd.id">
            <div class="cd-goods-img">
              <img :src="cdl.imgUrl + cd.default_img" alt="">
@@ -45,8 +46,12 @@
             </div>
           </router-link>
         </li>
-      </ul>
-      <p class="add-more" style="padding-top: .2rem" @click="classAdd" v-if="cdl.isMore">点击加载更多</p>
+        </ul>
+        <p class="add-more" style="margin-top: .15rem" v-if="cdl.isMore"><mt-spinner type="triple-bounce"></mt-spinner></p>
+        <p class="add-more" style="margin-top: .15rem" v-if="!cdl.isMore">没有更多了</p>
+        <!--<p class="add-more" style="padding-top: .2rem" v-if="cdl.isMore">点击加载更多</p>-->
+      </v-scroll>
+
     </div>
   </div>
 </template>
@@ -56,8 +61,12 @@
   import { imgUrl } from '../../assets/js/api.js'
   import { Toast } from 'mint-ui'
   import cache from '@/assets/js/catch.js'
+  import Scroll from '../comp/scroll.vue';
   export default {
     name: "classify-detail",
+    components : {
+      'v-scroll': Scroll
+    },
     data () {
       return {
         cdl: {
@@ -73,60 +82,10 @@
       };
     },
     methods: {
-      classAdd () {
-        this.cdl.page += 1;
+      getClassList () {
         api.getClassifyDetail({
           id: this.cdl.id,
-          page: this.cdl.page
-        })
-          .then(res => {
-            if (res.code === 200) {
-              if (res.data.length === 0) {
-                Toast('到底了！！！');
-                this.cdl.isMore = false;
-              } else {
-                for (var i in res.data) {
-                  this.cdl.cdList.push((res.data)[i]);
-                }
-              }
-            }
-          })
-      }
-    },
-    beforeDestroy () {
-      let cacheData  = this.cdl;
-      let d = parseInt((new Date().getTime())/1000);
-      this.cache.setCache('leaveCdl',{cd: cacheData,lt: d});
-    },
-    created () {
-      let cdlData = this.cache.getCache('leaveCdl');
-      if (cdlData) {
-        let c =parseInt((new Date().getTime())/1000);
-        let proTime = c - cdlData.lt;
-        let cacheId = cdlData.cd.id;
-        if (proTime >= 3600 || this.comeId !== cacheId) {
-          api.getClassifyDetail({
-            id: this.cdl.id,
-            page: this.cdl.page
-          })
-            .then(res => {
-              // console.log(res)
-              if (res.code === 200) {
-                if (res.data.length < 10) {
-                  this.cdl.isMore = false;
-                } else {
-                  this.cdl.isMore = true;
-                }
-                this.cdl.cdList = res.data;
-              }
-            })
-        } else {
-          this.cdl = cdlData.cd;
-        }
-      } else {
-        api.getClassifyDetail({
-          id: this.cdl.id,
-          page: this.cdl.page
+          page: 1
         })
           .then(res => {
             // console.log(res)
@@ -139,9 +98,63 @@
               this.cdl.cdList = res.data;
             }
           })
+      },
+      onRefresh (done) {
+        this.cache.remove('leaveCdl');
+        setTimeout(() => {
+          window.location.reload()
+        },2000);
+        done();
+      },
+      onInfinite (done) {
+        if (this.cdl.isMore) {
+          setTimeout(() => {
+            this.cdl.page += 1;
+            api.getClassifyDetail({
+              id: this.cdl.id,
+              page: this.cdl.page
+            })
+              .then(res => {
+                if (res.code === 200) {
+                  if (res.data.length === 0) {
+                    Toast('到底了！！！');
+                    this.$el.querySelector('.load-more').style.display = 'none';
+                    this.cdl.isMore = false;
+                  } else {
+                    for (var i in res.data) {
+                      this.cdl.cdList.push((res.data)[i]);
+                    }
+                    done();
+                  }
+                }
+              })
+          },2500)
+        } else {
+          this.$el.querySelector('.load-more').style.display = 'none';
+        }
+      }
+    },
+    created () {
+      let cdlData = this.cache.getCache('leaveCdl');
+      if (cdlData) {
+        let c =parseInt((new Date().getTime())/1000);
+        let proTime = c - cdlData.lt;
+        let cacheId = cdlData.cd.id;
+        if (proTime >= 3600 || this.comeId !== cacheId) {
+          this.getClassList()
+        } else {
+          this.cdl = cdlData.cd;
+        }
+      } else {
+        this.getClassList()
       }
 
-    }
+    },
+    beforeDestroy () {
+      let cacheData  = this.cdl;
+      let d = parseInt((new Date().getTime())/1000);
+      this.cache.setCache('leaveCdl',{cd: cacheData,lt: d});
+    },
   }
 </script>
 

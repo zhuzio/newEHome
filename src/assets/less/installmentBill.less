@@ -1,0 +1,107 @@
+.moduleHead{
+  background-image: linear-gradient(-90deg,
+  #fcaa6e 0%,
+  #f64243 100%);
+}
+.section{
+  width:100%;
+  background-color: white;
+  padding: 0 0 0.6rem 0;
+  margin-top: .8rem;
+  .title{
+    width: 94%;
+    font-size: .28rem;
+    color: #7e7e7e;
+    padding: .2rem 3%;
+    border-bottom: 1px solid rgba(183, 183, 183, 0.71);
+    *{
+      vertical-align: middle;
+    }
+    span{
+      display: inline-block;
+      width: 0.077rem;
+      height: 0.29rem;
+      background-color: #3896fe;
+      margin-right: .1rem;
+    }
+  }
+  .bill-container{
+    width: 100%;
+    margin: 0 auto;
+    .bill-detail{
+      padding: 0.3rem 2% 0.3rem 6%;
+      border-bottom: 1px solid rgba(183, 183, 183, 0.71);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      width: 92%;
+      &.bill-now{
+        background-image: linear-gradient(#f64243, #f64243), linear-gradient(#eae9e9, #eae9e9)!important;
+        background-blend-mode: normal, normal;
+        .bill-info{
+          p{
+            span{
+              color: white;
+              &.bill-code {
+                color: white!important;
+                &.bill-code-red {
+                  color: white!important;
+                }
+              }
+            }
+          }
+        }
+      }
+      &.bill-next{
+        background-image: linear-gradient(#f0f0f0, #f0f0f0), linear-gradient(#eae9e9, #eae9e9);
+        background-blend-mode: normal, normal;
+      }
+      .icon-arrow{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height:.8rem;
+      }
+      .bill-info{
+        width: 5.35rem;
+        p{
+          padding: .15rem 0;
+          overflow: hidden;
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          .bill-frequency{
+            font-size: 0.25rem;
+            color: #000000;
+            font-weight: bolder;
+            i{
+              font-size: .3rem;
+              margin: 0 .1rem;
+            }
+          }
+          .bill-money{
+            font-size: .23rem;
+            i{
+              font-size: .3rem;
+            }
+          }
+          .bill-time{
+            font-size: 0.22rem;
+            color: #000000;
+            opacity: 0.6;
+          }
+          .bill-code{
+            font-size: .22rem;
+            &.bill-code-red {
+              color: #c50000;
+            }
+            &.bill-code-green {
+              color: #06b51c;
+            }
+          }
+        }
+      }
+    }
+
+  }
+}

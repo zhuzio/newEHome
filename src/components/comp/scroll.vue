@@ -1,27 +1,26 @@
 <template>
-  <div class="wrapper">
-    <div class="yo-scroll"
-         :class="{'down':(state===0),'up':(state==1),refresh:(state===2),touch:touching}"
-         @touchstart="touchStart($event)"
-         @touchmove="touchMove($event)"
-         @touchend="touchEnd($event)"
-         @scroll="(onInfinite || infiniteLoading) ? onScroll($event) : undefined">
-      <section class="inner" :style="{ transform: 'translate3d(0, ' + top + 'px, 0)' }">
-        <header class="pull-refresh">
-          <slot name="pull-refresh">
-            <span class="down-tip">下拉更新</span>
-            <span class="up-tip">松开更新</span>
-            <span class="refresh-tip">更新中</span>
-          </slot>
-        </header>
-        <slot></slot>
-        <footer class="load-more">
-          <slot name="load-more">
-            <span>加载中……</span>
-          </slot>
-        </footer>
-      </section>
-    </div>  </div>
+  <div class="yo-scroll"
+       :class="{'down':(state===0),'up':(state==1),refresh:(state===2),touch:touching}"
+       @touchstart="touchStart($event)"
+       @touchmove="touchMove($event)"
+       @touchend="touchEnd($event)"
+       @scroll="(onInfinite || infiniteLoading) ? onScroll($event) : undefined">
+    <section class="inner" :style="{ transform: 'translate3d(0, ' + top + 'px, 0)' }" id="scrollContainer">
+      <header class="pull-refresh">
+        <slot name="pull-refresh">
+          <span class="down-tip">下拉更新</span>
+          <span class="up-tip">松开更新</span>
+          <span class="refresh-tip">更新中</span>
+        </slot>
+      </header>
+      <slot></slot>
+      <footer class="load-more">
+        <slot name="load-more">
+          <span>加载中……</span>
+        </slot>
+      </footer>
+    </section>
+  </div>
 </template>
 
 <script>
@@ -65,15 +64,12 @@
         this.startY = e.targetTouches[0].pageY
         this.startScroll = this.$el.scrollTop || 0
         this.touching = true
-        // console.log(this.startY)
       },
       touchMove(e) {
-        // console.log(this.enableRefresh)
         if (!this.enableRefresh || this.$el.scrollTop > 0 || !this.touching) {
           return
         }
         let diff = e.targetTouches[0].pageY - this.startY - this.startScroll
-        console.log(diff)
         if (diff > 0) e.preventDefault()
         this.top = Math.pow(diff, 0.8) + (this.state === 2 ? this.offset : 0)
 
@@ -137,5 +133,5 @@
 </script>
 
 <style scoped lang="less">
-  @import "../../assets/less/scroll";
+  @import "../../assets/less/scroll.less";
 </style>

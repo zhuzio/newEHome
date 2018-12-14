@@ -97,6 +97,15 @@
         <button @click="readAgreement(1)">我知道了</button>
       </div>
     </div>
+    <mt-popup v-model="popBorrowing" class="borrowing-pop" position="bottom">
+      <div class="borrowing-pop-container">
+        <div class="borrowing-pay-way">
+          <div class="borrowing-pay-list" @click="firstInstallment(0)">
+            <div class="borrowing-each-pay"><i class="icon icon-pay-weChat"></i><span>微信支付</span></div>
+          </div>
+        </div>
+      </div>
+    </mt-popup>
   </div>
 </template>
 
@@ -136,8 +145,9 @@
         imgType:2,     //图片上传的状态  0：图片已经成功上传  1表示图片在上传中 2表示图片还没上传,
         img_loading:false,
         Orientation:''  ,    //图片的拍摄角度
-        z_tel: /^1(3|4|5|6|7|8|9)\d{9}$/
-
+        z_tel: /^1(3|4|5|6|7|8|9)\d{9}$/,
+        popBorrowing: false,
+        borrowingPayWay: ''
       }
     },
     methods: {
@@ -259,6 +269,19 @@
           Toast('请认真阅读并同意协议！！！');
           return false;
         };
+        this.popBorrowing = true;
+      },
+      firstInstallment (idx) {
+        switch (idx) {
+          case 0:
+            this.borrowingPayWay = 'wx';
+            break;
+          case 1:
+            this.borrowingPayWay = 'unionpay';
+            break;
+          default:
+            return false;
+        };
         if (this.isC) {
           this.isC = false;
           this.btnTxt = '正在提交中，请稍等...';
@@ -270,19 +293,21 @@
             name: t.borrowInfo.realName,
             phone: t.borrowInfo.tel,
             id_photo: t.borrowInfo.upImgSrc,
-            agree_to_agreement: t.borrowInfo.agreeNum
+            agree_to_agreement: t.borrowInfo.agreeNum,
+            pay_channel: this.borrowingPayWay
           });
           api.borrowIt(form)
             .then(res => {
               if (res.code === 200) {
-                Toast({
+               /* Toast({
                   message: '分期成功，请等待审核！',
                   position: 'middle',
                   duration: 2000
                 });
                 setTimeout(() => {
                   this.$router.back(-1);
-                },2300)
+                },2300)*/
+                window.location.href = 'http://www.xinyijiamall.com/api/applyloan/OrderPay?order_sn='+ res.data +'';
               } else {
                 Toast(res.msg);
                 this.isC = true;
@@ -296,8 +321,6 @@
         } else {
           Toast('正在提交中，请稍等...')
         }
-
-
       },
       readAgreement (idx) {
         switch (idx) {

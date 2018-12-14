@@ -37,6 +37,9 @@ import bandZone from '@/components/store/bandZone'
 import announcement from '@/components/store/announcement'
 import aboutUs from '@/components/my/aboutUs'
 import storeDetail from '@/components/store/storeDetail'
+import installmentBill from '@/components/my/installmentBill'
+import overdueBill from '@/components/my/overdueBill'
+import InstallmentOrder from '@/components/my/InstallmentOrder'
 
 Vue.use(Router)
 
@@ -89,7 +92,7 @@ export default new Router({
     {
       path:'/storeDetail/:id', // 店铺详情
       name: 'storeDetail',
-      component: storeDetail
+      component: storeDetail,
     },
     {
       path: '/search', // 搜索
@@ -210,6 +213,21 @@ export default new Router({
       path: '/borrowing', // 借贷
       name: 'borrowing',
       component: borrowing
+    },
+    {
+      path: '/installmentBill', // 分期还款
+      name: 'installmentBill',
+      component: installmentBill
+    },
+    {
+      path: '/overdueBill', // 已逾期分期还款
+      name: 'overdueBill',
+      component: overdueBill
+    },
+    {
+      path: '/InstallmentOrder', // 分期订单
+      name: 'InstallmentOrder',
+      component: InstallmentOrder
     },
     {
       path: '/changePassword/:id', // 修改登录密码

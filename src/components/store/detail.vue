@@ -1,32 +1,22 @@
 <template>
-    <div class="wrapper">
-      <div class="detail-container">
-        <div class="detail-swipe-container" :style="{'height': nowHeight + 'px'}">
-          <p class="detail-back-car">
-            <span class="detail-back" @click="detailBack"><i class="icon icon-detail-back"></i></span>
-            <span class="detail-car"><router-link to="/shopCar"><i class="icon icon-detail-car"></i></router-link></span>
-          </p>
-          <swiper :options="swiperOption" ref="mySwiper">
-            <swiper-slide v-for="(sp, index) in goodsInfo.main_img" :key="index"><img :src="imgUrl+sp" alt="" class="swiper-image"></swiper-slide>
-            <div class="swiper-pagination"  slot="pagination"></div>
-          </swiper>
-        </div>
+  <div class="wrapper">
+    <div class="detail-container">
+      <div class="detail-swipe-container" :style="{'height': nowHeight + 'px'}">
+        <p class="detail-back-car">
+          <span class="detail-back" @click="detailBack"><i class="icon icon-detail-back"></i></span>
+          <span class="detail-car"><router-link to="/shopCar"><i class="icon icon-detail-car"></i></router-link></span>
+        </p>
+        <swiper :options="swiperOption" ref="mySwiper">
+          <swiper-slide v-for="(sp, index) in goodsInfo.main_img" :key="index"><img :src="imgUrl+sp" alt="" class="swiper-image"></swiper-slide>
+          <div class="swiper-pagination"  slot="pagination"></div>
+        </swiper>
       </div>
-      <div class="detail-name-price">
-        <p class="detail-goods-name">{{goodsInfo.name}}</p>
-        <div class="detail-goods-price" v-if="goodsInfo.type == 3">
-          <p><i></i><span>¥</span>{{money}}</p>
-          <!--<p class="ac"><i>市场价：</i><s>¥</s><s>{{market}}</s></p>-->
-        </div>
-        <div class="detail-goods-integral" v-if="goodsInfo.type == 1">
-          <p><i class="icon icon-y-integral"></i><span style="color: #ff3b30;font-size: .35rem">{{integralX}}</span></p>
-          <p class="detail-goods-price" style="color: #c3c3c3"><span style="color: #c3c3c3;font-size: .32rem">¥</span><s class="ss">{{money}}</s></p>
-        </div>
-        <div class="detail-goods-integral-and-money" v-if="goodsInfo.type == 2">
-          <p class="aa1">市场价：<span>¥<i>{{market}}</i></span></p>
-          <p class="aa">会员价：<b>¥</b><span>{{money}}</span><b>+</b><i class="icon icon-y-integral"></i><span>{{integralX}}</span></p>
-          <!--<p><i class="icon icon-y-integral"></i><span>{{integralY}}</span><b>+</b><u>¥</u>{{money}}</p>-->
-        </div>
+    </div>
+    <div class="detail-name-price">
+      <p class="detail-goods-name">{{goodsInfo.name}}</p>
+      <div class="detail-goods-price" v-if="goodsInfo.type == 3">
+        <p><i></i><span>¥</span>{{money}}</p>
+        <!--<p class="ac"><i>市场价：</i><s>¥</s><s>{{market}}</s></p>-->
       </div>
       <div class="detail-goods-detail">
         <p class="detail-title" v-if="goodsDescrible"><span></span>温馨提示</p>
@@ -44,53 +34,63 @@
         <div class="detail-clear-join-car" @click="joinBuy(0)">加入购物车</div>
         <div class="detail-clear-buy-now" @click="joinBuy(1)">立即购买</div>
       </div>
-      <mt-popup v-model="popupVisible" class="detail-pop" position="bottom">
-        <div class="detail-pop-center">
-          <div class="pop-head">
-            <div class="detail-small-img">
-              <img :src="imgUrl + goodsInfo.default_img" alt="">
-            </div>
-            <div class="pop-detail-txt">
-              <p class="pop-price" v-if="goodsInfo.type == 3"><span>¥</span>{{money}}</p>
-              <div class="pop-integral" v-if="goodsInfo.type == 1">
-                <!--<p><i class="icon icon-x-integral"></i><span>{{integralX}}</span></p>-->
-                <p class="bb"><i>¥</i>{{money}}</p>
-                <p><i class="icon icon-y-integral"></i><span>{{integralY}}</span></p>
-              </div>
-              <div class="pop-integral-money" v-if="goodsInfo.type == 2">
-                <!--<p><i class="icon icon-x-integral"></i><span>{{integralX}}</span><b>+</b><u>¥</u><span>{{money}}</span></p>-->
-                <p class="bb"><i>¥</i>{{market}}</p>
-                <p><i class="icon icon-y-integral"></i><span>{{integralY}}</span><b>+</b><u>¥</u><span>{{money}}</span></p>
-              </div>
-              <p class="pop-inventory">库存 {{inventory}} 件</p>
-            </div>
-          </div>
-          <div class="pop-style">
-            <div class="pop-style-type2">
-              <p class="style-head">{{goodsInfo.spec_name1}}</p>
-              <div class="style-type-center">
-                <span @click="choseStyle(0, index, st1)" :class="{'style-on':st1Idex===index}" v-for="(st1, index) in style1" :key="index">{{st1.size}}</span>
-              </div>
-            </div>
-            <div class="pop-style-type1">
-              <p class="style-head">{{goodsInfo.spec_name2}}</p>
-              <div class="style-type-center">
-                <span @click="choseStyle(1, index, st2)" :class="{'style-on':st2Idex===index}" v-for="(st2, index) in style2" :key="index">{{st2}}</span>
-              </div>
-            </div>
-          </div>
-          <div class="pop-total">
-            <p class="total-title">购买数量</p>
-            <div class="pop-total-center">
-              <button class="cti-sub cti" @click="subAdd(0)">-</button>
-              <input type="number" class="cti-number" readonly="" :value="value">
-              <button class="cti-add cti" @click="subAdd(1)">+</button>
-            </div>
-          </div>
-          <button class="pop-confirm" @click="detailConfirm">确定</button>
-        </div>
-      </mt-popup>
     </div>
+    <div class="detail-clear">
+      <div class="detail-clear-store"><router-link :to="/storeDetail/ + goodsInfo.store_id"><i class="icon icon-detail-service"></i><p>店铺</p></router-link></div>
+      <!--<div class="detail-clear-store"><router-link to="/demo"><i class="icon icon-detail-service"></i><p>店铺</p></router-link></div>-->
+
+      <div class="detail-clear-service"><a href="tel:0377—63186665"><i class="icon icon-detail-store"></i><p>客服</p></a></div>
+
+      <div class="detail-clear-join-car" @click="joinBuy(0)">加入购物车</div>
+      <div class="detail-clear-buy-now" @click="joinBuy(1)">立即购买</div>
+    </div>
+    <mt-popup v-model="popupVisible" class="detail-pop" position="bottom">
+      <div class="detail-pop-center">
+        <div class="pop-head">
+          <div class="detail-small-img">
+            <img :src="imgUrl + goodsInfo.default_img" alt="">
+          </div>
+          <div class="pop-detail-txt">
+            <p class="pop-price" v-if="goodsInfo.type == 3"><span>¥</span>{{money}}</p>
+            <div class="pop-integral" v-if="goodsInfo.type == 1">
+              <!--<p><i class="icon icon-x-integral"></i><span>{{integralX}}</span></p>-->
+              <p class="bb"><i>¥</i>{{money}}</p>
+              <p><i class="icon icon-y-integral"></i><span>{{integralY}}</span></p>
+            </div>
+            <div class="pop-integral-money" v-if="goodsInfo.type == 2">
+              <!--<p><i class="icon icon-x-integral"></i><span>{{integralX}}</span><b>+</b><u>¥</u><span>{{money}}</span></p>-->
+              <p class="bb"><i>¥</i>{{market}}</p>
+              <p><i class="icon icon-y-integral"></i><span>{{integralY}}</span><b>+</b><u>¥</u><span>{{money}}</span></p>
+            </div>
+            <p class="pop-inventory">库存 {{inventory}} 件</p>
+          </div>
+        </div>
+        <div class="pop-style">
+          <div class="pop-style-type2">
+            <p class="style-head">{{goodsInfo.spec_name1}}</p>
+            <div class="style-type-center">
+              <span @click="choseStyle(0, index, st1)" :class="{'style-on':st1Idex===index}" v-for="(st1, index) in style1" :key="index">{{st1.size}}</span>
+            </div>
+          </div>
+          <div class="pop-style-type1">
+            <p class="style-head">{{goodsInfo.spec_name2}}</p>
+            <div class="style-type-center">
+              <span @click="choseStyle(1, index, st2)" :class="{'style-on':st2Idex===index}" v-for="(st2, index) in style2" :key="index">{{st2}}</span>
+            </div>
+          </div>
+        </div>
+        <div class="pop-total">
+          <p class="total-title">购买数量</p>
+          <div class="pop-total-center">
+            <button class="cti-sub cti" @click="subAdd(0)">-</button>
+            <input type="number" class="cti-number" readonly="" :value="value">
+            <button class="cti-add cti" @click="subAdd(1)">+</button>
+          </div>
+        </div>
+        <button class="pop-confirm" @click="detailConfirm">确定</button>
+      </div>
+    </mt-popup>
+  </div>
 </template>
 
 <script>

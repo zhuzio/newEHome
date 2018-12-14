@@ -286,6 +286,18 @@ export default {
     // 是否借款
     return Get(`/whetherToBorrow?token=${token}&apply_level=1`)
   },
+  firstInstallmentPay (params) {
+    // 首期分期支付创建订单
+    return Get(`/applyloan/OrderPay?order_sn=${params}`)
+  },
+  installmentBill () {
+    // 账单
+    return Get(`/stag/stagingLog?token=${token}`)
+  },
+  createdInstallmentOrder (params) {
+    // 创建分期账单
+    return Post(`/stag/createOrder`, params)
+  },
   upgradeQualification (params) {
     return Get(`/myTeam?token=${token}&apply_type=${params}`)
   },
