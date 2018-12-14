@@ -52,7 +52,7 @@
          <!-- <router-link to="/upgrade">
             <div><i class="icon icon-about"></i>升级<i class="icon icon-right fr"></i></div>
           </router-link>-->
-          <router-link to="/installmentBill"><div><i class="icon icon-address"></i>分期账单<i class="icon icon-right fr"></i></div></router-link>
+          <router-link to="/installmentBill" v-if="show"><div><i class="icon icon-address"></i>分期账单<i class="icon icon-right fr"></i></div></router-link>
           <div @click="borrow"><i class="icon icon-borrowing"></i>代理费分期<i class="icon icon-right fr"></i></div>
           <router-link to="/addressManage/0"><div><i class="icon icon-address"></i>收货地址<i class="icon icon-right fr"></i></div></router-link>
           <router-link to="/aboutUs"><div><i class="icon icon-about"></i>关于我们<i class="icon icon-right fr"></i></div></router-link>
@@ -85,6 +85,7 @@
         c_b: false,
         msg: '',
         borrowQualification: false,
+        show: false
       }
     },
     methods: {
@@ -119,8 +120,10 @@
       } else {
         api.getUserInfo()
           .then(res => {
-            // console.log(res)
             this.userInfo = res.data;
+            if (this.userInfo.level > 0) {
+              this.show = true
+            };
             switch (parseInt(this.userInfo.account_type)) {
               case 1:
                 this.idDeg = '会员';
@@ -148,8 +151,6 @@
           .catch(err => {
             console.log(err)
           })
-        //  = JSON.parse(localStorage.getItem('userInfo'));
-
         localStorage.removeItem('borrow');
         localStorage.removeItem('borrowLeave');
         this.src = 'http://www.xinyijiamall.com/api/registerLink?token='+token+'';
