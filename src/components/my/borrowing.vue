@@ -285,12 +285,12 @@
           let form = this.$qs.stringify({
             token: token,
             // bank_id: t.bankId,
-            id_number: t.borrowInfo.idNum,
-            apply_level: t.borrowInfo.money,
-            name: t.borrowInfo.realName,
-            phone: t.borrowInfo.tel,
-            id_photo: t.borrowInfo.upImgSrc,
-            agree_to_agreement: t.borrowInfo.agreeNum,
+            id_number: this.borrowInfo.idNum,
+            apply_level: this.borrowInfo.money,
+            name: this.borrowInfo.realName,
+            phone: this.borrowInfo.tel,
+            id_photo: this.borrowInfo.upImgSrc,
+            agree_to_agreement: this.borrowInfo.agreeNum,
             pay_channel: this.borrowingPayWay
           });
           api.borrowIt(form)
