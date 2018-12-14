@@ -249,10 +249,6 @@
           Toast('请填写身份证账号！！！');
           return false;
         };
-        /*if (!t.bankAccount) {
-          Toast('请选择银行卡号！！！');
-          return false;
-        };*/
         if (!t.borrowInfo.tel) {
           Toast('请填写预留手机号！！！');
           return false;
@@ -282,6 +278,7 @@
           default:
             return false;
         };
+        this.popBorrowing = true;
         if (this.isC) {
           this.isC = false;
           this.btnTxt = '正在提交中，请稍等...';
