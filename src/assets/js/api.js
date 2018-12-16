@@ -1,8 +1,8 @@
 import axios from 'axios'
 import { Toast } from 'mint-ui'
 
-var url = 'http://www.xinyijiamall.com/api/'
-// var url = 'http://appliance.test/api/'
+// var url = 'http://www.xinyijiamall.com/api/'
+var url = 'http://appliance.test/api/'
 var imgUrl = 'http://img.nyycstar.com/'
 let token = localStorage.getItem('token')
 // axios 配置
@@ -14,7 +14,7 @@ export function Post (url, params) {
   return new Promise((resolve, reject) => {
     axios.post(url, params)
       .then(response => {
-        if (response.data.code === 200 || response.data.code === 500) {
+        if (response.data.code === 200 || response.data.code === 500 || response.data.code === 501) {
           resolve(response.data)
         } else if (response.data.code === 403) {
           Toast({
@@ -39,7 +39,7 @@ export function Get (url, params) {
   return new Promise((resolve, reject) => {
     axios.get(url, params)
       .then(response => {
-        if (response.data.code === 200 || response.data.code === 500) {
+        if (response.data.code === 200 || response.data.code === 500 || response.data.code === 501) {
           resolve(response.data)
         } else if (response.data.code === 403) {
           Toast({
@@ -286,9 +286,9 @@ export default {
     // 是否借款
     return Get(`/whetherToBorrow?token=${token}&apply_level=1`)
   },
-  firstInstallmentPay (params) {
-    // 首期分期支付创建订单
-    return Get(`/applyloan/OrderPay?order_sn=${params}`)
+  firstInstallmentPayAgain (params) {
+    // 首次分期支付重新支付
+    return Post(`/applyLoan/payOrder`, params)
   },
   installmentBill () {
     // 账单

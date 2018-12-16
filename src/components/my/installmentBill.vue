@@ -15,7 +15,7 @@
               <span class="bill-money">金额：<i>{{bill.money}}</i> 元</span>
             </p>
             <p>
-              <span class="bill-time" v-if="bill.is_overdue == 0">账单还款日趋截至为 <i>{{bill.repayment_date}}</i></span>
+              <span class="bill-time" v-if="bill.is_overdue == 0">账单还款日期截至为 <i>{{bill.repayment_date}}</i></span>
               <span class="bill-time" v-if="bill.is_overdue == 1">您的账单已逾期 <i style="color: #44ec1d;font-size: .3rem">{{bill.overdue_day}}</i> 天，请尽快还款</span>
               <span class="bill-code bill-code-green" v-if="bill.is_repay == 1 && bill.is_overdue == 0">已还款</span>
               <span class="bill-code bill-code-red" v-if="bill.is_repay == 0 && bill.is_overdue == 0">未还款</span>

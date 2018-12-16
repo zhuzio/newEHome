@@ -62,6 +62,15 @@
       <div class="regCode" v-if="link" @click="CLink(1)">
         <img :src="src" alt="">
       </div>
+      <mt-popup v-model="popBorrowing" class="borrowing-pop" position="bottom">
+        <div class="borrowing-pop-container">
+          <div class="borrowing-pay-way">
+            <div class="borrowing-pay-list" @click="firstInstallment(0)">
+              <div class="borrowing-each-pay"><i class="icon icon-pay-weChat"></i><span>微信支付</span></div>
+            </div>
+          </div>
+        </div>
+      </mt-popup>
     </div>
 </template>
 
@@ -69,6 +78,7 @@
   import tabFoot from '../comp/tabFoot.vue'
   import api from '@/assets/js/api.js'
   import { Toast } from 'mint-ui'
+  import { MessageBox } from 'mint-ui'
   let token = localStorage.getItem('token')
   export default {
     name: "my",
@@ -85,7 +95,10 @@
         c_b: false,
         msg: '',
         borrowQualification: false,
-        show: false
+        show: false,
+        popBorrowing: false,
+        borrowingPayWay: '',
+        borrowingPayWayId: ''
       }
     },
     methods: {
@@ -93,13 +106,33 @@
         api.qualificationBorrow()
           .then(res => {
             if (res.code !== 200) {
-              Toast(res.msg);
-              return false
+             if (res.code === 500) {
+               Toast(res.msg);
+               return false
+             };
+             if (res.code === 501) {
+               MessageBox({
+                 title: '提示',
+                 message: '您有未支付的分期订单，是否去支付？',
+                 showCancelButton: true
+               })
+                 .then(rest => {
+                   if (rest == 'confirm') {
+                     console.log(res)
+                     this.borrowingPayWayId = res.data.id;
+                     this.popBorrowing = true;
+                   } else {
+                     return false;
+                   }
+                 })
+             }
             } else {
               this.$router.push('/borrowing');
             }
           })
-        // this.$router.push('/borrowing');
+          .catch(err => {
+            console.log(err)
+          })
       },
       CLink (idx) {
         switch (idx) {
@@ -112,6 +145,38 @@
           default:
             return false;
         }
+      },
+      firstInstallment (idx) {
+        switch (idx) {
+          case 0:
+            this.borrowingPayWay = 'wx';
+            break;
+          case 1:
+            this.borrowingPayWay = 'unionpay';
+            break;
+          default:
+            return false;
+        };
+        let form = this.$qs.stringify({
+          token: token,
+          loan_id: this.borrowingPayWayId,
+          pay_channel: this.borrowingPayWay
+        })
+        api.firstInstallmentPayAgain (form)
+          .then(res => {
+            console.log(res)
+            if (res.code === 200) {
+              window.location.href = 'http://www.xinyijiamall.com/api/applyloan/OrderPay?order_sn='+ res.data +'';
+            } else {
+              this.popBorrowing = false;
+              Toast(res.msg);
+              return false
+            }
+          })
+          .catch(err => {
+            console.log(err)
+          })
+
       }
     },
     created () {
