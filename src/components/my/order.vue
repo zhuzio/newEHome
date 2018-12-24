@@ -16,14 +16,13 @@
             <div class="eol-info fl">
               <p class="eol-nam">&nbsp;{{order.product.name}}</p>
               <p class="eol-type" style="width: 4.2rem;height: .3rem;overflow: hidden">{{order.spec1}}，{{order.spec.size}}</p>
+
               <div class="co-goods-integral-money" v-if="order.product_type == 2">
-                <!--<p><i class="icon icon-x-integral"></i><span>{{order.spec.points}}</span><b>+</b><u>¥</u><span>{{order.spec.ready}}</span></p>-->
-                <p><i class="icon icon-y-integral"></i><span>{{order.spec.points}}</span><b>+</b><u>¥</u><span>{{order.spec.ready}}</span></p>
-                <p><i>¥</i>{{order.spec.market}}</p>
+                <!--<p><i class="icon icon-y-integral"></i><span>{{order.spec.points}}</span><b>+</b><u>¥</u><span>{{order.spec.ready}}</span></p>-->
+                <!--<p><i>¥</i>{{order.spec.market}}</p>-->
               </div>
               <div class="co-goods-integral" v-if="order.product_type == 1">
-                <!--<p><i class="icon icon-x-integral"></i><span>{{order.spec.points}}</span></p>-->
-                <p><i class="icon icon-y-integral"></i><span>{{order.spec.points}}</span></p>
+                <!--<p><i class="icon icon-y-integral"></i><span>{{order.spec.points}}</span></p>-->
                 <p><i>¥</i>{{order.spec.ready}}</p>
               </div>
               <div class="co-goods-price-total" v-if="order.product_type == 3">
@@ -232,12 +231,15 @@
           stu: way
         })
           .then(res => {
+            // console.log(res.data)
             let noGoods = res.data == '' || res.data == undefined || res.data == null
             if (noGoods) {
               this.noData = true;
             } else {
               this.noData = false;
-              this.orderList = res.data
+              this.orderList = '';
+              this.orderList = res.data;
+              console.log(this.orderList)
             }
           })
           .catch(err => {
@@ -252,6 +254,7 @@
               this.noData = true;
             } else {
               this.noData = false;
+              this.orderList = '';
               this.orderList = res.data
             }
           })
