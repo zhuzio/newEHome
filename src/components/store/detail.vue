@@ -23,8 +23,8 @@
         <p class="detail-goods-price" style="color: #c3c3c3"><span style="color: #c3c3c3;font-size: .32rem">¥</span><s class="ss">{{money}}</s></p>
       </div>
       <div class="detail-goods-integral-and-money" v-if="goodsInfo.type == 2">
+        <p class="aa">会员价：<b>¥</b><span style="font-size: .3rem">{{money}}</span><b>+</b><i class="icon icon-y-integral"></i><span style="font-size: .3rem">{{integralX}}</span></p>
         <p class="aa1">市场价：<span>¥<i>{{market}}</i></span></p>
-        <p class="aa">会员价：<b>¥</b><span>{{money}}</span><b>+</b><i class="icon icon-y-integral"></i><span>{{integralX}}</span></p>
         <!--<p><i class="icon icon-y-integral"></i><span>{{integralY}}</span><b>+</b><u>¥</u>{{money}}</p>-->
       </div>
       <div class="detail-goods-detail">
