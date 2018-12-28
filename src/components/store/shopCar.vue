@@ -210,8 +210,8 @@
               if (goodsItem.id === this.currentId) {
                 console.log(goodsItem)
                 let final = {
-                  t1: goodsItem.specification,
-                  t2: goodsItem.spec.size,
+                  t1: goodsItem.spec.size,
+                  t2: goodsItem.specification,
                   tId: goodsItem.spec.id,
                   integralX: this.totalConsumeIntegral,
                   integralY: this.totalUseIntegral,
