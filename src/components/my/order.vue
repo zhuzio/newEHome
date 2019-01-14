@@ -38,18 +38,24 @@
             <p v-if="idx===1 || idx===2 || idx===3">
               <span>支付合计：
                 <i v-if="order.pay_order.pay_channel == 2">可用积分 {{order.total_points}}</i>
-                <i v-if="order.pay_order.pay_channel == 1">¥ {{order.total_ready}}</i>
+                <i v-if="order.pay_order.pay_channel == 1">微信 ¥ {{order.total_ready}}</i>
                 <i v-if="order.pay_order.pay_channel == 3">购物积分 {{order.total_points}}</i>
-                <i v-if="order.pay_order.pay_channel == 4">可用积分 {{order.total_points}} + ¥ {{order.total_ready}}</i>
-                <i v-if="order.pay_order.pay_channel == 5">购物积分 {{order.total_points}} + ¥ {{order.total_ready}}</i>
+                <i v-if="order.pay_order.pay_channel == 4">可用积分 {{order.total_points}} + 微信 ¥ {{order.total_ready}}</i>
+                <i v-if="order.pay_order.pay_channel == 5">购物积分 {{order.total_points}} + 微信 ¥ {{order.total_ready}}</i>
+                <i v-if="order.pay_order.pay_channel == 8">支付宝 ¥ {{order.total_ready}}</i>
+                <i v-if="order.pay_order.pay_channel == 9">可用积分 {{order.total_points}} + 支付宝 ¥ {{order.total_ready}}</i>
+                <i v-if="order.pay_order.pay_channel == 10">购物积分 {{order.total_points}} + 支付宝 ¥ {{order.total_ready}}</i>
               </span>
             </p>
             <p v-if="idx===4"><span>退款合计：
                 <i v-if="order.pay_order.pay_channel == 2">可用积分 {{order.refund_points}}</i>
-                <i v-if="order.pay_order.pay_channel == 1">¥ {{order.refund_ready}}</i>
+                <i v-if="order.pay_order.pay_channel == 1">微信 ¥ {{order.refund_ready}}</i>
                 <i v-if="order.pay_order.pay_channel == 3">购物积分 {{order.refund_points}}</i>
-                <i v-if="order.pay_order.pay_channel == 4">可用积分 {{order.refund_points}} + ¥ {{order.refund_ready}}</i>
-                <i v-if="order.pay_order.pay_channel == 5">购物积分 {{order.refund_points}} + ¥ {{order.refund_ready}}</i>
+                <i v-if="order.pay_order.pay_channel == 4">可用积分 {{order.refund_points}} + 微信 ¥ {{order.refund_ready}}</i>
+                <i v-if="order.pay_order.pay_channel == 5">购物积分 {{order.refund_points}} + 微信 ¥ {{order.refund_ready}}</i>
+                <i v-if="order.pay_order.pay_channel == 8">支付宝 ¥ {{order.total_ready}}</i>
+                <i v-if="order.pay_order.pay_channel == 9">可用积分 {{order.total_points}} + 支付宝 ¥ {{order.total_ready}}</i>
+                <i v-if="order.pay_order.pay_channel == 10">购物积分 {{order.total_points}} + 支付宝 ¥ {{order.total_ready}}</i>
             </span></p>
             <p v-if="idx===2 || idx===3"><span>快递单号：<input :id="order.tracking_num" :value="order.tracking_num" readonly></span></p>
             <!--<p><span>运　　费：0</span></p>-->
