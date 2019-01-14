@@ -26,7 +26,7 @@
             <p v-if="applyClass===2"><i class="icon icon-y-integral"></i><span>{{order.iy}}</span></p>
           </div>
         </div>-->
-        <div class="apply-way">
+        <!--<div class="apply-way">
           <p class="apply-title">支付方式：</p>
           <div @click="choseApply(0)" :class="{'apply-way-on': 0===applyClass}" v-if="order.type !== 1">
             <i class="icon icon-pay-weChat"></i><span>微信支付</span>
@@ -42,6 +42,24 @@
           </div>
           <div @click="choseApply(4)" :class="{'apply-way-on': 4===applyClass}" v-if="order.type == 2">
             <i class="icon icon-pay-integral-y-weChat"></i><span>可用积分 + 微信支付</span>
+          </div>
+        </div>-->
+        <div class="apply-way">
+          <p class="apply-title">支付方式：</p>
+          <div @click="choseApply(0)" :class="{'apply-way-on': 0===applyClass}" v-if="order.type !== 1">
+            <i class="icon icon-pay-apply"></i><span>支付宝支付</span>
+          </div>
+          <div @click="choseApply(1)" :class="{'apply-way-on': 1===applyClass}" v-if="order.type == 1">
+            <i class="icon icon-pay-integral-x"></i><span>购物积分</span>
+          </div>
+          <div @click="choseApply(2)" :class="{'apply-way-on': 2===applyClass}" v-if="order.type == 1">
+            <i class="icon icon-pay-integral-y"></i><span>可用积分</span>
+          </div>
+          <div @click="choseApply(3)" :class="{'apply-way-on': 3===applyClass}" v-if="order.type == 2">
+            <i class="icon icon-pay-integral-x-weChat"></i><span>购物积分 + 支付宝支付</span>
+          </div>
+          <div @click="choseApply(4)" :class="{'apply-way-on': 4===applyClass}" v-if="order.type == 2">
+            <i class="icon icon-pay-integral-y-weChat"></i><span>可用积分 + 支付宝支付</span>
           </div>
         </div>
       </div>
@@ -112,7 +130,8 @@
         this.applyClass = idx;
         switch (idx) {
           case 0:
-            this.payWay = 'wx';
+            // this.payWay = 'wx';
+            this.payWay = 'alipay';
             break;
           case 1:
             if (parseFloat(this.finalIntegralShop) > parseFloat(this.integralShop)) {
@@ -140,7 +159,8 @@
             } else {
               this.payWay = 'shop_points';
             };
-            this.payWay = 'wx_shop_points';
+            // this.payWay = 'wx_shop_points';
+            this.payWay = 'alipay_shop_points';
             break;
           case 4:
             if (parseFloat(this.finalIntegralUse) > parseFloat(this.integralUse)) {
@@ -150,7 +170,8 @@
             } else {
               this.payWay = 'ready_points';
             };
-            this.payWay = 'wx_ready_points';
+            // this.payWay = 'wx_ready_points';
+            this.payWay = 'alipay_shop_points';
             break;
           default:
             return false;
