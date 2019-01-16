@@ -3,7 +3,7 @@ import { Toast } from 'mint-ui'
 
 var url = 'http://www.xinyijiamall.com/api/'
 // var url = 'http://appliance.test/api/'
-var imgUrl = 'http://img.nyycstar.com/'
+var imgUrl = 'http://img.xinyijiamall.com/'
 let token = localStorage.getItem('token')
 // axios 配置
 axios.defaults.timeout = 5000
