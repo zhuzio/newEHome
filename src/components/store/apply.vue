@@ -171,7 +171,7 @@
               this.payWay = 'ready_points';
             };
             // this.payWay = 'wx_ready_points';
-            this.payWay = 'alipay_shop_points';
+            this.payWay = 'alipay_ready_points';
             break;
           default:
             return false;
