@@ -15,7 +15,7 @@
         </div>
       </router-link>
       <div class="wd-center">
-        <p class="wd-count">提现金额（手续费1%<i style="color: #ff3b30">[暂不收取]</i>，剩余次数<span>{{withdrawCount}}</span>次）</p>
+        <p class="wd-count">提现金额（手续费10%，剩余次数<span>{{withdrawCount}}</span>次）</p>
         <div class="wd-num">
           <span>¥</span>
           <input type="number" placeholder="0" v-model="withdrawNum">
