@@ -47,7 +47,7 @@
           .then(res => {
             this.userInfo = res.data;
             this.username = this.userInfo.realname;
-            this.userTel = this.userInfo.phone;
+            this.userTel = this.userInfo.account;
             switch (parseInt(this.userInfo.account_type)) {
               case 1:
                 this.idDeg = '会员';
