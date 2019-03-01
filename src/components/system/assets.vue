@@ -18,11 +18,11 @@
             <p>已转化</p>
             <h3>{{haveConversionIntegralTotal}}</h3>
           </div></router-link>
-          <router-link :to="{path:'useable/'+usable+''}"><div>
+          <router-link :to="{path:'useable'}"><div>
             <p>可用积分</p>
             <h3>{{usable}}</h3>
           </div></router-link>
-          <router-link :to="{path:'shopIntegral/'+shop+''}"><div>
+          <router-link :to="{path:'shopIntegral'}"><div>
             <p>购物积分</p>
             <h3>{{shop}}</h3>
           </div></router-link>

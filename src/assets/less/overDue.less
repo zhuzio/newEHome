@@ -44,4 +44,65 @@
     }
   }
 }
-
+.overdue-pay-way-choice{
+  position: fixed;
+  top: 0;
+  left: 0;
+  background: rgba(0, 0, 0, 0.45);
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  .overdue-pay-way-center{
+    width: 75%;
+    // height: 200px;
+    padding: .15rem;
+    background: white;
+    border-radius: .15rem;
+    .overdue-pay-title{
+      width: 100%;
+      text-align: center;
+      font-size: .24rem;
+      padding: .2rem 0;
+    }
+    .overdue-pay-way{
+      text-align: left;
+      padding:.2rem .1rem; 
+    }
+    .overdue-pay-btn{
+      margin-top: .35rem;
+      padding-bottom: .2rem;
+      button{
+        width: 85%;
+        height: .6rem;;
+        margin: 0 auto;
+        display: block;
+        font-size: .26rem;
+        border-radius: .1rem;
+        color: white;
+        background-image: -webkit-gradient(linear,left top,left bottom,from(#f64243),to(#f64243)),-webkit-gradient(linear,left top,left bottom,from(#eae9e9),to(#eae9e9))!important
+      }
+    }
+  }
+}
+input[type='radio']+label::before {
+  width:0.35rem;
+  height:0.35rem;
+  line-height: 0.35rem;
+  border: 1px #ccc solid;
+}
+input[type='radio']:checked+label::before {
+  color: #fff;/*对号的颜色*/
+  background: #f64243;
+  border: 1px #f64243 solid;
+}
+label{
+  color: black;
+  *{
+    vertical-align: middle;
+  }
+  i{
+    margin:0 .1rem 0 .3rem;
+  }
+}

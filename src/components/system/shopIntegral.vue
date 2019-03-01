@@ -45,7 +45,17 @@
       }
     },
     created () {
-      this.total = this.$route.params.num;
+       api.availableIntegral()
+        .then(res => {
+          if (res.code === 200) {
+            this.total = res.data.shop_points
+          } else {
+            Toast(res.msg);
+          }
+        })
+        .catch(err => {
+          console.log(err)
+        })
       api.shopIntegral()
         .then(res => {
           if (res.code === 200) {

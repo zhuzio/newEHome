@@ -55,7 +55,7 @@
               Toast('没有哦更多了');
             } else {
               for (var i in res.data){
-                this.list.push((res.data[i]));
+                this.hcList.push((res.data[i]));
               }
             }
           } else {

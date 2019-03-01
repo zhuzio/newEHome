@@ -75,6 +75,7 @@
       }
     },
     created () {
+      console.log(this.page)
       api.withdrawRecord(this.page)
         .then(res => {
           if (res.code === 200) {

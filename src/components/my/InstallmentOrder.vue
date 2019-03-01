@@ -12,27 +12,44 @@
         <div class="ioc-pay-list">
           <p><i class="icon icon-pay-weChat"></i><span>微信支付</span></p>
           <div>
-            <input type="checkbox" id="pay" value="wx" v-model="payWay">
-            <label for="pay"></label>
+            <input type="radio" id="wxpay" value="wx" v-model="payWay" name='installPay'>
+            <label for="wxpay"></label>
+          </div>
+        </div>
+        <div class="ioc-pay-list">
+          <p><i class="icon icon-pay-integral-y"></i><span>可用积分支付</span></p>
+          <div>
+            <input type="radio" id="kjpay" value="ready_points" v-model="payWay" name='installPay'>
+            <label for="kjpay"></label>
           </div>
         </div>
       </div>
       <button @click="installmentPay">立即还款</button>
     </div>
+    <pay @hidden="hiddenShow"  @password="passwordGro" :password="applyPsd" v-show="payPop"></pay>
   </div>
 </template>
 
 <script>
   import api from '@/assets/js/api.js'
   import { Toast } from 'mint-ui'
+  import pay from '../comp/pay.vue'
+  import { truncate } from 'fs';
   let token = localStorage.getItem('token')
   export default {
     name: "installment-order",
     data () {
       return {
         bills:[],
-        payWay:''
+        payWay:'',
+        payPop: false,
+        applyPsd: '',
+        orderSn: '',
+        
       }
+    },
+    components: {
+      pay
     },
     created () {
       this.bills = JSON.parse(localStorage.getItem('bill'));
@@ -46,23 +63,54 @@
         let form = this.$qs.stringify({
           token: token,
           stag_id: this.bills.id,
-          pay_channel: 'wx'
+          pay_channel: this.payWay
         })
         api.createdInstallmentOrder(form)
-          .then(res => {
-            if (res.code === 200) {
+        .then(res => {
+          if (res.code === 200) {
+            if (this.payWay == 'wx') {
               window.location.href = 'http://www.xinyijiamall.com/api/stag/OrderPay?order_sn='+ res.data +'';
-            } else if (res.code === 500) {
-              Toast(res.msg);
-              return false;
             } else {
-              Toast(res.msg);
-              return false;
+              this.orderSn = res.data;
+              this.payPop = true;
             }
+          } else if (res.code === 500) {
+            Toast(res.msg);
+            return false;
+          } else {
+            Toast(res.msg);
+            return false;
+          }
+        })
+        .catch(err => {
+          console.log(err)
+        })
+      },
+      hiddenShow () {
+        let that = this;
+        that.payPop = false
+      },
+      passwordGro (e) {
+        this.applyPsd = e
+        let psw = this.applyPsd.toString().replace(/,/g, '')
+        if ( this.applyPsd.length === 6) {
+          let form = this.$qs.stringify({
+            order_sn: this.orderSn,
+            payment_password: psw
           })
-          .catch(err => {
-            console.log(err)
+          api.createdInstallmentOrderUseableIntegral(form)
+            .then(res => {
+              if (res.code === 200) {
+                  Toast(res.msg);
+                  setTimeout(function(){
+                    window.history.go(-1)
+                  },1500)
+                } else {
+                  Toast(res.msg);
+                  this.payPop = true;
+                }
           })
+        }
       }
     }
   }

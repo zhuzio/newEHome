@@ -6,6 +6,10 @@
           <span class="register-title">推荐码</span>
           <input type="text" class="register-input" v-model="recommendCode">
         </div>
+        <div class="register-list">
+          <span class="register-title" style="color: rgb(59, 5, 5);font-weight: bolder;">账号：</span>
+          <input type="text" class="register-input" v-model="account" readonly>
+        </div>
         <!--<div class="register-list">
           <span class="register-title">会员等级</span>
           <div class="register-deg">
@@ -69,6 +73,7 @@
         z_tel: /^1(3|4|5|6|7|8|9)\d{9}$/,
         isSend: false,
         verificationCodeTxt:'获取验证码',
+        account: '',
       }
     },
     methods: {
@@ -101,11 +106,10 @@
           return false;
         } else {
           let pho = this.$qs.stringify({
-            phone: this.registerTel
+              phone: this.registerTel
           })
           api.getSMSVerification(pho)
             .then(res => {
-              console.log(res)
               if (res.code === 200) {
                 Toast({
                   message: res.msg,
@@ -176,7 +180,8 @@
         };
         let form = this.$qs.stringify({
           phone: this.registerTel,
-          recommend_phone: this.recommendCode,
+          account:this.account,
+          recommend_account: this.recommendCode,
           realname: this.realName,
           password: this.password,
           payment_password:this.applyPassword,
@@ -208,18 +213,31 @@
       }
     },
     created () {
+     
       this.height = document.documentElement.clientHeight;
       // console.log(document.documentElement.clientHeight)
       // console.log(this.height)
       let url = window.location.href.substring()
-      // let url = 'http://wap.xinyijiamall.com/#/register?phone=15236058819&account_type=3'
+      // 'http://wap.xinyijiamall.com/#/register?phone=15236058819&account_type=3'
+      // let url = 'http://wap.xinyijiamall.com/#/register?recommend_account=1234567&account_type=3&account=987654'
+
       if (url.indexOf('?') == -1) {
         this.recommendCode = ''
+        api.registerAccount()
+          .then(res => {
+            if (res.code === 200) {
+              this.account = res.account;
+            } else {
+              Toast(res.msg)
+            }
+          }) 
       } else {
         let a1 = url.split('?');
         let a2 = a1[1].split('&');
         let a3 = a2[0].split('=');
-        this.recommendCode = a3[1]
+        let a4 = a2[2].split('=');
+        this.recommendCode = a3[1];
+        this.account = a4[1];
       }
     }
   }

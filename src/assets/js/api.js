@@ -2,7 +2,7 @@ import axios from 'axios'
 import { Toast } from 'mint-ui'
 
 var url = 'http://www.xinyijiamall.com/api/'
-// var url = 'http://appliance.test/api/'
+// var url = 'http://192.168.1.4/api/'
 var imgUrl = 'http://img.xinyijiamall.com/'
 let token = localStorage.getItem('token')
 // axios 配置
@@ -80,7 +80,7 @@ export default {
   },
   login (params) {
     // 登录
-    return Post( `/login?phone=${params.account}&password=${params.password}`)
+    return Post( `/login?account=${params.account}&password=${params.password}`)
   },
   getUserInfo () {
     // 获得用户基本信息
@@ -298,6 +298,10 @@ export default {
     // 创建分期账单
     return Post(`/stag/createOrder`, params)
   },
+  createdInstallmentOrderUseableIntegral (params) {
+    // 创建分期账单--微信支付
+    return Post(`/stag/pointsOrderPay`, params)
+  },
   upgradeQualification (params) {
     return Get(`/myTeam?token=${token}&apply_type=${params}`)
   },
@@ -352,6 +356,22 @@ export default {
   aboutUs () {
     // 关于我们
     return Get(`/aboutus`)
+  },
+  UITGetPhoneCode (params) {
+    // 可用积分转账获取手机验证码
+    return Get(`/transfer/sendSms?token=${params}`)
+  },
+  UITransferApi (params) {
+    // 可用积分转账
+    return Post(`/transfer/transfer`, params)
+  },
+  UITransferRecord (params) {
+    // 可用积分转记录
+    return Get(`/transfer/transferList/${params.page}?token=${params.token}&from=${params.form}`)
+  },
+  registerAccount () {
+    // 用户注册，随机获得账号
+    return Get(`/user/customAccount`)
   }
 }
 export { imgUrl }

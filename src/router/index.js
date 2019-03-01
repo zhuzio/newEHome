@@ -40,6 +40,8 @@ import storeDetail from '@/components/store/storeDetail'
 import installmentBill from '@/components/my/installmentBill'
 import overdueBill from '@/components/my/overdueBill'
 import InstallmentOrder from '@/components/my/InstallmentOrder'
+import useableIntegralTransfer from '@/components/system/useableIntegralTransfer'
+import useableIntegralTransferRecord from '@/components/system/useableIntegralTransferRecord'
 
 Vue.use(Router)
 
@@ -140,7 +142,7 @@ export default new Router({
       component: integralDetailList
     },
     {
-      path: '/shopIntegral/:num', // 购物积分
+      path: '/shopIntegral', // 购物积分
       name: 'shopIntegral',
       component: shopIntegral
     },
@@ -150,9 +152,19 @@ export default new Router({
       component: shopIntegralIncome
     },
     {
-      path: '/useable/:num', // 可用积分
+      path: '/useable', // 可用积分
       name: 'useable',
       component: useable
+    },
+    {
+      path: '/useableIntegralTransfer', // 可用积分转账
+      name: 'useableIntegralTransfer',
+      component: useableIntegralTransfer
+    },
+    {
+      path: '/useableIntegralTransferRecord/:way', // 可用积分转账记录
+      name: 'useableIntegralTransferRecord',
+      component: useableIntegralTransferRecord
     },
     {
       path: '/withdraw', // 提现

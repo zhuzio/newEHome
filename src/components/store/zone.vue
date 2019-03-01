@@ -173,7 +173,7 @@
         if (proTime >= 3600 || this.comeId !== cacheId) {
           switch (this.zo.id) {
             case 1:
-              this.zo.title = '资产兑换专区';
+              this.zo.title = 'VIP专区';
               break;
             case 2:
               this.zo.title = '会员专区';
@@ -189,7 +189,7 @@
       } else {
       switch (this.zo.id) {
         case 1:
-          this.zo.title = '资产兑换专区';
+          this.zo.title = 'VIP专区';
           break;
         case 2:
           this.zo.title = '会员专区';
@@ -203,7 +203,7 @@
 
       /*switch (this.zo.id) {
         case 1:
-          this.zo.title = '资产兑换专区';
+          this.zo.title = 'VIP专区';
           break;
         case 2:
           this.zo.title = '会员专区';

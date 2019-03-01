@@ -49,7 +49,7 @@
           <div @click="choseApply(0)" :class="{'apply-way-on': 0===applyClass}" v-if="order.type !== 1">
             <i class="icon icon-pay-apply"></i><span>支付宝支付</span>
           </div>
-          <div @click="choseApply(1)" :class="{'apply-way-on': 1===applyClass}" v-if="order.type == 1">
+          <div @click="choseApply(1)" :class="{'apply-way-on': 1===applyClass}" v-if="order.type == 0">
             <i class="icon icon-pay-integral-x"></i><span>购物积分</span>
           </div>
           <div @click="choseApply(2)" :class="{'apply-way-on': 2===applyClass}" v-if="order.type == 1">

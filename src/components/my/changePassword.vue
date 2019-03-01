@@ -6,7 +6,7 @@
     <div class="cp-container">
       <div class="cp-tel"><input type="number" placeholder="请输入您的手机号" v-model="tel"></div>
       <div class="cp-reg"><input type="number" placeholder="请输入验证码" v-model="VCode"><span :class="{'send-on': send}" @click="getVerificationCode">{{verificationCodeTxt}}</span></div>
-      <div class="cp-tel"v-if="id == 0"><input type="password" placeholder="设置新密码" v-model="newPsd"></div>
+      <div class="cp-tel" v-if="id == 0"><input type="password" placeholder="设置新密码" v-model="newPsd"></div>
       <div class="cp-tel" v-if="id != 0"><input type="password" placeholder="设置新密码（6位数字）" v-model="newPsd"></div>
       <div class="cp-tel"><input type="password" placeholder="请再次输入新密码" v-model="psdOnce"></div>
       <p class="cp-btn" @click="changeBtn">确认修改</p>

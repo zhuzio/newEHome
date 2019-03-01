@@ -95,7 +95,7 @@
         </div>
         <div class="each-floor">
           <div class="floor-title ft2">
-            <p>资产兑换专区</p>
+            <p>VIP专区</p>
             <span><router-link to="/zone/1">更多 >></router-link></span>
           </div>
           <div class="ft3-container">
