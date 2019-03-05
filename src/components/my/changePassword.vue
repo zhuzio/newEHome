@@ -4,7 +4,7 @@
       <a href="javascript:window.history.go(-1)"></a>{{title}}
     </div>
     <div class="cp-container">
-      <div class="cp-tel"><input type="number" placeholder="请输入您的手机号" v-model="tel"></div>
+      <div class="cp-tel"><input type="number" placeholder="请输入您的账号" v-model="tel"></div>
       <div class="cp-reg"><input type="number" placeholder="请输入验证码" v-model="VCode"><span :class="{'send-on': send}" @click="getVerificationCode">{{verificationCodeTxt}}</span></div>
       <div class="cp-tel" v-if="id == 0"><input type="password" placeholder="设置新密码" v-model="newPsd"></div>
       <div class="cp-tel" v-if="id != 0"><input type="password" placeholder="设置新密码（6位数字）" v-model="newPsd"></div>
@@ -31,7 +31,7 @@
         VCode: '',
         newPsd: '',
         psdOnce: '',
-        z_tel: /^1(3|4|5|6|7|8|9)\d{9}$/,
+        z_tel: /^\d{7,11}$/,
       };
     },
     methods: {
@@ -40,32 +40,32 @@
         var that = this
         if (t > 0) {
           this.send = true
-          this.verificationCodeTxt = t + 's后重发'
-          t--
+          this.verificationCodeTxt = t + 's后重发';
+          t--;
           setTimeout(function () {
-            that.ctimer(t)
+            that.ctimer(t);
           }, 1000)
         } else {
-          this.send = false
-          this.verificationCodeTxt = '获取验证码'
+          this.send = false;
+          this.verificationCodeTxt = '获取验证码';
         }
       },
       getVerificationCode () {
         if (!this.tel) {
-          Toast('请填写电话号码!')
-          return false
+          Toast('请填写账号!');
+          return false;
         };
         if (this.z_tel.test(this.tel) === false) {
-          Toast('您的电话号码格式有误!');
-          return false
+          Toast('请输入7-11位账号数字!');
+          return false;
         };
         if (this.send) {
           Toast('请稍后点击！');
           return false;
         } else {
           let pho = this.$qs.stringify({
-            phone: this.tel
-          })
+            account: this.tel
+          });
           api.getSMSVerification(pho)
             .then(res => {
               if (res.code === 200) {
@@ -94,11 +94,11 @@
       },
       changeBtn () {
         if (!this.tel) {
-          Toast('请填写电话号码!');
+          Toast('请填写账号!');
           return false;
         };
         if (this.z_tel.test(this.tel) === false) {
-          Toast('您的电话号码格式有误!');
+          Toast('请输入7-11位账户数字');
           return false;
         };
         if (!this.VCode) {
