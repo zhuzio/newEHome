@@ -6,7 +6,7 @@
     <div class="team-container">
       <div class="team-center">
         <div class="team-list" v-for="(tl, index) in teamList" :key="index">
-          <p class="team-name-tel"><span class="t-name">{{tl.realname}}</span><span class="t-tel">{{tl.phone}}</span></p>
+          <p class="team-name-tel"><span class="t-name">{{tl.realname}}</span><span class="t-tel">电话：{{tl.phone}}</span></p>
           <div class="team-deg">
             <p class="t-id">身份：
               <span v-if="tl.account_type == 1">会员</span>
@@ -17,11 +17,11 @@
               <span v-if="tl.account_type == 6">合伙人</span>
               <span v-if="tl.account_type == 7">股东</span>
             </p>
-            <!--<p class="t-deg">
-              <span v-if="tl.level == 1" style="color: purple">VIP1</span>
-              <span v-if="tl.level == 2" style="color: #801051">VIP2</span>
-              <span v-if="tl.level == 3" style="color: #803f0c">VIP3</span>
-            </p>-->
+            <p class="t-deg">账号：<span>{{tl.account}}</span>
+              <!--<span v-if="tl.level == 1" style="color: purple">VIP1</span>-->
+              <!--<span v-if="tl.level == 2" style="color: #801051">VIP2</span>-->
+              <!--<span v-if="tl.level == 3" style="color: #803f0c">VIP3</span>-->
+            </p>
           </div>
         </div>
         <p class="add-more" @click="teamAddMore" v-if="isMore">点击加载更多</p>
